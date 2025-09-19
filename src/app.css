@@ -1,45 +1,9 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
 
-@theme {
-	--color-gray-50: #dedfe1;
-	--color-gray-100: #d3d4d7;
-	--color-gray-200: #c9cacd;
-	--color-gray-300: #a8aaaf;
-	--color-gray-400: #666a74;
-	--color-gray-500: #252a38;
-	--color-gray-600: #212632;
-	--color-gray-700: #1c202a;
-	--color-gray-800: #161922;
-	--color-gray-900: #10141d;
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton/optional/presets';
+@import '@skeletonlabs/skeleton/themes/cerberus';
 
-	--color-primary-50: #ffe6e0;
-	--color-primary-100: #ffded5;
-	--color-primary-200: #ffd6cb;
-	--color-primary-300: #ffbdac;
-	--color-primary-400: #fe8c6d;
-	--color-primary-500: #fe5b2f;
-	--color-primary-600: #e5522a;
-	--color-primary-700: #bf4423;
-	--color-primary-800: #98371c;
-	--color-primary-900: #7c2d17;
-
-	--color-tertiary-50: #ffece1;
-	--color-tertiary-100: #ffe6d7;
-	--color-tertiary-200: #ffe0cd;
-	--color-tertiary-300: #fecdae;
-	--color-tertiary-400: #fea872;
-	--color-tertiary-500: #fd8335;
-	--color-tertiary-600: #e47630;
-	--color-tertiary-700: #be6228;
-	--color-tertiary-800: #984f20;
-	--color-tertiary-900: #7c401a;
-
-	--breakpoint-2xl: 1536px;
-
-	--font-family-sans:
-		'Inter var', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI',
-		'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji',
-		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-}
-
-@plugin "@tailwindcss/typography";
+@source '../../node_modules/@skeletonlabs/skeleton-svelte/dist';

@@ -1,35 +1,41 @@
-import tsParser from '@typescript-eslint/parser';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
 import prettier from 'eslint-config-prettier';
+import { fileURLToPath } from 'node:url';
+import { includeIgnoreFile } from '@eslint/compat';
+import js from '@eslint/js';
+import svelte from 'eslint-plugin-svelte';
+import { defineConfig } from 'eslint/config';
+import globals from 'globals';
+import ts from 'typescript-eslint';
+import svelteConfig from './svelte.config.js';
 
-export default [
+const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
+
+export default defineConfig(
+	includeIgnoreFile(gitignorePath),
+	js.configs.recommended,
+	...ts.configs.recommended,
+	...svelte.configs.recommended,
 	prettier,
+	...svelte.configs.prettier,
 	{
-		files: ['**/*.{js,ts}'],
 		languageOptions: {
-			parser: tsParser,
-			parserOptions: {
-				ecmaVersion: 'latest',
-				sourceType: 'module'
-			}
-		},
-		plugins: {
-			'@typescript-eslint': tsPlugin
+			globals: { ...globals.browser, ...globals.node }
 		},
 		rules: {
-			'@typescript-eslint/no-unused-vars': 'error',
-			'@typescript-eslint/no-explicit-any': 'warn'
+			// typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
+			// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
+			'no-undef': 'off'
 		}
 	},
 	{
-		ignores: [
-			'build/',
-			'.svelte-kit/',
-			'dist/',
-			'node_modules/',
-			'static/',
-			'pnpm-lock.yaml',
-			'**/*.svelte'
-		]
+		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
+		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				extraFileExtensions: ['.svelte'],
+				parser: ts.parser,
+				svelteConfig
+			}
+		}
 	}
-];
+);
