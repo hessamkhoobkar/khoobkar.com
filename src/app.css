@@ -3,7 +3,32 @@
 @plugin '@tailwindcss/typography';
 
 @import '@skeletonlabs/skeleton';
-@import '@skeletonlabs/skeleton/optional/presets';
-@import '@skeletonlabs/skeleton/themes/cerberus';
+@import '@skeletonlabs/skeleton/themes/fennec';
 
 @source '../../node_modules/@skeletonlabs/skeleton-svelte/dist';
+
+[data-theme='fennec'] {
+	--color-primary-50: oklch(87.02% 0.025 71.44);
+	--color-primary-100: oklch(83.24% 0.032 70.46);
+	--color-primary-200: oklch(79.15% 0.093 67.93);
+	--color-primary-300: oklch(72.89% 0.148 58.17);
+	--color-primary-400: oklch(69.18% 0.179 49.92);
+	--color-primary-500: oklch(66.11% 0.195 43.01);
+	--color-primary-600: oklch(60.01% 0.226 32.29);
+	--color-primary-700: oklch(51.41% 0.207 29.86);
+	--color-primary-800: oklch(39.55% 0.157 30.14);
+	--color-primary-900: oklch(26.5% 0.092 32.64);
+	--color-primary-950: oklch(17.05% 0.041 35.12);
+
+	--color-surface-50: oklch(99.48% 0.001 17.18);
+	--color-surface-100: oklch(82.08% 0.002 67.8);
+	--color-surface-200: oklch(63.4% 0.002 67.79);
+	--color-surface-300: oklch(50.03% 0.002 67.78);
+	--color-surface-400: oklch(40.6% 0.002 67.76);
+	--color-surface-500: oklch(32.53% 0.004 84.58);
+	--color-surface-600: oklch(23.5% 0.006 91.61);
+	--color-surface-700: oklch(20.5% 0.004 84.59);
+	--color-surface-800: oklch(17.34% 0.004 84.59);
+	--color-surface-900: oklch(15.22% 0.008 68.34);
+	--color-surface-950: oklch(12.57% 0.021 84.5);
+}
