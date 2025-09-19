@@ -36,20 +36,22 @@ As the home of my work and projects, khoobkar.com not only showcases my skills a
 To set up the project locally, follow these steps:
 
 1. **Clone the repository**:
-    ```sh
-    git clone https://github.com/yourusername/khoobkar.com.git
-    cd khoobkar.com
-    ```
+
+   ```sh
+   git clone https://github.com/yourusername/khoobkar.com.git
+   cd khoobkar.com
+   ```
 
 2. **Install dependencies**:
-    ```sh
-    pnpm install
-    ```
+
+   ```sh
+   pnpm install
+   ```
 
 3. **Run the development server**:
-    ```sh
-    pnpm run dev
-    ```
+   ```sh
+   pnpm run dev
+   ```
 
 The website should now be running at `http://localhost:3000`.
 

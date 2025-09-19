@@ -8,7 +8,7 @@
 {#key url}
 	<div
 		class="transition"
-		in:fly={{
+		in:fly|global={{
 			y: 50,
 			duration: 750,
 			easing: quartOut

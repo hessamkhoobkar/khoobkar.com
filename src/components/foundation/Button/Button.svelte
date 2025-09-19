@@ -30,8 +30,8 @@
 		size === 'small'
 			? 'text-xs h-12'
 			: size === 'large'
-			? 'text-baselg h-14 py-4 px-10'
-			: 'text-sm h-12 py-3 px-6';
+				? 'text-baselg h-14 py-4 px-10'
+				: 'text-sm h-12 py-3 px-6';
 
 	$: iconSize = size === 'small' ? '20' : size === 'large' ? '24' : '20';
 

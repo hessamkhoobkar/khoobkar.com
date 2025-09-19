@@ -109,7 +109,7 @@
 						/>
 						{#if tooltipDisplay}
 							<div
-								transition:fade
+								transition:fade|global
 								class="absolute -top-[90%] left-0 bg-gray-700 p-4 rounded-2xl shadow-lg w-3/4"
 							>
 								<p class="text-xs text-primary-500">

@@ -51,7 +51,7 @@
 	class="fixed inset-0 w-screen h-screen bg-gray-900 bg-opacity-90 backdrop-blur-sm cursor-pointer z-40"
 	on:click={close}
 	on:keydown={handle_keydown}
-	transition:fade={{
+	transition:fade|global={{
 		duration: 300
 	}}
 />
@@ -62,7 +62,7 @@
 	role="dialog"
 	aria-modal="true"
 	bind:this={modal}
-	transition:fade={{
+	transition:fade|global={{
 		duration: 300
 	}}
 >

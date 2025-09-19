@@ -14,7 +14,7 @@
 <div class="absolute w-full h-full">
 	{#each slideData as { src, alt }, i}
 		{#if currentSlide === i}
-			<div transition:fade class="absolute w-full h-full rounded-2xl overflow-hidden">
+			<div transition:fade|global class="absolute w-full h-full rounded-2xl overflow-hidden">
 				<img class="w-full h-full object-cover" {src} {alt} />
 			</div>
 		{/if}

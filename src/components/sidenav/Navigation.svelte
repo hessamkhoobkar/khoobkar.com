@@ -44,8 +44,8 @@
 					class="transition-colors duration-300 ease-in-out {$page.url.pathname === adress
 						? 'text-gray-900 group-hover:text-gray-900'
 						: disabled
-						? 'text-gray-600 group-hover:text-gray-600'
-						: 'text-gray-500 group-hover:text-primary-500'}
+							? 'text-gray-600 group-hover:text-gray-600'
+							: 'text-gray-500 group-hover:text-primary-500'}
 						
 						"
 				/>
@@ -54,8 +54,8 @@
 					adress
 						? 'text-gray-900 group-hover:text-gray-900'
 						: disabled
-						? 'text-gray-500 group-hover:text-gray-500'
-						: 'text-gray-300 group-hover:text-white'}
+							? 'text-gray-500 group-hover:text-gray-500'
+							: 'text-gray-300 group-hover:text-white'}
 						"
 				>
 					{label}

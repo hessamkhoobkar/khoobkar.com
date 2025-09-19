@@ -21,9 +21,9 @@ So, what's Snø all about? Picture this: simplicity meets sophistication, and we
 
 Snø, a Norwegian word for snow, was selected as the theme's title to capture the essence of purity and simplicity. Influenced by the minimalist design movement and a deep appreciation for the Norwegian landscape, I aimed to infuse a distinctive combination of simplicity and natural beauty into the digital realm.
 
-![an aerial view of a large pile of snow on mountains](https://utfs.io/f/05801abc-1301-471a-a402-c384d9a9500d-20kzma.webp "Image")
+![an aerial view of a large pile of snow on mountains](https://utfs.io/f/05801abc-1301-471a-a402-c384d9a9500d-20kzma.webp 'Image')
 Photo by [Yadi Afriadi](https://unsplash.com/@matthewfariz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) on [Unsplash](https://unsplash.com/photos/a-large-pile-of-snow-kQVxf-5bs6s?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
-  
+
 ## The Allure of Minimalism
 
 Snø, the minimalist Astro theme, stands out in a crowded space by embracing simplicity and elegance. With a clean and uncluttered design, Snø focuses on the essentials, providing a distraction-free environment for both developers and visitors. This theme proves that less is often more, offering a visually appealing and user-friendly experience.
