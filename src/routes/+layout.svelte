@@ -29,28 +29,19 @@
 </div>
 
 <style lang="postcss">
+	@reference;
+
 	:global(html) {
-		@apply antialiased;
+		@apply antialiased text-base font-sans text-gray-100 bg-gray-900;
 		scroll-behavior: smooth;
-		color: theme(colors.gray.100);
-		font-size: theme(fontSize.base);
-		font-family: theme(fontFamily.sans);
-		background-color: theme(colors.gray.900);
 	}
 
 	:global(.article-content h3) {
-		font-size: 2.5rem;
-		line-height: 1.25em;
-		font-weight: normal;
-		margin-bottom: 1rem;
-		color: theme(colors.sky.500);
+		@apply text-5xl leading-tight font-normal mb-4 text-sky-500;
 	}
 
 	:global(.article-content p) {
-		font-size: 1rem;
-		line-height: 1.5em;
-		font-weight: normal;
-		margin-bottom: 1rem;
+		@apply text-base leading-6 font-normal mb-4;
 	}
 
 	:global(::-webkit-scrollbar) {

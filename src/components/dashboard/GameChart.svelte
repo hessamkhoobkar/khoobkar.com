@@ -56,5 +56,5 @@
 	>
 		Video game and work balance
 	</h3>
-	<canvas bind:this={canvas} />
+	<canvas bind:this={canvas}></canvas>
 </div>

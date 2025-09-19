@@ -92,7 +92,7 @@
 							name="message"
 							id="message"
 							placeholder="Type your message here. Your feedback is valuable to me and I will respond as soon as possible."
-						/>
+						></textarea>
 					</div>
 					<div class="w-full relative">
 						<input
@@ -116,7 +116,7 @@
 									Unfortunately, the contact form database is down and not accessible at the moment.
 									Please get in touch with me via email or social media.
 								</p>
-								<div class="absolute triangle" />
+								<div class="absolute triangle"></div>
 							</div>
 						{/if}
 					</div>
@@ -165,8 +165,10 @@
 </div>
 
 <style lang="postcss">
+	@reference;
+
 	.input {
-		@apply w-full px-4 py-4 rounded-xl bg-gray-700 bg-opacity-70 border border-gray-600 transition-all duration-200 ease-in-out ring-0 outline-none text-white;
+		@apply w-full px-4 py-4 rounded-xl bg-gray-700/70 border border-gray-600 transition-all duration-200 ease-in-out ring-0 outline-none text-white;
 	}
 
 	.input::placeholder {
@@ -174,11 +176,11 @@
 	}
 
 	.input:hover {
-		@apply bg-opacity-90 border-primary-900;
+		@apply bg-gray-700/90 border-primary-900;
 	}
 
 	.input:focus {
-		@apply bg-opacity-90 border-primary-500 ring-0 outline-none;
+		@apply bg-gray-700/90 border-primary-500 ring-0 outline-none;
 	}
 
 	.triangle {

@@ -13,7 +13,7 @@
 			src="https://utfs.io/f/04f8bf57-4581-4578-870d-db0f25e8daeb-1kh0af.jpg"
 			alt="The cover for my info section inmcluding my handdrwan ux work in my leather notebook and papaer cards with some woods and other props around them on a balck background"
 		/>
-		<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-gray-900" />
+		<div class="absolute inset-0 rounded-xl bg-gradient-to-t from-gray-900"></div>
 		<div class="absolute bottom-6 md:bottom-2 left-32 flex flex-col justify-start items-start">
 			<span class="text-sm">hessam khoobkar</span>
 			<span class="font-bold">UI designer / Front-end Developer</span>

@@ -93,7 +93,7 @@
 			</SplideTrack>
 			<div class="absolute -bottom-8 inset-x-0 flex flex-col">
 				<div class="splide__progress">
-					<div class="splide__progress__bar" />
+					<div class="splide__progress__bar"></div>
 				</div>
 			</div>
 		</Splide>

@@ -31,11 +31,11 @@
 		{#if !isLink}
 			<div class="bg-gray-800 shadow-lg shadow-gray-900 rounded-2xl p-6 pb-8 w-full relative">
 				<div class="absolute top-0 left-0 h-full">
-					<div class="absolute bg-gray-700 top-0 left-8 w-2 h-full" />
+					<div class="absolute bg-gray-700 top-0 left-8 w-2 h-full"></div>
 					<div
 						class="absolute top-6 left-6 w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-tertiary-500 flex justify-center items-center"
 					>
-						<div class="bg-gray-600 w-4 h-4 rounded-full" />
+						<div class="bg-gray-600 w-4 h-4 rounded-full"></div>
 					</div>
 				</div>
 				<div class="flex flex-col justify-start items-start gap-1 ml-10">

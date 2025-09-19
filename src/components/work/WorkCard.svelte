@@ -48,7 +48,7 @@
 		/>
 
 		<div
-			class="col-span-1 xl:col-span-6 xl:row-span-3 xl:col-start-7 xl:row-start-1 rounded-2xl bg-gray-800 aspect-w-4 aspect-h-3 relativ overflow-hidden"
+			class="col-span-1 xl:col-span-6 xl:row-span-3 xl:col-start-7 xl:row-start-1 rounded-2xl bg-gray-800 aspect-[4/3] relative overflow-hidden"
 		>
 			<img class="object-cover w-full h-full" src={work.thumbnail} alt={work.thumbnailAlt} />
 		</div>

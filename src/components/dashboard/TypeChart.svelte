@@ -41,23 +41,23 @@
 		My Work Categories
 	</h3>
 	<div class="max-h-52 w-full">
-		<canvas bind:this={canvas} class="mx-auto" />
+		<canvas bind:this={canvas} class="mx-auto"></canvas>
 	</div>
 	<div class="flex flex-col mt-8 gap-2 text-sm">
 		<div class="flex justify-between items-center font-medium">
-			<span class="bg-primary-500 w-2 h-2 rounded-full mr-4" />
+			<span class="bg-primary-500 w-2 h-2 rounded-full mr-4"></span>
 			<span class="text-primary-500 mr-auto">UI Design Projects</span>
 			<span class="text-gray-400 mr-2">8</span>
 			<span class="text-primary-500">62%</span>
 		</div>
 		<div class="flex justify-between items-center font-medium">
-			<span class="bg-[#8E7DBE] w-2 h-2 rounded-full mr-4" />
+			<span class="bg-[#8E7DBE] w-2 h-2 rounded-full mr-4"></span>
 			<span class="text-[#8E7DBE] mr-auto">Front-end Projects</span>
 			<span class="text-gray-400 mr-2">4</span>
 			<span class="text-[#8E7DBE]">30%</span>
 		</div>
 		<div class="flex justify-between items-center font-medium">
-			<span class="bg-[#99C1B9] w-2 h-2 rounded-full mr-4" />
+			<span class="bg-[#99C1B9] w-2 h-2 rounded-full mr-4"></span>
 			<span class="text-[#99C1B9] mr-auto">Full-stack Projects</span>
 			<span class="text-gray-400 mr-2">1</span>
 			<span class="text-[#99C1B9]">8%</span>

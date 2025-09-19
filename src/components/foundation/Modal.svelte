@@ -49,12 +49,14 @@
 
 <div
 	class="fixed inset-0 w-screen h-screen bg-gray-900 bg-opacity-90 backdrop-blur-sm cursor-pointer z-40"
+	role="button"
+	tabindex="0"
 	on:click={close}
 	on:keydown={handle_keydown}
 	transition:fade|global={{
 		duration: 300
 	}}
-/>
+></div>
 
 <!-- class="fixed top-1/2 left-1/2 -translate-y-2/4 -translate-x-2/4 w-[calc(100vw - 4rem)] max-w-lg max-h-[calc(100vh - 4rem)] bg-gray-700 rounded-2xl z-50" -->
 <div

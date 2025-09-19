@@ -23,7 +23,7 @@
 			<WorkCard {work} />
 
 			<div class="w-full h-4 relative flex justify-center items-center last-of-type:hidden">
-				<div class="w-full h-px bg-gray-500" />
+				<div class="w-full h-px bg-gray-500"></div>
 				<div class="absolute bg-gray-900">
 					<Apple class="w-8 h-8 xl:w-12 xl:h-12 text-gray-500" />
 				</div>
