@@ -5,6 +5,8 @@
 @import '@skeletonlabs/skeleton';
 @import '@skeletonlabs/skeleton/themes/fennec';
 
+@import '@fontsource-variable/inter';
+
 @source '../../node_modules/@skeletonlabs/skeleton-svelte/dist';
 
 [data-theme='fennec'] {
@@ -31,4 +33,11 @@
 	--color-surface-800: oklch(17.34% 0.004 84.59);
 	--color-surface-900: oklch(15.22% 0.008 68.34);
 	--color-surface-950: oklch(12.57% 0.021 84.5);
+
+	/* --base-font-color: 
+	--base-font-color-dark:  */
+	--base-font-family: 'Inter Variable', sans-serif;
+	--base-font-size: 16px;
+	--base-font-weight: 500;
+	--base-font-style: normal;
 }
