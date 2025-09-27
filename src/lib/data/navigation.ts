@@ -12,6 +12,7 @@ export const mainNavigation: NavigationItem[] = [
 	{ href: '/resources', label: 'Resources', description: 'Useful resources and tools' },
 	{ href: '/about', label: 'About', description: 'About us and our story' },
 	{ href: '/now', label: 'Now', description: "What we're currently working on" }
+	// { href: '/contact', label: 'Contact', description: 'Get in touch and start your project' }
 ];
 
 export const footerNavigation: NavigationItem[] = [
