@@ -46,7 +46,7 @@
 	<div class="hidden w-full lg:block">
 		<Sidebar />
 	</div>
-	<ScrollSmoother smooth={1.2} effects={true} smoothTouch={0.1}>
+	<ScrollSmoother smooth={1.4} effects={true} smoothTouch={0.2}>
 		{@render children?.()}
 	</ScrollSmoother>
 </div>
