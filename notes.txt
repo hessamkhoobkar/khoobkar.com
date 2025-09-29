@@ -1,0 +1,33 @@
+Todos: 
+1. Side nav menu
+2. Mobile version menu
+3. Insights page
+4. Insight single page
+5. About page
+6. 
+
+a1. Button 
+a2. Full page transition
+a3. Gray Images with hover make them Orange? or vise versa
+a4. Hover card animation
+a5. Liquid scroll ease 
+a6. 
+
+b1. SSG on tercel
+b2. 
+
+x1. GASP animation 
+x2. 
+
+
+## SideNavBar
+s0. Components modules 
+s1. Nav items
+s2. Footer
+    s2.1 User card
+    s2.2 Resume link
+    s2.3 Social link 
+s3. 
+
+
+####### ANIMATION, ANIMATION, ANIMATION ##########

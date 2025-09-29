@@ -5,5 +5,5 @@
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 	"prettier.requireConfig": true,
-	"cSpell.words": ["hessam", "khoobkar"]
+	"cSpell.words": ["Dribbble", "hessam", "khoobkar"]
 }
