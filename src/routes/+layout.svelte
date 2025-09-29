@@ -47,6 +47,8 @@
 		<Sidebar />
 	</div>
 	<ScrollSmoother smooth={1.4} effects={true} smoothTouch={0.2}>
-		{@render children?.()}
+		<div class="pb-8">
+			{@render children?.()}
+		</div>
 	</ScrollSmoother>
 </div>

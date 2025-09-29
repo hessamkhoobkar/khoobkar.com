@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { loadContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
+	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 
 	let blogPosts: ContentItem[] = $state([]);
 	let loading = $state(true);
@@ -22,12 +24,17 @@
 	<meta name="description" content="Insights, thoughts, and updates from our team" />
 </svelte:head>
 
-<div class="mx-auto max-w-6xl">
-	<header class="mb-12">
-		<h1 class="mb-4 text-4xl font-bold text-surface-50">Insights</h1>
-		<p class="text-lg text-surface-300">
-			Thoughts, insights, and updates from our team on technology, design, and digital innovation.
-		</p>
+<div class="">
+	<header
+		class="relative mt-4 mb-12 h-80 w-full overflow-hidden rounded-2xl border border-surface-600"
+	>
+		<Silk speed={5} scale={1} color="#e82b00" noiseIntensity={1.5} rotation={0} />
+		<div class="absolute inset-0 z-2 flex flex-col items-center justify-center">
+			<h1 class="mb-4 text-5xl font-bold text-surface-50">Insights</h1>
+			<p class="w-2xl text-center text-xl">
+				Thoughts, insights, and updates from our team on technology, design, and digital innovation.
+			</p>
+		</div>
 	</header>
 
 	{#if loading}
@@ -49,64 +56,7 @@
 	{:else}
 		<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 			{#each blogPosts as post}
-				<article
-					class="hover:bg-surface-750 overflow-hidden rounded-lg bg-surface-800 transition-colors"
-				>
-					{#if post.meta.image}
-						<div class="aspect-video bg-surface-700">
-							<img src={post.meta.image} alt={post.meta.title} class="h-full w-full object-cover" />
-						</div>
-					{/if}
-
-					<div class="p-6">
-						<div class="mb-3 flex items-center gap-2 text-sm text-surface-400">
-							<time datetime={post.meta.date}>
-								{new Date(post.meta.date).toLocaleDateString('en-US', {
-									year: 'numeric',
-									month: 'short',
-									day: 'numeric'
-								})}
-							</time>
-							{#if post.meta.readingTime}
-								<span>•</span>
-								<span>{post.meta.readingTime} min read</span>
-							{/if}
-						</div>
-
-						<h2 class="mb-3 line-clamp-2 text-xl font-semibold text-surface-50">
-							<a href="/insights/{post.meta.slug}" class="transition-colors hover:text-primary-400">
-								{post.meta.title}
-							</a>
-						</h2>
-
-						<p class="mb-4 line-clamp-3 text-surface-300">
-							{post.meta.description}
-						</p>
-
-						{#if post.meta.tags && post.meta.tags.length > 0}
-							<div class="mb-4 flex flex-wrap gap-2">
-								{#each post.meta.tags.slice(0, 3) as tag}
-									<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">
-										{tag}
-									</span>
-								{/each}
-								{#if post.meta.tags.length > 3}
-									<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-400">
-										+{post.meta.tags.length - 3} more
-									</span>
-								{/if}
-							</div>
-						{/if}
-
-						<a
-							href="/insights/{post.meta.slug}"
-							class="inline-flex items-center gap-2 text-primary-400 transition-colors hover:text-primary-300"
-						>
-							Read more
-							<span>→</span>
-						</a>
-					</div>
-				</article>
+				<ArticleCard {post} basePath="/insights" />
 			{/each}
 		</div>
 	{/if}

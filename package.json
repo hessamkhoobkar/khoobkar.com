@@ -25,6 +25,7 @@
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.0.0",
 		"@types/node": "^24.5.2",
+		"@types/three": "^0.180.0",
 		"eslint": "^9.22.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.12.4",
@@ -49,6 +50,7 @@
 	"dependencies": {
 		"@fontsource-variable/inter": "^5.2.8",
 		"@lucide/svelte": "^0.544.0",
-		"gsap": "^3.13.0"
+		"gsap": "^3.13.0",
+		"three": "^0.180.0"
 	}
 }
