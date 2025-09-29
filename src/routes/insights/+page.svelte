@@ -28,7 +28,7 @@
 	<header
 		class="relative mt-4 mb-12 h-80 w-full overflow-hidden rounded-2xl border border-surface-600"
 	>
-		<Silk speed={5} scale={1} color="#e82b00" noiseIntensity={1.5} rotation={0} />
+		<Silk speed={5} scale={1} color="#ef5e03" noiseIntensity={1.5} rotation={0} />
 		<div class="absolute inset-0 z-2 flex flex-col items-center justify-center">
 			<h1 class="mb-4 text-5xl font-bold text-surface-50">Insights</h1>
 			<p class="w-2xl text-center text-xl">
@@ -54,7 +54,7 @@
 			<p class="text-surface-400">Check back soon for new insights and articles.</p>
 		</div>
 	{:else}
-		<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+		<div class="masonry-grid">
 			{#each blogPosts as post}
 				<ArticleCard {post} basePath="/insights" />
 			{/each}
