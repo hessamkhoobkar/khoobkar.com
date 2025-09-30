@@ -68,17 +68,16 @@
 		<div class="mt-4">
 			<a
 				{href}
-				class="group/btn relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg border border-surface-600 bg-surface-800/50 px-6 py-2.5 text-sm text-surface-300 transition-all duration-500 hover:scale-[1.02] hover:border-primary-400/80 hover:bg-gradient-to-r hover:from-primary-400/20 hover:via-primary-500/30 hover:to-primary-400/20 hover:text-primary-300 hover:shadow-2xl hover:shadow-primary-500/40"
+				class="group/btn relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg border border-surface-600 bg-surface-800/50 px-6 py-2.5 text-sm text-surface-300 transition-all duration-500 hover:scale-[1.02] hover:border-primary-400/80 hover:bg-gradient-to-r hover:from-primary-600/10 hover:via-primary-500/30 hover:to-primary-600/10 hover:text-primary-300 hover:shadow-2xl hover:shadow-primary-500/40"
 			>
-				<!-- Animated shimmer effect on hover -->
 				<span
 					class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover/btn:translate-x-full"
 				></span>
 
-				<span class="relative font-medium">Read more</span>
+				<span class="relative font-medium duration-200">Read more</span>
 				<ArrowRight
 					size={18}
-					class="relative transition-all duration-500 ease-out group-hover/btn:translate-x-1 group-hover/btn:scale-110"
+					class="relative transition-all duration-200 ease-out group-hover/btn:translate-x-1 group-hover/btn:scale-110"
 				/>
 			</a>
 		</div>
