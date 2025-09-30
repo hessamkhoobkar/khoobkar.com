@@ -1,5 +1,7 @@
 import type { ContentItem, ContentMeta, ContentCollection } from '$lib/data/content';
 import { contentConfig } from '$lib/data/content';
+import { marked } from 'marked';
+import hljs from 'highlight.js';
 
 // Type for mdsvex module exports
 interface MdsvexModule {
@@ -7,38 +9,46 @@ interface MdsvexModule {
 	default?: unknown;
 }
 
-// Simple markdown to HTML converter (basic implementation)
+// Configure marked with syntax highlighting using extensions
+marked.use({
+	breaks: true,
+	gfm: true,
+	renderer: {
+		code({ text, lang }: { text: string; lang?: string }): string {
+			const language = lang || 'plaintext';
+
+			if (language && hljs.getLanguage(language)) {
+				try {
+					const highlighted = hljs.highlight(text, { language }).value;
+					return `<pre><code class="hljs language-${language}">${highlighted}</code></pre>`;
+				} catch (err) {
+					console.error('Highlight.js error:', err);
+				}
+			}
+
+			// Escape HTML for plain code
+			const escaped = text
+				.replace(/&/g, '&amp;')
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;')
+				.replace(/"/g, '&quot;')
+				.replace(/'/g, '&#039;');
+
+			return `<pre><code>${escaped}</code></pre>`;
+		}
+	}
+});
+
+// Markdown to HTML converter using marked
 function markdownToHtml(markdown: string): string {
+	// Remove frontmatter
 	let withoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---\n/, '');
 
+	// Remove the first H1 if it exists (since we display title separately)
 	withoutFrontmatter = withoutFrontmatter.replace(/^# .*$/m, '').trim();
 
-	let html = withoutFrontmatter
-		// Headers
-		.replace(/^### (.*$)/gim, '<h3>$1</h3>')
-		.replace(/^## (.*$)/gim, '<h2>$1</h2>')
-		.replace(/^# (.*$)/gim, '<h1>$1</h1>')
-		// Bold
-		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-		// Italic
-		.replace(/\*(.*?)\*/g, '<em>$1</em>')
-		// Links
-		.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-		// Lists
-		.replace(/^- (.*$)/gim, '<li>$1</li>')
-		// Paragraphs
-		.replace(/\n\n/g, '</p><p>')
-		.replace(/(<h[1-6]>.*<\/h[1-6]>)/g, '</p>$1<p>')
-		.replace(/(<li>.*<\/li>)/g, '</p><ul>$1</ul><p>');
-
-	html = '<p>' + html + '</p>';
-	html = html
-		.replace(/<p><\/p>/g, '')
-		.replace(/<p>(<h[1-6]>)/g, '$1')
-		.replace(/(<\/h[1-6]>)<\/p>/g, '$1')
-		.replace(/<p>(<ul>)/g, '$1')
-		.replace(/(<\/ul>)<\/p>/g, '$1')
-		.replace(/<\/li><li>/g, '</li><li>');
+	// Convert markdown to HTML using marked
+	const html = marked.parse(withoutFrontmatter, { async: false }) as string;
 
 	return html;
 }

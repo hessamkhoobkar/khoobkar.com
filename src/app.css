@@ -7,6 +7,9 @@
 
 @import '@fontsource-variable/inter';
 
+/* Highlight.js - Atom One Dark theme */
+@import 'highlight.js/styles/atom-one-dark.css';
+
 @source '../../node_modules/@skeletonlabs/skeleton-svelte/dist';
 
 [data-theme='fennec'] {
@@ -101,4 +104,21 @@
 	margin-bottom: 2rem;
 	display: inline-block;
 	width: 100%;
+}
+
+/* Code block styling enhancements */
+.prose pre {
+	padding: 0;
+	overflow-x: auto;
+}
+
+.prose pre code {
+	background: transparent;
+	padding: 1.5rem;
+	font-size: 0.875rem;
+	line-height: 1.7;
+}
+
+.prose code {
+	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
 }
