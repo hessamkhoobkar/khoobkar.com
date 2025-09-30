@@ -4,10 +4,12 @@
 	import type { ContentItem } from '$lib/data/content';
 	import type { PageData } from './$types';
 	import { Calendar, Clock, User, Tag, Share2, ArrowLeft } from '@lucide/svelte';
+	import { ProgressRing } from '@skeletonlabs/skeleton-svelte';
 
 	let { data }: { data: PageData } = $props();
 	let relatedPosts: ContentItem[] = $state([]);
 	let readingProgress = $state(0);
+	let maxProgress = 100;
 
 	onMount(() => {
 		// Load related posts
@@ -77,26 +79,7 @@
 	{/if}
 </svelte:head>
 
-<!-- Reading Progress Bar -->
-<div class="fixed top-0 right-0 left-0 z-50 h-1 bg-surface-800">
-	<div
-		class="h-full bg-gradient-to-r from-primary-500 to-primary-400 transition-all duration-150"
-		style="width: {readingProgress}%"
-	></div>
-</div>
-
-<div class="mx-auto max-w-6xl">
-	<!-- Back Navigation -->
-	<div class="mb-6">
-		<a
-			href="/insights"
-			class="group inline-flex items-center gap-2 text-sm text-surface-400 transition-colors hover:text-primary-400"
-		>
-			<ArrowLeft size={16} class="transition-transform group-hover:-translate-x-1" />
-			Back to Insights
-		</a>
-	</div>
-
+<div class="mx-auto mt-4 max-w-6xl">
 	<div class="grid gap-8 lg:grid-cols-12">
 		<!-- Main Content Area -->
 		<div class="lg:col-span-8">
@@ -237,7 +220,18 @@
 
 		<!-- Sidebar -->
 		<aside class="lg:col-span-4">
-			<div class="sticky top-8 space-y-6">
+			<div class="sidebar-sticky space-y-6" data-speed="0">
+				<!-- Back Navigation Card -->
+				<div class="rounded-2xl border border-surface-600 bg-surface-800">
+					<a
+						href="/insights"
+						class="group flex items-center gap-2 p-4 text-sm text-surface-400 transition-colors hover:text-primary-400"
+					>
+						<ArrowLeft size={16} class="transition-transform group-hover:-translate-x-1" />
+						Back to Insights
+					</a>
+				</div>
+
 				<!-- Author Card -->
 				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
 					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
@@ -310,6 +304,16 @@
 					>
 						Get in Touch
 					</a>
+				</div>
+
+				<!-- Reading Progress Card -->
+				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
+					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+						Reading Progress
+					</h3>
+					<div class="flex flex-col items-center justify-center gap-4">
+						<ProgressRing value={readingProgress} max={maxProgress} showLabel />
+					</div>
 				</div>
 			</div>
 		</aside>
