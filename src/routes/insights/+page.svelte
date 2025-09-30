@@ -24,10 +24,8 @@
 	<meta name="description" content="Insights, thoughts, and updates from our team" />
 </svelte:head>
 
-<div class="">
-	<header
-		class="relative mt-4 mb-8 h-80 w-full overflow-hidden rounded-2xl border border-surface-600"
-	>
+<div class="mt-4">
+	<header class="relative mb-8 h-80 w-full overflow-hidden rounded-2xl border border-surface-600">
 		<Silk speed={5} scale={1} color="#ef5e03" noiseIntensity={1.5} rotation={0} />
 		<div class="absolute inset-0 z-2 flex flex-col items-center justify-center">
 			<h1 class="mb-4 text-5xl font-bold text-surface-50">Insights</h1>
