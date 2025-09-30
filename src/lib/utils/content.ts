@@ -1,10 +1,17 @@
 import type { ContentItem, ContentMeta, ContentCollection } from '$lib/data/content';
 import { contentConfig } from '$lib/data/content';
 
+// Type for mdsvex module exports
+interface MdsvexModule {
+	metadata?: ContentMeta;
+	default?: unknown;
+}
+
 // Simple markdown to HTML converter (basic implementation)
 function markdownToHtml(markdown: string): string {
-	// Remove frontmatter
-	const withoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---\n/, '');
+	let withoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---\n/, '');
+
+	withoutFrontmatter = withoutFrontmatter.replace(/^# .*$/m, '').trim();
 
 	let html = withoutFrontmatter
 		// Headers
@@ -18,13 +25,12 @@ function markdownToHtml(markdown: string): string {
 		// Links
 		.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
 		// Lists
-		.replace(/^\- (.*$)/gim, '<li>$1</li>')
+		.replace(/^- (.*$)/gim, '<li>$1</li>')
 		// Paragraphs
 		.replace(/\n\n/g, '</p><p>')
 		.replace(/(<h[1-6]>.*<\/h[1-6]>)/g, '</p>$1<p>')
 		.replace(/(<li>.*<\/li>)/g, '</p><ul>$1</ul><p>');
 
-	// Wrap in paragraph tags and clean up
 	html = '<p>' + html + '</p>';
 	html = html
 		.replace(/<p><\/p>/g, '')
@@ -57,7 +63,7 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
 		if (pathCategory !== category) continue;
 
 		const slug = path.split('/').pop()?.replace('.md', '') || '';
-		const metaMod = metaModules[path] as any;
+		const metaMod = metaModules[path] as MdsvexModule;
 
 		if (metaMod?.metadata) {
 			const content = markdownToHtml(rawContent as string);
@@ -95,7 +101,7 @@ export async function loadContentItem(category: string, slug: string): Promise<C
 		const pathSlug = pathParts[pathParts.length - 1].replace('.md', '');
 
 		if (pathCategory === category && pathSlug === slug) {
-			const metaMod = metaModules[path] as any;
+			const metaMod = metaModules[path] as MdsvexModule;
 
 			if (metaMod?.metadata) {
 				const content = markdownToHtml(rawContent as string);
