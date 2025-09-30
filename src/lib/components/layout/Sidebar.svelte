@@ -18,9 +18,9 @@
 		{#each mainNavigation as item}
 			<a
 				href={item.href}
-				class="block w-full rounded-2xl px-4 py-3 text-surface-100 transition-all duration-200 hover:bg-primary-600/5 hover:text-primary-500 {currentPath ===
+				class="block w-full rounded-2xl px-4 py-3 text-surface-100 transition-all duration-200 hover:bg-primary-500/5 hover:text-primary-500 {currentPath ===
 				item.href
-					? 'bg-primary-600 text-surface-950'
+					? 'bg-primary-500 text-surface-950'
 					: ''}"
 				title={item.description}
 			>

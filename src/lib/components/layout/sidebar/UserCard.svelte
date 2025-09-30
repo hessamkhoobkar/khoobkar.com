@@ -57,14 +57,14 @@
 		<div class="flex flex-col gap-2">
 			<a
 				href="/resume"
-				class="btn h-12 w-full rounded-2xl border-2 border-surface-600 bg-surface-800 btn-lg text-surface-200 hover:border-primary-600 hover:bg-primary-600/10 hover:text-primary-600"
+				class="btn h-12 w-full rounded-2xl border-2 border-surface-600 bg-surface-800 btn-lg text-surface-200 transition-colors duration-300 ease-in-out hover:border-primary-500 hover:bg-primary-500 hover:text-surface-950 hover:!brightness-100"
 				title="Resume"
 			>
-				<span class="text-sm"> My Resume </span>
+				<span class="text-sm font-bold"> My Resume </span>
 			</a>
 			<a
 				href="/contact"
-				class="btn h-12 w-full rounded-2xl border-2 border-surface-700 bg-primary-600 btn-lg text-surface-950 hover:!brightness-100"
+				class="btn h-12 w-full rounded-2xl border-2 border-surface-700 bg-primary-500 btn-lg text-surface-950 hover:!brightness-100"
 				title="Contact Me"
 			>
 				<span class="text-sm font-bold"> Contact Me </span>

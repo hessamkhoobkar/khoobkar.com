@@ -39,8 +39,8 @@
 				{/if}
 			</div>
 
-			<h2 class="mb-3 line-clamp-2 text-xl font-semibold text-surface-50">
-				<a {href} class="transition-colors hover:text-primary-400">
+			<h2 class="mb-3 line-clamp-2 block text-xl font-semibold text-surface-50">
+				<a {href} class="block transition-colors hover:text-primary-400">
 					{post.meta.title}
 				</a>
 			</h2>
@@ -65,14 +65,21 @@
 			{/if}
 		</div>
 
-		<!-- Button always at bottom -->
-		<div class="mt-auto">
+		<div class="mt-4">
 			<a
 				{href}
-				class="group inline-flex w-full items-center justify-center gap-3 rounded-xl border border-primary-400/30 bg-gradient-to-r from-primary-400/10 via-primary-400/5 to-primary-400/10 px-8 py-3 text-primary-400 shadow-lg shadow-primary-400/10 transition-all duration-300 hover:border-primary-400/60 hover:shadow-xl hover:shadow-primary-400/20"
+				class="group/btn relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-lg border border-surface-600 bg-surface-800/50 px-6 py-2.5 text-sm text-surface-300 transition-all duration-500 hover:scale-[1.02] hover:border-primary-400/80 hover:bg-gradient-to-r hover:from-primary-400/20 hover:via-primary-500/30 hover:to-primary-400/20 hover:text-primary-300 hover:shadow-2xl hover:shadow-primary-500/40"
 			>
-				<span class="font-semibold tracking-wide">Read more</span>
-				<ArrowRight size={20} class="transition-transform group-hover:translate-x-1" />
+				<!-- Animated shimmer effect on hover -->
+				<span
+					class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover/btn:translate-x-full"
+				></span>
+
+				<span class="relative font-medium">Read more</span>
+				<ArrowRight
+					size={18}
+					class="relative transition-all duration-500 ease-out group-hover/btn:translate-x-1 group-hover/btn:scale-110"
+				/>
 			</a>
 		</div>
 	</div>
