@@ -1,30 +1,74 @@
 import type { ContentItem, ContentMeta, ContentCollection } from '$lib/data/content';
 import { contentConfig } from '$lib/data/content';
 
+// Simple markdown to HTML converter (basic implementation)
+function markdownToHtml(markdown: string): string {
+	// Remove frontmatter
+	const withoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---\n/, '');
+
+	let html = withoutFrontmatter
+		// Headers
+		.replace(/^### (.*$)/gim, '<h3>$1</h3>')
+		.replace(/^## (.*$)/gim, '<h2>$1</h2>')
+		.replace(/^# (.*$)/gim, '<h1>$1</h1>')
+		// Bold
+		.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+		// Italic
+		.replace(/\*(.*?)\*/g, '<em>$1</em>')
+		// Links
+		.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+		// Lists
+		.replace(/^\- (.*$)/gim, '<li>$1</li>')
+		// Paragraphs
+		.replace(/\n\n/g, '</p><p>')
+		.replace(/(<h[1-6]>.*<\/h[1-6]>)/g, '</p>$1<p>')
+		.replace(/(<li>.*<\/li>)/g, '</p><ul>$1</ul><p>');
+
+	// Wrap in paragraph tags and clean up
+	html = '<p>' + html + '</p>';
+	html = html
+		.replace(/<p><\/p>/g, '')
+		.replace(/<p>(<h[1-6]>)/g, '$1')
+		.replace(/(<\/h[1-6]>)<\/p>/g, '$1')
+		.replace(/<p>(<ul>)/g, '$1')
+		.replace(/(<\/ul>)<\/p>/g, '$1')
+		.replace(/<\/li><li>/g, '</li><li>');
+
+	return html;
+}
+
 /**
  * Load all markdown files from a specific directory
  */
 export async function loadContent(category: string): Promise<ContentItem[]> {
-	const modules = import.meta.glob('../../content/**/*.md', { eager: true });
+	const modules = import.meta.glob('../../content/**/*.md', {
+		eager: true,
+		query: '?raw',
+		import: 'default'
+	});
+	const metaModules = import.meta.glob('../../content/**/*.md', { eager: true });
+
 	const items: ContentItem[] = [];
 
-	for (const [path, module] of Object.entries(modules)) {
+	for (const [path, rawContent] of Object.entries(modules)) {
 		const pathParts = path.split('/');
-		const pathCategory = pathParts[pathParts.length - 2]; // Extract category from path
+		const pathCategory = pathParts[pathParts.length - 2];
 
 		if (pathCategory !== category) continue;
 
-		const mod = module as { metadata?: ContentMeta; default?: { render?: () => string } };
 		const slug = path.split('/').pop()?.replace('.md', '') || '';
+		const metaMod = metaModules[path] as any;
 
-		if (mod.metadata) {
+		if (metaMod?.metadata) {
+			const content = markdownToHtml(rawContent as string);
+
 			items.push({
 				meta: {
-					...mod.metadata,
+					...metaMod.metadata,
 					slug,
 					category: pathCategory as ContentMeta['category']
 				},
-				content: mod.default?.render?.() || '',
+				content,
 				path
 			});
 		}
@@ -38,25 +82,31 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
  * Load a single content item by category and slug
  */
 export async function loadContentItem(category: string, slug: string): Promise<ContentItem | null> {
-	// Use the same glob pattern to load all files, then filter for the specific one
-	const modules = import.meta.glob('../../content/**/*.md', { eager: true });
+	const rawModules = import.meta.glob('../../content/**/*.md', {
+		eager: true,
+		query: '?raw',
+		import: 'default'
+	});
+	const metaModules = import.meta.glob('../../content/**/*.md', { eager: true });
 
-	for (const [path, module] of Object.entries(modules)) {
+	for (const [path, rawContent] of Object.entries(rawModules)) {
 		const pathParts = path.split('/');
 		const pathCategory = pathParts[pathParts.length - 2];
 		const pathSlug = pathParts[pathParts.length - 1].replace('.md', '');
 
 		if (pathCategory === category && pathSlug === slug) {
-			const mod = module as { metadata?: ContentMeta; default?: { render?: () => string } };
+			const metaMod = metaModules[path] as any;
 
-			if (mod.metadata) {
+			if (metaMod?.metadata) {
+				const content = markdownToHtml(rawContent as string);
+
 				return {
 					meta: {
-						...mod.metadata,
+						...metaMod.metadata,
 						slug,
 						category: category as ContentMeta['category']
 					},
-					content: mod.default?.render?.() || '',
+					content,
 					path
 				};
 			}
