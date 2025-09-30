@@ -1,15 +1,21 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { getRelatedContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
 	import type { PageData } from './$types';
 	import { Calendar, Clock, User, Tag, Share2, ArrowLeft } from '@lucide/svelte';
 	import { ProgressRing } from '@skeletonlabs/skeleton-svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	let { data }: { data: PageData } = $props();
 	let relatedPosts: ContentItem[] = $state([]);
 	let readingProgress = $state(0);
-	let maxProgress = 100;
+	let readingProgressCard: HTMLElement;
+	let articleContent: HTMLElement;
+
+	// Register ScrollTrigger plugin
+	gsap.registerPlugin(ScrollTrigger);
 
 	onMount(() => {
 		// Load related posts
@@ -19,16 +25,33 @@
 			});
 		}
 
-		// Reading progress tracker
-		const handleScroll = () => {
-			const scrollTop = window.scrollY;
-			const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-			const progress = (scrollTop / docHeight) * 100;
-			readingProgress = Math.min(progress, 100);
-		};
+		// Set up sticky reading progress card and reading progress tracking with GSAP
+		if (readingProgressCard && articleContent) {
+			// Pin the reading progress card
+			ScrollTrigger.create({
+				trigger: readingProgressCard,
+				start: 'top top+=16px',
+				end: () => `+=${document.body.scrollHeight}`,
+				pin: true,
+				pinSpacing: false,
+				scrub: false,
+				refreshPriority: -1
+			});
 
-		window.addEventListener('scroll', handleScroll);
-		return () => window.removeEventListener('scroll', handleScroll);
+			// Track reading progress based on article content
+			ScrollTrigger.create({
+				trigger: articleContent,
+				start: 'top top',
+				end: 'bottom bottom',
+				onUpdate: (self) => {
+					readingProgress = Math.min(self.progress * 100, 100);
+				}
+			});
+		}
+
+		return () => {
+			ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+		};
 	});
 
 	function sharePost() {
@@ -82,7 +105,7 @@
 <div class="mx-auto mt-4 max-w-6xl">
 	<div class="grid gap-8 lg:grid-cols-12">
 		<!-- Main Content Area -->
-		<div class="lg:col-span-8">
+		<div bind:this={articleContent} class="lg:col-span-8">
 			<!-- Article Header Card -->
 			<article class="mb-8 overflow-hidden rounded-2xl border border-surface-600 bg-surface-800">
 				{#if data.post.meta.image}
@@ -307,12 +330,25 @@
 				</div>
 
 				<!-- Reading Progress Card -->
-				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
+				<div
+					bind:this={readingProgressCard}
+					class="rounded-2xl border border-surface-600 bg-surface-800 p-6"
+				>
 					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
 						Reading Progress
 					</h3>
 					<div class="flex flex-col items-center justify-center gap-4">
-						<ProgressRing value={readingProgress} max={maxProgress} showLabel />
+						<ProgressRing
+							value={readingProgress}
+							max={100}
+							trackStroke="stroke-surface-700"
+							meterStroke="stroke-primary-500"
+							strokeLinecap="round"
+							size="w-32 h-32"
+							showLabel={false}
+						>
+							<span class="text-2xl font-bold text-surface-50">{Math.round(readingProgress)}%</span>
+						</ProgressRing>
 					</div>
 				</div>
 			</div>
