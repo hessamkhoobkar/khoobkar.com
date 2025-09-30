@@ -3,15 +3,12 @@
 	import { gsap } from 'gsap';
 	import { ScrollSmoother } from 'gsap/ScrollSmoother';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	// import { initScrollAnimations, cleanupScrollAnimations } from '$lib/utils/scroll-animations';
 
-	// Register the plugins
 	gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 
 	let scrollContainer: HTMLElement;
 	let scrollContent: HTMLElement;
 
-	// Props for customization
 	let {
 		smooth = 1.2,
 		effects = true,
@@ -26,81 +23,36 @@
 	let smoother: ScrollSmoother | null = null;
 	let isMobile = $state(false);
 
-	// Check if device is mobile
+	function checkMobile() {
+		isMobile = window.matchMedia('(max-width: 768px)').matches;
+	}
 
 	onMount(() => {
-		if (scrollContainer && scrollContent) {
-			// Initialize ScrollSmoother with mobile-optimized settings
-			smoother = ScrollSmoother.create({
-				wrapper: scrollContainer,
-				content: scrollContent,
-				smooth: isMobile ? 0.5 : smooth,
-				effects: !isMobile && effects,
-				smoothTouch: isMobile ? 0.1 : smoothTouch,
-				normalizeScroll,
-				ignoreMobileResize,
-				autoResize,
-				...rest
-			});
+		checkMobile();
 
-			// Add some nice easing for better UX
-			gsap.defaults({
-				ease: 'power2.out',
-				duration: 0.8
-			});
+		smoother = ScrollSmoother.create({
+			wrapper: scrollContainer,
+			content: scrollContent,
+			smooth: isMobile ? 0.5 : smooth,
+			effects: !isMobile && effects,
+			smoothTouch: isMobile ? 0.1 : smoothTouch,
+			normalizeScroll,
+			ignoreMobileResize,
+			autoResize,
+			...rest
+		});
 
-			// Initialize scroll animations for enhanced effects
-			// if (!isMobile) {
-			// 	// Initialize all scroll animations
-			// 	initScrollAnimations();
-
-			// 	// Legacy support for animate-on-scroll class
-			// 	gsap.utils.toArray('.animate-on-scroll').forEach((element: any) => {
-			// 		gsap.fromTo(
-			// 			element,
-			// 			{
-			// 				opacity: 0,
-			// 				y: 50
-			// 			},
-			// 			{
-			// 				opacity: 1,
-			// 				y: 0,
-			// 				duration: 1,
-			// 				ease: 'power2.out',
-			// 				scrollTrigger: {
-			// 					trigger: element,
-			// 					start: 'top 80%',
-			// 					end: 'bottom 20%',
-			// 					toggleActions: 'play none none reverse'
-			// 				}
-			// 			}
-			// 		);
-			// 	});
-
-			// 	// Parallax effect for hero sections
-			// 	gsap.utils.toArray('.parallax-element').forEach((element: any) => {
-			// 		gsap.to(element, {
-			// 			yPercent: -50,
-			// 			ease: 'none',
-			// 			scrollTrigger: {
-			// 				trigger: element,
-			// 				start: 'top bottom',
-			// 				end: 'bottom top',
-			// 				scrub: true
-			// 			}
-			// 		});
-			// 	});
-			// }
-		}
+		gsap.defaults({
+			ease: 'power2.out',
+			duration: 0.8
+		});
 	});
 
 	onDestroy(() => {
-		if (smoother) {
-			smoother.kill();
-		}
+		smoother?.kill();
+		ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 	});
 
-	// Expose smoother instance for external use
 	export { smoother };
 </script>
 
@@ -109,6 +61,3 @@
 		{@render children?.()}
 	</main>
 </div>
-
-<style>
-</style>
