@@ -173,23 +173,34 @@ void main() {
 		animationFrameId = requestAnimationFrame(animate);
 	}
 
+	let resizeHandler: (() => void) | null = null;
+
 	onMount(() => {
 		init();
 		updateUniforms();
 		resize();
 		animationFrameId = requestAnimationFrame(animate);
-		const onResize = () => resize();
-		window.addEventListener('resize', onResize);
-		return () => {
-			window.removeEventListener('resize', onResize);
-		};
+		resizeHandler = () => resize();
+		window.addEventListener('resize', resizeHandler);
 	});
 
 	// React to prop changes explicitly (Svelte 5): reference props in the reactive statement
 	$: (speed, scale, noiseIntensity, color, rotation, updateUniforms());
 
 	onDestroy(() => {
-		if (animationFrameId !== null) cancelAnimationFrame(animationFrameId);
+		// Clean up event listener
+		if (resizeHandler) {
+			window.removeEventListener('resize', resizeHandler);
+			resizeHandler = null;
+		}
+
+		// Clean up animation frame
+		if (animationFrameId !== null) {
+			cancelAnimationFrame(animationFrameId);
+			animationFrameId = null;
+		}
+
+		// Clean up Three.js resources
 		if (scene && mesh) {
 			scene.remove(mesh);
 			mesh.geometry.dispose();
@@ -198,6 +209,8 @@ void main() {
 		if (renderer) {
 			renderer.dispose();
 		}
+
+		// Nullify references
 		scene = null;
 		camera = null;
 		mesh = null;
