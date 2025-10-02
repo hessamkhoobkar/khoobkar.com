@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { getRelatedContent } from '$lib/utils/content';
+	import { generateBlogPostingSchema } from '$lib/utils/structured-data';
 	import type { ContentItem } from '$lib/data/content';
 	import type { PageData } from './$types';
 	import { Calendar, Clock, User, Tag, Share2, ArrowLeft } from '@lucide/svelte';
@@ -48,10 +49,11 @@
 				}
 			});
 		}
+	});
 
-		return () => {
-			ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-		};
+	onDestroy(() => {
+		// Clean up all ScrollTrigger instances to prevent memory leaks
+		ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 	});
 
 	function sharePost() {
@@ -63,6 +65,9 @@
 			});
 		}
 	}
+
+	// Generate JSON-LD structured data for SEO
+	const structuredData = $derived(generateBlogPostingSchema(data.post));
 </script>
 
 <svelte:head>
@@ -100,6 +105,9 @@
 	{#if data.post.meta.tags}
 		<meta name="keywords" content={data.post.meta.tags.join(', ')} />
 	{/if}
+
+	<!-- JSON-LD Structured Data for SEO -->
+	{@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
 </svelte:head>
 
 <div class="mx-auto mt-4 max-w-6xl">

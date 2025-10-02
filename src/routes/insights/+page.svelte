@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { loadContent } from '$lib/utils/content';
+	import { generateBlogSchema } from '$lib/utils/structured-data';
 	import type { ContentItem } from '$lib/data/content';
 	import Silk from '$lib/components/layout/hero/Silk.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
@@ -17,11 +18,24 @@
 			loading = false;
 		}
 	});
+
+	// Generate JSON-LD structured data for blog listing page
+	const structuredData = $derived(
+		generateBlogSchema(
+			blogPosts,
+			'https://khoobkar.com/insights',
+			'Insights - Khoobkar',
+			'Thoughts, insights, and updates from Hessam Khoobkar'
+		)
+	);
 </script>
 
 <svelte:head>
 	<title>Insights - Khoobkar</title>
 	<meta name="description" content="Insights, thoughts, and updates from our team" />
+
+	<!-- JSON-LD Structured Data for SEO -->
+	{@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
 </svelte:head>
 
 <div class="mt-4">
