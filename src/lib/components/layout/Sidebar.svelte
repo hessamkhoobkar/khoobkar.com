@@ -5,6 +5,16 @@
 	import UserCard from './sidebar/UserCard.svelte';
 
 	$: currentPath = $page.url.pathname;
+
+	// Check if a navigation item is active (exact match or child route)
+	function isActive(href: string, currentPath: string): boolean {
+		// For root path, only match exactly
+		if (href === '/') {
+			return currentPath === '/';
+		}
+		// For other paths, match if current path starts with the href
+		return currentPath === href || currentPath.startsWith(href + '/');
+	}
 </script>
 
 <aside
@@ -18,8 +28,10 @@
 		{#each mainNavigation as item}
 			<a
 				href={item.href}
-				class="block w-full rounded-2xl px-4 py-3 text-surface-100 transition-all duration-200 hover:bg-primary-500/5 hover:text-primary-500 {currentPath ===
-				item.href
+				class="block w-full rounded-2xl px-4 py-3 text-surface-100 transition-all duration-200 hover:bg-primary-500/5 hover:text-primary-500 {isActive(
+					item.href,
+					currentPath
+				)
 					? 'bg-primary-500 text-surface-950'
 					: ''}"
 				title={item.description}
