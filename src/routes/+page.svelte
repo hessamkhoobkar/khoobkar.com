@@ -276,7 +276,7 @@
 	</section>
 
 	<!-- Main Dashboard Content -->
-	<div class="ml-[336px] p-8">
+	<div class="py-8">
 		<div class="space-y-12">
 			<!-- Stats Grid with Stunning Animations -->
 			<section>
