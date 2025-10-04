@@ -30,6 +30,7 @@
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import Linkedin from '@lucide/svelte/icons/linkedin';
 	import Github from '@lucide/svelte/icons/github';
+	import Trophy from '@lucide/svelte/icons/trophy';
 
 	// Register GSAP plugins
 	if (typeof window !== 'undefined') {
@@ -216,60 +217,111 @@
 
 <!-- Full-Width Stunning Dashboard -->
 <div class="min-h-screen">
-	<!-- Hero Section with Silk Animation -->
-	<section class="relative overflow-hidden">
+	<!-- Premium Hero Section with Stunning Visuals -->
+	<section
+		class="relative min-h-screen overflow-hidden bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950"
+	>
+		<!-- Animated Background Elements -->
 		<div class="absolute inset-0 z-0">
-			<Silk speed={3} scale={1.2} color="#ef5e03" noiseIntensity={2} rotation={15} />
+			<Silk speed={2} scale={1.5} color="#ef5e03" noiseIntensity={3} rotation={25} />
+			<div
+				class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
+			></div>
+			<div
+				class="absolute top-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-gradient-to-r from-primary-500/20 to-transparent blur-3xl"
+			></div>
+			<div
+				class="absolute right-1/4 bottom-1/4 h-80 w-80 animate-pulse rounded-full bg-gradient-to-r from-primary-500/20 to-transparent blur-3xl delay-1000"
+			></div>
 		</div>
-		<div class="relative z-10 ml-[336px] flex min-h-[80vh] items-center justify-center p-8">
-			<div class="text-center">
-				<div class="floating mb-8">
-					<div
-						class="inline-flex items-center gap-3 rounded-full border border-primary-500/30 bg-primary-500/10 px-6 py-3 backdrop-blur-sm"
-					>
-						<div class="h-2 w-2 animate-pulse rounded-full bg-primary-400"></div>
-						<span class="font-medium text-primary-300">Available for New Projects</span>
+
+		<!-- Main Hero Content -->
+		<div class="relative z-10 flex min-h-screen items-center justify-center px-8 py-20">
+			<div class="mx-auto max-w-7xl text-center">
+				<!-- Premium Status Badge -->
+				<div
+					class="floating mb-8 inline-flex items-center gap-4 rounded-full border border-primary-500/30 bg-gradient-to-r from-primary-600/20 to-primary-500/10 px-8 py-4 shadow-2xl backdrop-blur-lg"
+				>
+					<div class="relative">
+						<div class="h-3 w-3 animate-ping rounded-full bg-primary-400"></div>
+						<div class="absolute inset-0 h-3 w-3 rounded-full bg-primary-500"></div>
+					</div>
+					<span class="text-lg font-semibold text-primary-200">Available for Premium Projects</span>
+					<div class="ml-2 rounded-full bg-green-500/20 px-3 py-1 text-xs font-bold text-green-300">
+						HIRING NOW
 					</div>
 				</div>
 
-				<h1 class="floating mb-6 text-7xl leading-tight font-bold text-surface-50">
-					Crafting <span
-						class="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent"
-						>Digital Excellence</span
-					><br />
-					<span class="text-5xl text-surface-300">One Pixel at a Time</span>
+				<!-- Main Headline with Premium Typography -->
+				<h1 class="floating mb-8 text-8xl leading-[0.9] font-black text-surface-50">
+					<span class="block">THE</span>
+					<span
+						class="bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent"
+					>
+						FRONTEND
+					</span>
+					<span class="block text-6xl text-surface-300">MASTERMIND</span>
 				</h1>
 
-				<p class="floating mx-auto mb-12 max-w-5xl text-2xl leading-relaxed text-surface-200">
-					Senior Front-End Developer with <strong class="text-primary-400">6+ years</strong> of
-					experience building
-					<strong class="text-surface-50">high-performance web applications</strong> that deliver
-					<strong class="text-primary-400">30-60% performance improvements</strong> and exceptional user
-					experiences.
-				</p>
+				<!-- Compelling Subtitle -->
+				<div class="floating mx-auto mb-12 max-w-4xl">
+					<p class="mb-4 text-3xl font-bold text-surface-100">
+						Who Transforms <span class="text-primary-400">Vision</span> Into
+						<span class="text-surface-50">Digital Reality</span>
+					</p>
+					<p class="text-xl leading-relaxed text-surface-300">
+						Senior Front-End Architect delivering <strong class="text-primary-400"
+							>30-60% performance boosts</strong
+						>, mentoring teams of 7+, and building applications used by
+						<strong class="text-surface-50">millions of users</strong> worldwide.
+					</p>
+				</div>
 
-				<div class="floating flex flex-wrap justify-center gap-6">
+				<!-- Premium Action Buttons -->
+				<div class="floating mb-16 flex flex-wrap justify-center gap-8">
 					<a
 						href="/work"
-						class="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-600 to-primary-500 px-8 py-4 font-bold text-white shadow-2xl shadow-primary-500/30 transition-all duration-300 hover:scale-105 hover:shadow-primary-500/50"
+						class="group relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 px-12 py-6 text-xl font-bold text-white shadow-2xl shadow-primary-500/40 transition-all duration-500 hover:scale-110 hover:shadow-primary-500/60"
 					>
 						<div
 							class="absolute inset-0 bg-gradient-to-r from-primary-400 to-primary-300 opacity-0 transition-opacity group-hover:opacity-100"
 						></div>
-						<span class="relative flex items-center gap-2">
-							<Code class="h-5 w-5" />
-							View My Work
+						<span class="relative flex items-center gap-3">
+							<Code class="h-6 w-6" />
+							Explore My Portfolio
 						</span>
+						<div
+							class="absolute -top-1 -right-1 h-6 w-6 rounded-full bg-white/20 backdrop-blur-sm"
+						></div>
 					</a>
 					<a
 						href="/contact"
-						class="group relative overflow-hidden rounded-2xl border-2 border-primary-500 bg-primary-500/10 px-8 py-4 font-bold text-primary-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-primary-500/20"
+						class="group relative overflow-hidden rounded-3xl border-2 border-primary-500/50 bg-gradient-to-r from-primary-600/10 to-primary-500/5 px-12 py-6 text-xl font-bold text-primary-200 backdrop-blur-lg transition-all duration-500 hover:scale-110 hover:border-primary-400 hover:bg-primary-500/20"
 					>
-						<span class="relative flex items-center gap-2">
-							<MessageSquare class="h-5 w-5" />
-							Let's Work Together
+						<span class="relative flex items-center gap-3">
+							<MessageSquare class="h-6 w-6" />
+							Start Your Project
 						</span>
+						<div
+							class="absolute -top-1 -right-1 h-6 w-6 rounded-full bg-primary-500/30 backdrop-blur-sm"
+						></div>
 					</a>
+				</div>
+
+				<!-- Success Metrics -->
+				<div class="floating mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-3">
+					<div class="text-center">
+						<div class="mb-2 text-4xl font-black text-primary-400">6+</div>
+						<div class="text-lg text-surface-300">Years Excellence</div>
+					</div>
+					<div class="text-center">
+						<div class="mb-2 text-4xl font-black text-blue-400">50+</div>
+						<div class="text-lg text-surface-300">Projects Delivered</div>
+					</div>
+					<div class="text-center">
+						<div class="mb-2 text-4xl font-black text-green-400">30+</div>
+						<div class="text-lg text-surface-300">Happy Clients</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -278,43 +330,108 @@
 	<!-- Main Dashboard Content -->
 	<div class="py-8">
 		<div class="space-y-12">
-			<!-- Stats Grid with Stunning Animations -->
-			<section>
-				<div class="mb-8 text-center">
-					<h2 class="mb-4 text-4xl font-bold text-surface-50">Impact by Numbers</h2>
-					<p class="text-xl text-surface-300">Measurable results that speak for themselves</p>
-				</div>
-				<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-					{#each stats as stat}
-						{@const Icon = stat.icon}
+			<!-- Premium Impact Metrics Section -->
+			<section class="relative py-20">
+				<div
+					class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
+				></div>
+				<div class="relative">
+					<div class="mb-16 text-center">
 						<div
-							class="stat-card group relative overflow-hidden rounded-2xl border border-surface-700/50 bg-gradient-to-br from-surface-800/50 to-surface-700/30 p-8 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:border-primary-500/50 hover:bg-gradient-to-br hover:from-primary-600/10 hover:to-primary-500/5 hover:shadow-2xl hover:shadow-primary-500/20"
+							class="mb-4 inline-flex items-center gap-3 rounded-full border border-primary-500/30 bg-primary-500/10 px-6 py-2 backdrop-blur-sm"
 						>
+							<Award class="h-5 w-5 text-primary-400" />
+							<span class="font-semibold text-primary-300">PROVEN EXCELLENCE</span>
+						</div>
+						<h2 class="mb-6 text-6xl font-black text-surface-50">
+							Impact That <span
+								class="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent"
+								>Matters</span
+							>
+						</h2>
+						<p class="text-2xl text-surface-300">Numbers that tell the story of success</p>
+					</div>
+
+					<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+						{#each stats as stat}
+							{@const Icon = stat.icon}
 							<div
-								class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-gradient-to-br from-primary-500/20 to-transparent opacity-0 blur-xl transition-opacity group-hover:opacity-100"
-							></div>
-							<div class="relative">
-								<div class="mb-4 flex items-center justify-between">
-									<div
-										class="rounded-xl bg-surface-700/50 p-3 transition-all group-hover:scale-110 group-hover:bg-primary-500/20"
-									>
-										<Icon
-											class="h-8 w-8 {stat.color} transition-colors group-hover:text-primary-400"
-										/>
+								class="stat-card group relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 p-8 backdrop-blur-xl transition-all duration-700 hover:scale-110 hover:border-primary-500/60 hover:bg-gradient-to-br hover:from-primary-600/20 hover:to-primary-500/10 hover:shadow-2xl hover:shadow-primary-500/30"
+							>
+								<!-- Premium Glow Effect -->
+								<div
+									class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-primary-500/20 via-primary-400/20 to-primary-500/20 opacity-0 blur-xl transition-opacity group-hover:opacity-100"
+								></div>
+
+								<!-- Floating Icon Background -->
+								<div
+									class="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-gradient-to-br from-primary-500/20 to-transparent opacity-0 blur-2xl transition-all group-hover:scale-150 group-hover:opacity-100"
+								></div>
+
+								<div class="relative z-10">
+									<!-- Icon with Premium Styling -->
+									<div class="mb-6 flex items-center justify-between">
+										<div class="relative">
+											<div
+												class="rounded-2xl bg-gradient-to-br from-primary-500/20 to-primary-600/10 p-4 transition-all group-hover:scale-125 group-hover:rotate-12"
+											>
+												<Icon
+													class="h-10 w-10 {stat.color} transition-colors group-hover:text-primary-300"
+												/>
+											</div>
+											<div
+												class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-400/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+											></div>
+										</div>
+										<div class="text-right">
+											<div
+												class="text-5xl font-black text-surface-50 transition-colors group-hover:text-primary-400"
+											>
+												{stat.value}
+											</div>
+											<div class="text-xs font-semibold tracking-wider text-primary-400 uppercase">
+												Achievement
+											</div>
+										</div>
 									</div>
-									<div class="text-right">
-										<p
-											class="text-4xl font-bold text-surface-50 transition-colors group-hover:text-primary-400"
-										>
-											{stat.value}
-										</p>
+
+									<!-- Premium Content -->
+									<h3
+										class="mb-3 text-xl font-bold text-surface-50 transition-colors group-hover:text-primary-300"
+									>
+										{stat.title}
+									</h3>
+									<p
+										class="leading-relaxed text-surface-400 transition-colors group-hover:text-surface-300"
+									>
+										{stat.subtitle}
+									</p>
+
+									<!-- Success Indicator -->
+									<div class="mt-4 flex items-center gap-2">
+										<div
+											class="h-1 w-8 rounded-full bg-gradient-to-r from-primary-500 to-primary-400"
+										></div>
+										<span class="text-xs font-semibold text-primary-400">SUCCESS</span>
 									</div>
 								</div>
-								<h3 class="mb-2 text-lg font-semibold text-surface-50">{stat.title}</h3>
-								<p class="text-sm text-surface-400">{stat.subtitle}</p>
 							</div>
-						</div>
-					{/each}
+						{/each}
+					</div>
+
+					<!-- Bottom CTA -->
+					<div class="mt-16 text-center">
+						<p class="mb-6 text-xl text-surface-300">
+							Ready to add your project to these success stories?
+						</p>
+						<a
+							href="/contact"
+							class="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-primary-600 to-primary-500 px-8 py-4 text-lg font-bold text-white shadow-2xl shadow-primary-500/30 transition-all duration-300 hover:scale-105 hover:shadow-primary-500/50"
+						>
+							<Rocket class="h-5 w-5" />
+							Start Your Success Story
+						</a>
+					</div>
 				</div>
 			</section>
 
@@ -322,195 +439,613 @@
 			<div class="grid gap-8 lg:grid-cols-3">
 				<!-- Left Column -->
 				<div class="space-y-8 lg:col-span-1">
-					<!-- Work Categories with Animated Progress -->
+					<!-- Premium Expertise Breakdown -->
 					<div
-						class="rounded-2xl border border-surface-700/50 bg-gradient-to-br from-surface-800/50 to-surface-700/30 p-8 backdrop-blur-sm"
+						class="relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 p-8 backdrop-blur-xl"
 					>
-						<h3 class="mb-6 text-2xl font-bold text-surface-50">Work Distribution</h3>
-						<div class="space-y-6">
-							{#each workCategories as category}
-								<div class="group">
-									<div class="mb-3 flex items-center justify-between text-sm">
-										<span class="font-medium text-surface-300">{category.name}</span>
-										<span class="text-surface-400">{category.count} projects</span>
-									</div>
-									<div class="h-3 overflow-hidden rounded-full bg-surface-700/50">
+						<div
+							class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
+						></div>
+						<div class="relative z-10">
+							<div class="mb-6 flex items-center justify-between">
+								<div>
+									<h3 class="text-2xl font-black text-surface-50">Expertise</h3>
+									<p class="text-sm font-semibold text-primary-400">SPECIALIZATION BREAKDOWN</p>
+								</div>
+								<div class="rounded-2xl bg-primary-500/20 p-3">
+									<TrendingUp class="h-6 w-6 text-primary-400" />
+								</div>
+							</div>
+
+							<div class="space-y-8">
+								{#each workCategories as category}
+									<div class="group relative">
+										<!-- Premium Progress Container -->
+										<div class="relative mb-4 flex items-center justify-between">
+											<div class="flex items-center gap-3">
+												<div
+													class="h-3 w-3 rounded-full {category.color
+														.replace('bg-', 'from- bg-gradient-to-r')
+														.replace('-500', '-400 to-')
+														.replace('-500', '-600')} shadow-lg"
+												></div>
+												<span class="text-lg font-bold text-surface-100">{category.name}</span>
+											</div>
+											<div class="text-right">
+												<div class="text-2xl font-black text-surface-50">{category.count}</div>
+												<div class="text-xs text-surface-400">projects</div>
+											</div>
+										</div>
+
+										<!-- Animated Progress Bar -->
 										<div
-											class="progress-bar h-full rounded-full {category.color} transition-all duration-1000 ease-out"
-											data-percentage={category.percentage}
-											style="width: 0%"
+											class="relative h-4 overflow-hidden rounded-full bg-surface-700/50 backdrop-blur-sm"
+										>
+											<div
+												class="absolute inset-0 rounded-full bg-gradient-to-r from-surface-600/30 to-surface-500/30"
+											></div>
+											<div
+												class="progress-bar relative h-full rounded-full {category.color} shadow-lg transition-all duration-1500 ease-out"
+												data-percentage={category.percentage}
+												style="width: 0%"
+											>
+												<div
+													class="absolute inset-0 rounded-full bg-gradient-to-r from-white/20 to-transparent"
+												></div>
+												<div
+													class="absolute top-1/2 right-2 -translate-y-1/2 text-xs font-bold text-white"
+												>
+													{category.percentage}%
+												</div>
+											</div>
+										</div>
+
+										<!-- Achievement Badge -->
+										<div class="mt-3 flex items-center justify-between">
+											<div class="flex items-center gap-2">
+												<Star class="h-4 w-4 text-primary-400" />
+												<span class="text-sm text-surface-400">
+													{category.percentage >= 50
+														? 'Primary Expertise'
+														: category.percentage >= 25
+															? 'Secondary Skill'
+															: 'Growing Area'}
+												</span>
+											</div>
+											<div class="rounded-full bg-primary-500/20 px-3 py-1">
+												<span class="text-xs font-bold text-primary-300">
+													{category.percentage >= 50
+														? 'MASTER'
+														: category.percentage >= 25
+															? 'EXPERT'
+															: 'GROWING'}
+												</span>
+											</div>
+										</div>
+									</div>
+								{/each}
+							</div>
+
+							<!-- Bottom Insight -->
+							<div
+								class="mt-8 rounded-2xl border border-primary-500/20 bg-gradient-to-r from-primary-600/10 to-primary-500/5 p-6"
+							>
+								<div class="mb-3 flex items-center gap-3">
+									<Zap class="h-5 w-5 text-primary-400" />
+									<span class="font-bold text-primary-300">INSIGHT</span>
+								</div>
+								<p class="text-sm leading-relaxed text-surface-300">
+									<strong class="text-primary-400">70% Front-end Focus</strong> demonstrates deep specialization
+									in modern web technologies, ensuring your projects get the expertise they deserve.
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<!-- Premium Profile Showcase -->
+					<div
+						class="relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 backdrop-blur-xl"
+					>
+						<!-- Premium Background Effects -->
+						<div
+							class="absolute inset-0 bg-gradient-to-r from-primary-600/10 via-transparent to-primary-600/10"
+						></div>
+						<div
+							class="absolute -top-20 -right-20 h-40 w-40 rounded-full bg-gradient-to-r from-primary-500/20 to-transparent blur-3xl"
+						></div>
+
+						<div class="relative z-10 p-8 text-center">
+							<!-- Premium Avatar with Glow -->
+							<div class="relative mx-auto mb-6 inline-block">
+								<div
+									class="absolute -inset-4 rounded-full bg-gradient-to-r from-primary-500/30 via-primary-400/20 to-primary-600/30 blur-xl"
+								></div>
+								<div
+									class="relative h-28 w-28 overflow-hidden rounded-3xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-2xl shadow-primary-500/40"
+								>
+									<img
+										src="https://khoobkar.com/_app/immutable/assets/hessam-avatar.b941527b.jpg"
+										class="h-full w-full object-cover"
+										alt="Hessam Khoobkar"
+									/>
+									<div
+										class="absolute inset-0 bg-gradient-to-br from-primary-400/20 to-transparent"
+									></div>
+								</div>
+								<!-- Online Status -->
+								<div
+									class="absolute -right-1 -bottom-1 h-8 w-8 rounded-full border-4 border-surface-800 bg-green-500 shadow-lg"
+								>
+									<div class="absolute inset-1 animate-pulse rounded-full bg-green-400"></div>
+								</div>
+							</div>
+
+							<!-- Premium Name & Title -->
+							<h3 class="mb-2 text-2xl font-black text-surface-50">Hessam Khoobkar</h3>
+							<p
+								class="mb-4 bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-lg font-bold text-transparent"
+							>
+								Senior Front-End Architect
+							</p>
+
+							<!-- Premium Status Badges -->
+							<div class="mb-6 flex flex-wrap justify-center gap-3">
+								<div
+									class="relative rounded-full border border-primary-500/30 bg-gradient-to-r from-primary-600/30 to-primary-500/20 px-4 py-2"
+								>
+									<div
+										class="absolute inset-0 rounded-full bg-gradient-to-r from-primary-400/20 to-transparent"
+									></div>
+									<span class="relative text-sm font-bold text-primary-200">AVAILABLE NOW</span>
+								</div>
+								<div
+									class="relative rounded-full border border-green-500/30 bg-gradient-to-r from-green-600/30 to-green-500/20 px-4 py-2"
+								>
+									<div
+										class="absolute inset-0 rounded-full bg-gradient-to-r from-green-400/20 to-transparent"
+									></div>
+									<span class="relative text-sm font-bold text-green-200">HIRING</span>
+								</div>
+							</div>
+
+							<!-- Location & Availability -->
+							<div class="space-y-3 text-surface-300">
+								<div class="flex items-center justify-center gap-3">
+									<div class="rounded-full bg-primary-500/20 p-2">
+										<MapPin class="h-4 w-4 text-primary-400" />
+									</div>
+									<span class="font-semibold">Tallinn, Estonia</span>
+								</div>
+								<div class="flex items-center justify-center gap-3">
+									<div class="rounded-full bg-blue-500/20 p-2">
+										<Globe class="h-4 w-4 text-blue-400" />
+									</div>
+									<span class="font-semibold">Global Remote Available</span>
+								</div>
+								<div class="flex items-center justify-center gap-3">
+									<div class="rounded-full bg-green-500/20 p-2">
+										<Clock class="h-4 w-4 text-green-400" />
+									</div>
+									<span class="font-semibold">24h Response Time</span>
+								</div>
+							</div>
+
+							<!-- Premium CTA -->
+							<div class="mt-8">
+								<a
+									href="/contact"
+									class="group relative inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-3 font-bold text-white shadow-xl shadow-primary-500/30 transition-all duration-300 hover:scale-105 hover:shadow-primary-500/50"
+								>
+									<div
+										class="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary-400 to-primary-300 opacity-0 transition-opacity group-hover:opacity-100"
+									></div>
+									<MessageSquare class="relative h-5 w-5" />
+									<span class="relative">Let's Connect</span>
+								</a>
+							</div>
+
+							<!-- Social Proof -->
+							<div class="mt-6 border-t border-surface-700/50 pt-6">
+								<p class="mb-2 text-sm text-surface-400">Trusted by</p>
+								<div class="flex items-center justify-center gap-4">
+									<div class="text-xs text-surface-500">30+ Companies</div>
+									<div class="h-4 w-px bg-surface-600"></div>
+									<div class="text-xs text-surface-500">50+ Projects</div>
+									<div class="h-4 w-px bg-surface-600"></div>
+									<div class="text-xs text-surface-500">6+ Years</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Premium Action Center -->
+					<div
+						class="relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 backdrop-blur-xl"
+					>
+						<div
+							class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
+						></div>
+						<div class="relative z-10 p-8">
+							<div class="mb-8 text-center">
+								<h3 class="mb-2 text-2xl font-black text-surface-50">Take Action</h3>
+								<p class="text-sm font-semibold text-primary-400">YOUR NEXT MOVE</p>
+							</div>
+
+							<div class="space-y-4">
+								<!-- Portfolio Action -->
+								<a
+									href="/work"
+									class="group relative flex items-center gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-surface-700/40 to-surface-600/30 p-6 text-surface-200 transition-all duration-300 hover:scale-105 hover:border-primary-500/30 hover:bg-gradient-to-r hover:from-primary-600/20 hover:to-primary-500/10"
+								>
+									<div
+										class="relative rounded-xl bg-gradient-to-br from-primary-500/30 to-primary-600/20 p-3 transition-all group-hover:scale-110 group-hover:rotate-6"
+									>
+										<Code class="h-6 w-6 text-primary-300" />
+										<div
+											class="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-400/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
 										></div>
 									</div>
-									<div class="mt-2 text-xs text-surface-500">{category.percentage}%</div>
-								</div>
-							{/each}
-						</div>
-					</div>
+									<div class="flex-1">
+										<span
+											class="block text-lg font-bold text-surface-100 transition-colors group-hover:text-primary-300"
+											>Explore Portfolio</span
+										>
+										<span class="text-sm text-surface-400">See my latest work</span>
+									</div>
+									<ArrowRight
+										class="h-5 w-5 transition-all group-hover:translate-x-2 group-hover:text-primary-400"
+									/>
+								</a>
 
-					<!-- Profile Card with Real Info -->
-					<div
-						class="rounded-2xl border border-surface-700/50 bg-gradient-to-br from-surface-800/50 to-surface-700/30 p-8 backdrop-blur-sm"
-					>
-						<div class="text-center">
+								<!-- Services Action -->
+								<a
+									href="/services"
+									class="group relative flex items-center gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-surface-700/40 to-surface-600/30 p-6 text-surface-200 transition-all duration-300 hover:scale-105 hover:border-blue-500/30 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-blue-500/10"
+								>
+									<div
+										class="relative rounded-xl bg-gradient-to-br from-blue-500/30 to-blue-600/20 p-3 transition-all group-hover:scale-110 group-hover:rotate-6"
+									>
+										<Palette class="h-6 w-6 text-blue-300" />
+										<div
+											class="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+										></div>
+									</div>
+									<div class="flex-1">
+										<span
+											class="block text-lg font-bold text-surface-100 transition-colors group-hover:text-blue-300"
+											>View Services</span
+										>
+										<span class="text-sm text-surface-400">What I can do for you</span>
+									</div>
+									<ArrowRight
+										class="h-5 w-5 transition-all group-hover:translate-x-2 group-hover:text-blue-400"
+									/>
+								</a>
+
+								<!-- Contact Action - Premium -->
+								<a
+									href="/contact"
+									class="group relative flex items-center gap-4 rounded-2xl border border-primary-500/30 bg-gradient-to-r from-primary-600 via-primary-500 to-primary-600 p-6 text-white transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-primary-500/40"
+								>
+									<div
+										class="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary-400/20 to-primary-300/20 opacity-0 transition-opacity group-hover:opacity-100"
+									></div>
+									<div
+										class="relative rounded-xl bg-white/20 p-3 backdrop-blur-sm transition-all group-hover:scale-110 group-hover:rotate-6"
+									>
+										<MessageSquare class="h-6 w-6 text-white" />
+									</div>
+									<div class="relative flex-1">
+										<span
+											class="block text-lg font-bold transition-colors group-hover:text-primary-100"
+											>Start Project</span
+										>
+										<span class="text-sm text-primary-100/80">Let's build something amazing</span>
+									</div>
+									<ArrowRight
+										class="h-5 w-5 transition-all group-hover:translate-x-2 group-hover:text-primary-100"
+									/>
+									<div
+										class="absolute -top-1 -right-1 h-6 w-6 rounded-full bg-white/20 backdrop-blur-sm"
+									></div>
+								</a>
+							</div>
+
+							<!-- Bottom Incentive -->
 							<div
-								class="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-2xl shadow-primary-500/30"
+								class="mt-8 rounded-2xl border border-primary-500/20 bg-gradient-to-r from-primary-600/10 to-primary-500/5 p-6"
 							>
-								<img
-									src="https://khoobkar.com/_app/immutable/assets/hessam-avatar.b941527b.jpg"
-									class="h-full w-full object-cover"
-									alt="Hessam Khoobkar"
-								/>
+								<div class="mb-3 flex items-center gap-3">
+									<Zap class="h-5 w-5 text-primary-400" />
+									<span class="text-sm font-bold text-primary-300">QUICK START</span>
+								</div>
+								<p class="text-sm leading-relaxed text-surface-300">
+									<strong class="text-primary-400">Free consultation</strong> for your next project.
+									Let's discuss how I can help you achieve your goals.
+								</p>
 							</div>
-							<h3 class="mb-2 text-xl font-bold text-surface-50">Hessam Khoobkar</h3>
-							<p class="mb-4 font-medium text-primary-400">Senior Front-End Developer</p>
-							<div class="mb-4 flex flex-wrap justify-center gap-2">
-								<span class="rounded-full bg-primary-500/20 px-3 py-1 text-xs text-primary-300"
-									>Available</span
-								>
-								<span class="rounded-full bg-green-500/20 px-3 py-1 text-xs text-green-300"
-									>Open to Work</span
-								>
-							</div>
-							<div class="space-y-2 text-sm text-surface-400">
-								<div class="flex items-center justify-center gap-2">
-									<MapPin class="h-4 w-4 text-primary-400" />
-									<span>Tallinn, Estonia</span>
-								</div>
-								<div class="flex items-center justify-center gap-2">
-									<Globe class="h-4 w-4 text-primary-400" />
-									<span>Available Globally (Remote)</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<!-- Quick Actions -->
-					<div
-						class="rounded-2xl border border-surface-700/50 bg-gradient-to-br from-surface-800/50 to-surface-700/30 p-8 backdrop-blur-sm"
-					>
-						<h3 class="mb-6 text-xl font-bold text-surface-50">Quick Actions</h3>
-						<div class="space-y-4">
-							<a
-								href="/work"
-								class="group flex items-center gap-4 rounded-xl bg-surface-700/50 p-4 text-surface-200 transition-all hover:bg-primary-600/20 hover:text-primary-300"
-							>
-								<div
-									class="rounded-lg bg-primary-500/20 p-2 transition-all group-hover:bg-primary-500/30"
-								>
-									<Code class="h-5 w-5" />
-								</div>
-								<span class="font-medium">View Portfolio</span>
-								<ArrowRight
-									class="ml-auto h-4 w-4 transition-transform group-hover:translate-x-1"
-								/>
-							</a>
-							<a
-								href="/services"
-								class="group flex items-center gap-4 rounded-xl bg-surface-700/50 p-4 text-surface-200 transition-all hover:bg-primary-600/20 hover:text-primary-300"
-							>
-								<div
-									class="rounded-lg bg-primary-500/20 p-2 transition-all group-hover:bg-primary-500/30"
-								>
-									<Palette class="h-5 w-5" />
-								</div>
-								<span class="font-medium">Explore Services</span>
-								<ArrowRight
-									class="ml-auto h-4 w-4 transition-transform group-hover:translate-x-1"
-								/>
-							</a>
-							<a
-								href="/contact"
-								class="group flex items-center gap-4 rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white transition-all hover:from-primary-500 hover:to-primary-400"
-							>
-								<div class="rounded-lg bg-white/20 p-2">
-									<MessageSquare class="h-5 w-5" />
-								</div>
-								<span class="font-medium">Get in Touch</span>
-								<ArrowRight
-									class="ml-auto h-4 w-4 transition-transform group-hover:translate-x-1"
-								/>
-							</a>
 						</div>
 					</div>
 				</div>
 
 				<!-- Right Column -->
 				<div class="space-y-8 lg:col-span-2">
-					<!-- Recent Activity -->
+					<!-- Premium Achievement Showcase -->
 					<div
-						class="rounded-2xl border border-surface-700/50 bg-gradient-to-br from-surface-800/50 to-surface-700/30 p-8 backdrop-blur-sm"
+						class="relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 backdrop-blur-xl"
 					>
-						<div class="mb-6 flex items-center justify-between">
-							<h3 class="text-2xl font-bold text-surface-50">Recent Achievements</h3>
-							<a href="/work" class="text-primary-400 transition-colors hover:text-primary-300">
-								View all →
-							</a>
+						<div
+							class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
+						></div>
+						<div class="relative z-10 p-8">
+							<div class="mb-8 flex items-center justify-between">
+								<div>
+									<h3 class="mb-2 text-3xl font-black text-surface-50">Success Stories</h3>
+									<p class="text-sm font-semibold text-primary-400">RECENT VICTORIES</p>
+								</div>
+								<a
+									href="/work"
+									class="group flex items-center gap-2 rounded-2xl border border-primary-500/30 bg-primary-600/20 px-4 py-2 text-primary-300 transition-all hover:scale-105 hover:bg-primary-600/30"
+								>
+									<span class="font-semibold">View Portfolio</span>
+									<ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+								</a>
+							</div>
+
+							<div class="space-y-6">
+								{#each recentActivity as activity}
+									{@const ActivityIcon = activity.icon}
+									<div
+										class="group relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-r from-surface-700/40 to-surface-600/30 p-6 transition-all duration-300 hover:scale-105 hover:border-primary-500/30 hover:bg-gradient-to-r hover:from-primary-600/20 hover:to-primary-500/10"
+									>
+										<!-- Premium Glow Effect -->
+										<div
+											class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary-500/10 via-transparent to-primary-500/10 opacity-0 blur-sm transition-opacity group-hover:opacity-100"
+										></div>
+
+										<div class="relative z-10 flex items-center gap-6">
+											<!-- Premium Icon Container -->
+											<div class="relative">
+												<div
+													class="rounded-2xl bg-gradient-to-br from-primary-500/30 to-primary-600/20 p-4 transition-all group-hover:scale-110 group-hover:rotate-6"
+												>
+													<ActivityIcon
+														class="h-8 w-8 text-primary-300 transition-colors group-hover:text-primary-200"
+													/>
+												</div>
+												<div
+													class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-400/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+												></div>
+											</div>
+
+											<!-- Content -->
+											<div class="flex-1">
+												<h4
+													class="mb-2 text-xl font-bold text-surface-50 transition-colors group-hover:text-primary-300"
+												>
+													{activity.title}
+												</h4>
+												<div class="flex items-center gap-3 text-sm text-surface-400">
+													<span class="font-semibold">{activity.type}</span>
+													<div class="h-1 w-1 rounded-full bg-surface-500"></div>
+													<span>{activity.time}</span>
+												</div>
+											</div>
+
+											<!-- Premium Status Badge -->
+											<div class="relative">
+												<div
+													class="rounded-2xl px-4 py-2 text-sm font-bold {activity.status ===
+													'completed'
+														? 'border border-green-500/30 bg-gradient-to-r from-green-600/30 to-green-500/20 text-green-200'
+														: activity.status === 'in-progress'
+															? 'border border-yellow-500/30 bg-gradient-to-r from-yellow-600/30 to-yellow-500/20 text-yellow-200'
+															: 'border border-gray-500/30 bg-gradient-to-r from-gray-600/30 to-gray-500/20 text-gray-200'}"
+												>
+													<div
+														class="absolute inset-0 rounded-2xl {activity.status === 'completed'
+															? 'bg-gradient-to-r from-green-400/20 to-transparent'
+															: activity.status === 'in-progress'
+																? 'bg-gradient-to-r from-yellow-400/20 to-transparent'
+																: 'bg-gradient-to-r from-gray-400/20 to-transparent'} opacity-0 transition-opacity group-hover:opacity-100"
+													></div>
+													<span class="relative tracking-wider uppercase">
+														{activity.status}
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								{/each}
+							</div>
+
+							<!-- Bottom Success Indicator -->
+							<div
+								class="mt-8 rounded-2xl border border-primary-500/20 bg-gradient-to-r from-primary-600/10 to-primary-500/5 p-6"
+							>
+								<div class="mb-3 flex items-center gap-3">
+									<Award class="h-5 w-5 text-primary-400" />
+									<span class="text-sm font-bold text-primary-300">TRACK RECORD</span>
+								</div>
+								<p class="text-sm leading-relaxed text-surface-300">
+									<strong class="text-primary-400">Consistent delivery</strong> of high-impact projects.
+									Every milestone achieved, every deadline met, every client satisfied.
+								</p>
+							</div>
 						</div>
-						<div class="space-y-4">
-							{#each recentActivity as activity}
-								{@const ActivityIcon = activity.icon}
+					</div>
+
+					<!-- Premium Tech Arsenal Showcase -->
+					<div
+						class="relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 backdrop-blur-xl"
+					>
+						<div
+							class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
+						></div>
+						<div class="relative z-10 p-8">
+							<div class="mb-8">
+								<h3 class="mb-2 text-3xl font-black text-surface-50">Tech Arsenal</h3>
+								<p class="mb-4 text-sm font-semibold text-primary-400">BATTLE-TESTED TOOLS</p>
+								<p class="text-lg leading-relaxed text-surface-300">
+									Modern stack, <strong class="text-primary-400">proven in production</strong>,
+									<strong class="text-surface-50">optimized for performance</strong>
+								</p>
+							</div>
+
+							<!-- Premium Tech Grid -->
+							<div class="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+								{#each techStack as tech}
+									<div
+										class="tech-tag group relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-br from-surface-700/50 to-surface-600/30 p-4 transition-all duration-300 hover:scale-110 hover:border-primary-500/30 hover:bg-gradient-to-br hover:from-primary-600/30 hover:to-primary-500/20 hover:shadow-lg hover:shadow-primary-500/20"
+									>
+										<!-- Premium Glow Effect -->
+										<div
+											class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary-500/20 via-transparent to-primary-500/20 opacity-0 blur-sm transition-opacity group-hover:opacity-100"
+										></div>
+
+										<div class="relative z-10 text-center">
+											<div
+												class="text-sm font-bold text-surface-200 transition-colors group-hover:text-primary-300"
+											>
+												{tech}
+											</div>
+											<div class="mt-2 h-1 w-full overflow-hidden rounded-full bg-surface-600/50">
+												<div
+													class="h-full w-0 rounded-full bg-gradient-to-r from-primary-500 to-primary-400 transition-all duration-1000 group-hover:w-full"
+												></div>
+											</div>
+										</div>
+									</div>
+								{/each}
+							</div>
+
+							<!-- Tech Categories -->
+							<div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+								<!-- Frontend Technologies -->
 								<div
-									class="group flex items-center gap-6 rounded-xl bg-surface-700/30 p-6 transition-all hover:bg-surface-700/50"
+									class="rounded-2xl border border-primary-500/20 bg-gradient-to-br from-primary-600/10 to-primary-500/5 p-6"
 								>
-									<div
-										class="rounded-xl bg-surface-600/50 p-3 transition-all group-hover:bg-primary-500/20"
-									>
-										<ActivityIcon
-											class="h-6 w-6 text-surface-300 transition-colors group-hover:text-primary-400"
-										/>
+									<div class="mb-4 flex items-center gap-3">
+										<div class="rounded-xl bg-primary-500/20 p-2">
+											<Code class="h-5 w-5 text-primary-400" />
+										</div>
+										<span class="font-bold text-primary-300">Frontend</span>
 									</div>
-									<div class="flex-1">
-										<h4 class="font-semibold text-surface-50">{activity.title}</h4>
-										<p class="text-sm text-surface-400">{activity.type} • {activity.time}</p>
-									</div>
-									<div
-										class="rounded-full px-3 py-1 text-xs font-medium {activity.status ===
-										'completed'
-											? 'bg-green-500/20 text-green-300'
-											: activity.status === 'in-progress'
-												? 'bg-yellow-500/20 text-yellow-300'
-												: 'bg-gray-500/20 text-gray-300'}"
-									>
-										{activity.status}
-									</div>
+									<p class="text-sm leading-relaxed text-surface-300">
+										<strong class="text-primary-400">React, Svelte, Vue.js</strong> with modern tooling
+										for lightning-fast development.
+									</p>
 								</div>
-							{/each}
+
+								<!-- Backend & APIs -->
+								<div
+									class="rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-600/10 to-blue-500/5 p-6"
+								>
+									<div class="mb-4 flex items-center gap-3">
+										<div class="rounded-xl bg-blue-500/20 p-2">
+											<Zap class="h-5 w-5 text-blue-400" />
+										</div>
+										<span class="font-bold text-blue-300">APIs & Data</span>
+									</div>
+									<p class="text-sm leading-relaxed text-surface-300">
+										<strong class="text-blue-400">GraphQL, REST APIs</strong> with seamless data integration
+										and real-time updates.
+									</p>
+								</div>
+
+								<!-- DevOps & Tools -->
+								<div
+									class="rounded-2xl border border-green-500/20 bg-gradient-to-br from-green-600/10 to-green-500/5 p-6"
+								>
+									<div class="mb-4 flex items-center gap-3">
+										<div class="rounded-xl bg-green-500/20 p-2">
+											<Rocket class="h-5 w-5 text-green-400" />
+										</div>
+										<span class="font-bold text-green-300">DevOps</span>
+									</div>
+									<p class="text-sm leading-relaxed text-surface-300">
+										<strong class="text-green-400">Docker, CI/CD</strong> for reliable deployment and
+										scalable infrastructure.
+									</p>
+								</div>
+							</div>
+
+							<!-- Bottom CTA -->
+							<div
+								class="mt-8 rounded-2xl border border-primary-500/20 bg-gradient-to-r from-primary-600/10 to-primary-500/5 p-6"
+							>
+								<div class="mb-3 flex items-center gap-3">
+									<Star class="h-5 w-5 text-primary-400" />
+									<span class="text-sm font-bold text-primary-300">READY TO BUILD</span>
+								</div>
+								<p class="mb-4 text-sm leading-relaxed text-surface-300">
+									<strong class="text-primary-400">24 cutting-edge technologies</strong> at your disposal.
+									Let's choose the perfect stack for your project.
+								</p>
+								<a
+									href="/services"
+									class="inline-flex items-center gap-2 rounded-xl border border-primary-500/30 bg-primary-600/20 px-4 py-2 text-sm font-semibold text-primary-300 transition-all hover:scale-105 hover:bg-primary-600/30"
+								>
+									<span>Explore Services</span>
+									<ArrowRight class="h-4 w-4" />
+								</a>
+							</div>
 						</div>
 					</div>
 
-					<!-- Tech Stack with Animation -->
+					<!-- Premium Achievement Highlights -->
 					<div
-						class="rounded-2xl border border-surface-700/50 bg-gradient-to-br from-surface-800/50 to-surface-700/30 p-8 backdrop-blur-sm"
+						class="relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 backdrop-blur-xl"
 					>
-						<h3 class="mb-6 text-2xl font-bold text-surface-50">Technical Arsenal</h3>
-						<p class="mb-6 text-surface-300">
-							Modern stack, proven in production, optimized for performance
-						</p>
-						<div class="flex flex-wrap gap-3">
-							{#each techStack as tech}
-								<span
-									class="tech-tag rounded-full bg-surface-700/50 px-4 py-2 text-sm text-surface-300 transition-all hover:scale-105 hover:bg-primary-600/20 hover:text-primary-300"
-								>
-									{tech}
-								</span>
-							{/each}
-						</div>
-					</div>
+						<div
+							class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
+						></div>
+						<div class="relative z-10 p-8">
+							<div class="mb-8">
+								<h3 class="mb-2 text-3xl font-black text-surface-50">Key Achievements</h3>
+								<p class="text-sm font-semibold text-primary-400">CAREER HIGHLIGHTS</p>
+							</div>
 
-					<!-- Experience Highlights -->
-					<div
-						class="rounded-2xl border border-surface-700/50 bg-gradient-to-br from-surface-800/50 to-surface-700/30 p-8 backdrop-blur-sm"
-					>
-						<h3 class="mb-6 text-2xl font-bold text-surface-50">Key Achievements</h3>
-						<div class="space-y-4">
-							{#each experienceHighlights as highlight}
-								<div class="flex items-start gap-4 rounded-xl bg-surface-700/30 p-4">
-									<div class="mt-1 rounded-full bg-primary-500/20 p-1">
-										<CheckCircle2 class="h-4 w-4 text-primary-400" />
+							<div class="space-y-6">
+								{#each experienceHighlights as highlight}
+									<div
+										class="group relative overflow-hidden rounded-2xl border border-transparent bg-gradient-to-r from-surface-700/40 to-surface-600/30 p-6 transition-all duration-300 hover:scale-105 hover:border-primary-500/30 hover:bg-gradient-to-r hover:from-primary-600/20 hover:to-primary-500/10"
+									>
+										<div
+											class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-primary-500/10 via-transparent to-primary-500/10 opacity-0 blur-sm transition-opacity group-hover:opacity-100"
+										></div>
+
+										<div class="relative z-10 flex items-start gap-4">
+											<div
+												class="relative mt-1 rounded-full bg-gradient-to-r from-primary-500/30 to-primary-600/20 p-2 transition-all group-hover:scale-110"
+											>
+												<CheckCircle2 class="h-5 w-5 text-primary-300" />
+												<div
+													class="absolute inset-0 rounded-full bg-gradient-to-r from-primary-400/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
+												></div>
+											</div>
+											<p
+												class="leading-relaxed font-medium text-surface-300 transition-colors group-hover:text-surface-200"
+											>
+												{highlight}
+											</p>
+										</div>
 									</div>
-									<p class="text-surface-300">{highlight}</p>
+								{/each}
+							</div>
+
+							<div
+								class="mt-8 rounded-2xl border border-primary-500/20 bg-gradient-to-r from-primary-600/10 to-primary-500/5 p-6"
+							>
+								<div class="mb-3 flex items-center gap-3">
+									<Trophy class="h-5 w-5 text-primary-400" />
+									<span class="text-sm font-bold text-primary-300">PROVEN RESULTS</span>
 								</div>
-							{/each}
+								<p class="text-sm leading-relaxed text-surface-300">
+									<strong class="text-primary-400">Consistent excellence</strong> across all projects.
+									From startups to enterprise, every client gets world-class results.
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
