@@ -2,6 +2,23 @@
 	import { onMount } from 'svelte';
 	import { loadContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
+	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import {
+		Briefcase,
+		ExternalLink,
+		Github,
+		TrendingUp,
+		Users,
+		Award,
+		Target,
+		Zap,
+		Code2,
+		Sparkles,
+		CheckCircle2,
+		ArrowRight,
+		Rocket,
+		Eye
+	} from '@lucide/svelte';
 
 	let caseStudies: ContentItem[] = $state([]);
 	let loading = $state(true);
@@ -15,106 +32,459 @@
 			loading = false;
 		}
 	});
+
+	// Stats for impact showcase
+	const stats = [
+		{ icon: Briefcase, label: 'Projects Delivered', value: '50+', color: 'primary' },
+		{ icon: Users, label: 'Happy Clients', value: '30+', color: 'primary' },
+		{ icon: Award, label: 'Years Experience', value: '10+', color: 'primary' },
+		{ icon: TrendingUp, label: 'Avg. Performance Gain', value: '60%', color: 'primary' }
+	];
+
+	// Expertise areas
+	const expertise = [
+		{
+			icon: Zap,
+			title: 'Performance Engineering',
+			description: 'Lightning-fast load times, 90+ Lighthouse scores, Core Web Vitals optimization'
+		},
+		{
+			icon: Code2,
+			title: 'Modern Tech Stack',
+			description: 'React, Svelte, Next.js, TypeScript - building with cutting-edge technologies'
+		},
+		{
+			icon: Target,
+			title: 'Conversion Optimization',
+			description: 'UX-driven design that turns visitors into customers, proven ROI increases'
+		},
+		{
+			icon: Sparkles,
+			title: 'Pixel-Perfect Design',
+			description: 'Meticulous attention to detail, responsive across all devices and browsers'
+		}
+	];
 </script>
 
 <svelte:head>
-	<title>Work - Khoobkar</title>
-	<meta name="description" content="Portfolio and case studies showcasing our best work" />
+	<title>Portfolio & Work - Hessam Khoobkar | Senior Front-End Developer</title>
+	<meta
+		name="description"
+		content="Explore my portfolio of web development projects. From e-commerce platforms to SaaS applications, see real examples of pixel-perfect implementations and performance-optimized solutions."
+	/>
+	<meta
+		name="keywords"
+		content="web development portfolio, React projects, Svelte applications, front-end work, case studies, web developer portfolio"
+	/>
+
+	<!-- Open Graph -->
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Portfolio & Work - Hessam Khoobkar" />
+	<meta
+		property="og:description"
+		content="Explore my portfolio of web development projects showcasing pixel-perfect implementations."
+	/>
+	<meta property="og:url" content="https://khoobkar.com/work" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Portfolio & Work - Hessam Khoobkar" />
+	<meta name="twitter:description" content="Explore my portfolio of web development projects." />
 </svelte:head>
 
-<div class="mx-auto max-w-6xl">
-	<header class="mb-12">
-		<h1 class="mb-4 text-4xl font-bold text-surface-50">Our Work</h1>
-		<p class="text-lg text-surface-300">
-			Discover our portfolio of successful projects and the impact we've made for our clients.
-		</p>
+<div class="mt-4">
+	<!-- Hero Section with Silk Animation -->
+	<header class="relative mb-8 h-96 w-full overflow-hidden rounded-2xl border border-surface-600">
+		<Silk speed={5} scale={1} color="#ef5e03" noiseIntensity={1.5} rotation={0} />
+		<div class="absolute inset-0 z-2 flex flex-col items-center justify-center px-4">
+			<div class="mb-4 flex items-center gap-2 text-primary-400">
+				<Briefcase size={40} class="animate-pulse" />
+			</div>
+			<h1 class="mb-4 text-center text-5xl font-bold text-surface-50 md:text-6xl">
+				Portfolio & <span class="text-primary-400">Success Stories</span>
+			</h1>
+			<p class="max-w-2xl text-center text-xl text-surface-100 md:text-2xl">
+				Real projects. Real results. Real impact on businesses and users.
+			</p>
+		</div>
 	</header>
 
-	{#if loading}
-		<div class="grid gap-8 md:grid-cols-2">
-			{#each Array(4) as _}
-				<div class="animate-pulse overflow-hidden rounded-lg bg-surface-800">
-					<div class="h-48 bg-surface-700"></div>
-					<div class="p-6">
-						<div class="mb-4 h-4 rounded bg-surface-700"></div>
-						<div class="mb-2 h-3 rounded bg-surface-700"></div>
-						<div class="h-3 w-2/3 rounded bg-surface-700"></div>
+	<div class="mx-auto max-w-6xl space-y-12">
+		<!-- Stats Showcase -->
+		<section
+			class="grid gap-6 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent p-8 md:grid-cols-4"
+		>
+			{#each stats as stat}
+				{@const Icon = stat.icon}
+				<div class="group text-center transition-transform hover:scale-110">
+					<div class="mb-3 flex justify-center">
+						<div
+							class="rounded-xl bg-primary-500/20 p-3 transition-all group-hover:bg-primary-500/30 group-hover:shadow-lg group-hover:shadow-primary-500/30"
+						>
+							<Icon size={32} class="text-primary-400" />
+						</div>
 					</div>
+					<div
+						class="mb-1 text-3xl font-bold text-surface-50 transition-all group-hover:text-primary-300 md:text-4xl"
+					>
+						{stat.value}
+					</div>
+					<div class="text-sm text-surface-300">{stat.label}</div>
 				</div>
 			{/each}
-		</div>
-	{:else if caseStudies.length === 0}
-		<div class="py-12 text-center">
-			<div class="mb-4 text-6xl">💼</div>
-			<h2 class="mb-2 text-2xl font-semibold text-surface-200">Case studies coming soon</h2>
-			<p class="text-surface-400">We're preparing detailed case studies of our recent projects.</p>
-		</div>
-	{:else}
-		<div class="grid gap-8 md:grid-cols-2">
-			{#each caseStudies as caseStudy}
-				<article
-					class="hover:bg-surface-750 overflow-hidden rounded-lg bg-surface-800 transition-all duration-300 hover:scale-[1.02]"
-				>
-					{#if caseStudy.meta.image}
-						<div class="aspect-video overflow-hidden bg-surface-700">
-							<img
-								src={caseStudy.meta.image}
-								alt={caseStudy.meta.title}
-								class="h-full w-full object-cover transition-transform duration-300 hover:scale-110"
-							/>
-						</div>
-					{/if}
+		</section>
 
-					<div class="p-6">
-						<div class="mb-3 flex items-center gap-2 text-sm text-surface-400">
-							<span class="rounded bg-primary-500/20 px-2 py-1 text-xs text-primary-300">
-								Case Study
-							</span>
-							<time datetime={caseStudy.meta.date}>
-								{new Date(caseStudy.meta.date).toLocaleDateString('en-US', {
-									year: 'numeric',
-									month: 'short'
-								})}
-							</time>
-							{#if caseStudy.meta.readingTime}
-								<span>•</span>
-								<span>{caseStudy.meta.readingTime} min read</span>
-							{/if}
-						</div>
+		<!-- Value Proposition -->
+		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-8 text-center md:p-12">
+			<div class="mb-6 flex justify-center">
+				<div class="rounded-full bg-primary-500/20 p-4">
+					<Rocket size={48} class="text-primary-400" />
+				</div>
+			</div>
+			<h2 class="mb-4 text-3xl font-bold text-surface-50 md:text-4xl">
+				Building Digital Experiences That <span class="text-primary-400">Drive Results</span>
+			</h2>
+			<p class="mx-auto mb-8 max-w-3xl text-lg text-surface-200 md:text-xl">
+				For 10+ years, I've partnered with startups, growing businesses, and enterprises to create
+				web experiences that users love and businesses depend on. Every line of code is written with
+				purpose, every design decision backed by data.
+			</p>
+			<div class="flex flex-wrap items-center justify-center gap-4 text-sm text-surface-300">
+				<div class="flex items-center gap-2">
+					<CheckCircle2 size={20} class="text-primary-400" />
+					<span>On-time delivery</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<CheckCircle2 size={20} class="text-primary-400" />
+					<span>Clean, maintainable code</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<CheckCircle2 size={20} class="text-primary-400" />
+					<span>Proven ROI improvements</span>
+				</div>
+				<div class="flex items-center gap-2">
+					<CheckCircle2 size={20} class="text-primary-400" />
+					<span>Mobile-first approach</span>
+				</div>
+			</div>
+		</section>
 
-						<h2 class="mb-3 line-clamp-2 text-xl font-semibold text-surface-50">
-							<a
-								href="/work/{caseStudy.meta.slug}"
-								class="transition-colors hover:text-primary-400"
+		<!-- Expertise Areas -->
+		<section>
+			<div class="mb-8 text-center">
+				<h2 class="mb-3 text-3xl font-bold text-surface-50">Core Expertise</h2>
+				<p class="text-lg text-surface-300">
+					Specialized skills that deliver measurable business impact
+				</p>
+			</div>
+			<div class="grid gap-6 md:grid-cols-2">
+				{#each expertise as area}
+					{@const Icon = area.icon}
+					<div
+						class="group hover:bg-surface-750 rounded-2xl border border-surface-600 bg-surface-800 p-6 transition-all duration-300 hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-500/10 md:p-8"
+					>
+						<div class="mb-4 flex items-start gap-4">
+							<div
+								class="rounded-xl bg-primary-500/20 p-3 transition-all group-hover:scale-110 group-hover:bg-primary-500/30"
 							>
-								{caseStudy.meta.title}
-							</a>
-						</h2>
+								<Icon size={28} class="text-primary-400" />
+							</div>
+							<div class="flex-1">
+								<h3 class="mb-2 text-xl font-semibold text-surface-50">{area.title}</h3>
+								<p class="text-surface-300">{area.description}</p>
+							</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</section>
 
-						<p class="mb-4 line-clamp-3 text-surface-300">
-							{caseStudy.meta.description}
+		<!-- Case Studies Section Header -->
+		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-8 text-center">
+			<div class="mb-4 flex justify-center">
+				<div class="rounded-full bg-primary-500/20 p-4">
+					<Eye size={40} class="text-primary-400" />
+				</div>
+			</div>
+			<h2 class="mb-4 text-3xl font-bold text-surface-50">Featured Projects & Case Studies</h2>
+			<p class="mx-auto max-w-2xl text-lg text-surface-300">
+				Detailed breakdowns of challenges, solutions, and measurable outcomes from real-world
+				projects
+			</p>
+		</section>
+
+		{#if loading}
+			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+				{#each Array(6) as _}
+					<div class="animate-pulse overflow-hidden rounded-2xl bg-surface-800">
+						<div class="h-56 bg-surface-700"></div>
+						<div class="p-6">
+							<div class="mb-4 h-4 rounded bg-surface-700"></div>
+							<div class="mb-2 h-3 rounded bg-surface-700"></div>
+							<div class="h-3 w-2/3 rounded bg-surface-700"></div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{:else if caseStudies.length === 0}
+			<!-- Empty State with Project Highlights -->
+			<div class="space-y-8">
+				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-12 text-center">
+					<div class="mb-6 flex justify-center">
+						<div class="rounded-full bg-primary-500/20 p-6">
+							<Briefcase size={48} class="text-primary-400" />
+						</div>
+					</div>
+					<h2 class="mb-4 text-2xl font-semibold text-surface-50">Case Studies Coming Soon</h2>
+					<p class="mx-auto mb-8 max-w-2xl text-surface-300">
+						I'm currently documenting detailed case studies of my recent projects. In the meantime,
+						here's a quick overview of my work:
+					</p>
+				</div>
+
+				<!-- Project Highlights -->
+				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+					<div class="rounded-xl border border-surface-600 bg-surface-800 p-6">
+						<div class="mb-4 text-4xl">🛒</div>
+						<h3 class="mb-2 text-lg font-semibold text-surface-50">E-commerce Platforms</h3>
+						<p class="mb-4 text-sm text-surface-300">
+							Built responsive e-commerce solutions with Shopify, WooCommerce, and custom React
+							applications. Improved conversion rates by 30-45%.
 						</p>
+						<div class="flex flex-wrap gap-2">
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">React</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">Next.js</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">Shopify</span>
+						</div>
+					</div>
 
-						{#if caseStudy.meta.tags && caseStudy.meta.tags.length > 0}
-							<div class="mb-4 flex flex-wrap gap-2">
-								{#each caseStudy.meta.tags.slice(0, 4) as tag}
-									<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">
-										{tag}
-									</span>
-								{/each}
+					<div class="rounded-xl border border-surface-600 bg-surface-800 p-6">
+						<div class="mb-4 text-4xl">💼</div>
+						<h3 class="mb-2 text-lg font-semibold text-surface-50">SaaS Applications</h3>
+						<p class="mb-4 text-sm text-surface-300">
+							Developed scalable SaaS platforms with complex dashboards, real-time data
+							visualization, and intuitive user interfaces.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">Svelte</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">Vue.js</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">D3.js</span>
+						</div>
+					</div>
+
+					<div class="rounded-xl border border-surface-600 bg-surface-800 p-6">
+						<div class="mb-4 text-4xl">📱</div>
+						<h3 class="mb-2 text-lg font-semibold text-surface-50">Progressive Web Apps</h3>
+						<p class="mb-4 text-sm text-surface-300">
+							Created PWAs with offline functionality, push notifications, and native-like
+							performance across all devices.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">PWA</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">
+								Service Workers
+							</span>
+						</div>
+					</div>
+
+					<div class="rounded-xl border border-surface-600 bg-surface-800 p-6">
+						<div class="mb-4 text-4xl">🎨</div>
+						<h3 class="mb-2 text-lg font-semibold text-surface-50">Design System Implementation</h3>
+						<p class="mb-4 text-sm text-surface-300">
+							Built component libraries and design systems from Figma designs, ensuring consistency
+							across large applications.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">
+								Storybook
+							</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">Tailwind</span
+							>
+						</div>
+					</div>
+
+					<div class="rounded-xl border border-surface-600 bg-surface-800 p-6">
+						<div class="mb-4 text-4xl">⚡</div>
+						<h3 class="mb-2 text-lg font-semibold text-surface-50">Performance Optimization</h3>
+						<p class="mb-4 text-sm text-surface-300">
+							Optimized existing applications, reducing load times by 50-70% and achieving perfect
+							Lighthouse scores.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">
+								Lighthouse
+							</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300"
+								>Core Web Vitals</span
+							>
+						</div>
+					</div>
+
+					<div class="rounded-xl border border-surface-600 bg-surface-800 p-6">
+						<div class="mb-4 text-4xl">🌐</div>
+						<h3 class="mb-2 text-lg font-semibold text-surface-50">Corporate Websites</h3>
+						<p class="mb-4 text-sm text-surface-300">
+							Developed professional corporate websites with CMS integration, multi-language
+							support, and SEO optimization.
+						</p>
+						<div class="flex flex-wrap gap-2">
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">CMS</span>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">SEO</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		{:else}
+			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+				{#each caseStudies as caseStudy}
+					<article
+						class="group hover:bg-surface-750 flex flex-col overflow-hidden rounded-2xl border border-surface-600 bg-surface-800 transition-all duration-300 hover:border-primary-500/50 hover:shadow-2xl hover:shadow-primary-500/20"
+					>
+						{#if caseStudy.meta.image}
+							<div class="aspect-video overflow-hidden bg-surface-700">
+								<a href="/work/{caseStudy.meta.slug}" class="block h-full w-full">
+									<img
+										src={caseStudy.meta.image}
+										alt={caseStudy.meta.title}
+										class="h-full w-full object-cover transition-all duration-500 group-hover:scale-110"
+									/>
+								</a>
 							</div>
 						{/if}
 
+						<div class="flex flex-1 flex-col p-6">
+							<div class="mb-3 flex items-center gap-2 text-sm text-surface-400">
+								<span
+									class="rounded-full bg-primary-500/20 px-3 py-1 text-xs font-semibold text-primary-300"
+								>
+									Case Study
+								</span>
+								<time datetime={caseStudy.meta.date}>
+									{new Date(caseStudy.meta.date).toLocaleDateString('en-US', {
+										year: 'numeric',
+										month: 'short'
+									})}
+								</time>
+								{#if caseStudy.meta.readingTime}
+									<span>•</span>
+									<span>{caseStudy.meta.readingTime} min</span>
+								{/if}
+							</div>
+
+							<h3 class="mb-3 line-clamp-2 text-xl font-bold text-surface-50">
+								<a
+									href="/work/{caseStudy.meta.slug}"
+									class="transition-colors hover:text-primary-400"
+								>
+									{caseStudy.meta.title}
+								</a>
+							</h3>
+
+							<p class="mb-4 line-clamp-3 flex-1 text-surface-300">
+								{caseStudy.meta.description}
+							</p>
+
+							{#if caseStudy.meta.tags && caseStudy.meta.tags.length > 0}
+								<div class="mb-4 flex flex-wrap gap-2">
+									{#each caseStudy.meta.tags.slice(0, 3) as tag}
+										<span class="rounded-full bg-surface-700 px-3 py-1 text-xs text-surface-300">
+											{tag}
+										</span>
+									{/each}
+									{#if caseStudy.meta.tags.length > 3}
+										<span class="rounded-full bg-surface-700 px-2 py-1 text-xs text-surface-400">
+											+{caseStudy.meta.tags.length - 3}
+										</span>
+									{/if}
+								</div>
+							{/if}
+
+							<a
+								href="/work/{caseStudy.meta.slug}"
+								class="group/btn relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg border border-surface-600 bg-surface-800/50 px-6 py-2.5 text-sm font-medium text-surface-300 transition-all duration-500 hover:border-primary-400/80 hover:bg-gradient-to-r hover:from-primary-600/10 hover:via-primary-500/30 hover:to-primary-600/10 hover:text-primary-300 hover:shadow-lg hover:shadow-primary-500/30"
+							>
+								<span
+									class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover/btn:translate-x-full"
+								></span>
+								<span class="relative">View case study</span>
+								<ArrowRight
+									size={16}
+									class="relative transition-transform duration-200 group-hover/btn:translate-x-1"
+								/>
+							</a>
+						</div>
+					</article>
+				{/each}
+			</div>
+
+			<!-- CTA Section -->
+			<section
+				class="relative overflow-hidden rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 via-primary-600/5 to-transparent p-8 text-center md:p-12"
+			>
+				<!-- Decorative elements -->
+				<div
+					class="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
+				></div>
+				<div
+					class="absolute -right-20 -bottom-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
+				></div>
+
+				<div class="relative">
+					<div class="mb-6 flex justify-center">
+						<div class="rounded-full bg-primary-500/20 p-4">
+							<Rocket size={48} class="text-primary-400" />
+						</div>
+					</div>
+					<h2 class="mb-4 text-3xl font-bold text-surface-50 md:text-4xl">
+						Ready to Build Something <span class="text-primary-400">Amazing</span>?
+					</h2>
+					<p class="mx-auto mb-8 max-w-2xl text-lg text-surface-200">
+						Whether you're hiring for your team, need a freelance expert, or want to discuss a
+						project, I'd love to hear from you. Let's create something exceptional together.
+					</p>
+					<div class="flex flex-wrap justify-center gap-4">
 						<a
-							href="/work/{caseStudy.meta.slug}"
-							class="inline-flex items-center gap-2 font-medium text-primary-400 transition-colors hover:text-primary-300"
+							href="/contact"
+							class="group inline-flex items-center gap-2 rounded-lg bg-primary-600 px-8 py-4 font-medium text-white shadow-lg shadow-primary-600/30 transition-all duration-200 hover:scale-105 hover:bg-primary-500 hover:shadow-xl hover:shadow-primary-500/40"
 						>
-							View case study
-							<span>→</span>
+							<Rocket size={20} />
+							<span>Start a Project</span>
+						</a>
+						<a
+							href="/services"
+							class="group inline-flex items-center gap-2 rounded-lg border border-surface-600 bg-surface-800/50 px-8 py-4 font-medium text-surface-300 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
+						>
+							<span>View Services</span>
+							<ArrowRight
+								size={20}
+								class="transition-transform duration-200 group-hover:translate-x-1"
+							/>
 						</a>
 					</div>
-				</article>
-			{/each}
-		</div>
-	{/if}
+
+					<!-- Quick stats reminder -->
+					<div class="mt-12 grid gap-4 text-sm md:grid-cols-3">
+						<div
+							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
+						>
+							<div class="mb-1 text-2xl font-bold text-primary-400">24h</div>
+							<div class="text-surface-300">Response Time</div>
+						</div>
+						<div
+							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
+						>
+							<div class="mb-1 text-2xl font-bold text-primary-400">100%</div>
+							<div class="text-surface-300">Client Satisfaction</div>
+						</div>
+						<div
+							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
+						>
+							<div class="mb-1 text-2xl font-bold text-primary-400">10+</div>
+							<div class="text-surface-300">Years Experience</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		{/if}
+	</div>
 </div>

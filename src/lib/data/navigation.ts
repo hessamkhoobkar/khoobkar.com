@@ -8,6 +8,7 @@ export interface NavigationItem {
 export const mainNavigation: NavigationItem[] = [
 	{ href: '/', label: 'Overview', description: 'Home page overview' },
 	{ href: '/work', label: 'Work', description: 'Portfolio and projects' },
+	{ href: '/services', label: 'Services', description: 'Freelance development services' },
 	{ href: '/insights', label: 'Insights', description: 'Blog posts and articles' },
 	{ href: '/resources', label: 'Resources', description: 'Useful resources and tools' },
 	{ href: '/about', label: 'About', description: 'About us and our story' },

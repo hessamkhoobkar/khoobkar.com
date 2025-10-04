@@ -97,6 +97,11 @@ Add comment system
 Create related tags page
 Add author pages
 
+
+
+
+---
+
 Todos: 
 1. Side nav menu
 2. Mobile version menu
@@ -130,3 +135,4 @@ s3.
 
 
 ####### ANIMATION, ANIMATION, ANIMATION ##########
+
