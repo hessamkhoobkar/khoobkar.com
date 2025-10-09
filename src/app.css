@@ -45,20 +45,18 @@
 	--base-font-style: normal;
 }
 
-.gradient-full {
+.gradient-background {
 	background: linear-gradient(
 		to top right,
-		var(--color-primary-50) 0%,
 		var(--color-primary-100) 5%,
 		var(--color-primary-200) 10%,
 		var(--color-primary-300) 30%,
 		var(--color-primary-400) 40%,
 		var(--color-primary-500) 50%,
-		var(--color-primary-600) 60%,
-		var(--color-primary-700) 70%,
-		var(--color-primary-800) 80%,
-		var(--color-primary-900) 95%,
-		var(--color-primary-950) 100%
+		var(--color-primary-600) 71%,
+		var(--color-primary-700) 83%,
+		var(--color-primary-800) 97%,
+		var(--color-primary-900) 100%
 	);
 }
 

@@ -3,6 +3,7 @@
 	import Linkedin from '@lucide/svelte/icons/linkedin';
 	import Github from '@lucide/svelte/icons/github';
 	import Dribbble from '@lucide/svelte/icons/dribbble';
+	import GradientButton from '$lib/components/ui/GradientButton.svelte';
 
 	const socialLinks = [
 		{
@@ -62,13 +63,9 @@
 			>
 				<span class="text-sm font-bold"> My Resume </span>
 			</a>
-			<a
-				href="/contact"
-				class="btn h-12 w-full rounded-2xl border-2 border-surface-700 bg-primary-500 btn-lg text-surface-950 hover:!brightness-100"
-				title="Contact Me"
-			>
+			<GradientButton href="/contact" title="Contact Me">
 				<span class="text-sm font-bold"> Contact Me </span>
-			</a>
+			</GradientButton>
 		</div>
 	</div>
 </div>
