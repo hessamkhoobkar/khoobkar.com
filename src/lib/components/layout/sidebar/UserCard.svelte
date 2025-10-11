@@ -58,7 +58,7 @@
 		<div class="flex flex-col gap-2">
 			<a
 				href="/resume"
-				class="btn h-12 w-full rounded-2xl border-2 border-surface-600 bg-surface-800 btn-lg text-surface-200 transition-colors duration-300 ease-in-out hover:border-primary-500 hover:bg-primary-500 hover:text-surface-950 hover:!brightness-100"
+				class="resume-button btn h-12 w-full rounded-2xl border-2 border-surface-600 bg-surface-800 btn-lg text-surface-200 transition-colors duration-300 ease-in-out active:scale-[0.98]"
 				title="Resume"
 			>
 				<span class="text-sm font-bold"> My Resume </span>
@@ -69,3 +69,22 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	/* Resume Button - Override hover to match nav link active state */
+	.resume-button:hover {
+		background: linear-gradient(
+			45deg,
+			oklch(68% 0.21 45) 0%,
+			oklch(65% 0.23 40) 50%,
+			oklch(62% 0.25 38) 100%
+		) !important;
+		color: oklch(15.22% 0.008 68.34) !important;
+		border-color: transparent !important;
+		box-shadow:
+			0 2px 8px oklch(65% 0.23 40 / 0.5),
+			0 0 20px oklch(62% 0.25 38 / 0.2),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+		filter: brightness(1) !important;
+	}
+</style>

@@ -44,6 +44,20 @@
 			onClose();
 		}
 	}
+
+	// Mouse tracking for navigation links
+	function handleNavMouseMove(e: MouseEvent) {
+		const target = e.currentTarget as HTMLElement;
+		const rect = target.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+
+		const centerX = (x / rect.width) * 100;
+		const centerY = (y / rect.height) * 100;
+
+		target.style.setProperty('--mouse-x', `${centerX}%`);
+		target.style.setProperty('--mouse-y', `${centerY}%`);
+	}
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -85,14 +99,15 @@
 				{#each mainNavigation as item}
 					<a
 						href={item.href}
-						class="block w-full rounded-2xl px-4 py-3 text-surface-100 transition-all duration-200 hover:bg-primary-500/5 hover:text-primary-500 active:scale-95 {isActive(
+						class="nav-link relative block w-full overflow-hidden rounded-2xl px-4 py-3 {isActive(
 							item.href,
 							currentPath
 						)
-							? 'bg-primary-500 text-surface-950'
+							? 'nav-link--active cursor-default'
 							: ''}"
 						title={item.description}
 						onclick={handleNavClick}
+						onmousemove={handleNavMouseMove}
 					>
 						<span class="font-medium">{item.label}</span>
 					</a>
@@ -118,13 +133,14 @@
 			{#each mainNavigation as item}
 				<a
 					href={item.href}
-					class="block w-full rounded-2xl px-4 py-3 text-surface-100 transition-all duration-200 hover:bg-primary-500/5 hover:text-primary-500 {isActive(
+					class="nav-link relative block w-full overflow-hidden rounded-2xl px-4 py-3 {isActive(
 						item.href,
 						currentPath
 					)
-						? 'bg-primary-500 text-surface-950'
+						? 'nav-link--active cursor-default'
 						: ''}"
 					title={item.description}
+					onmousemove={handleNavMouseMove}
 				>
 					<span class="font-medium">{item.label}</span>
 				</a>
@@ -135,3 +151,121 @@
 		<UserCard />
 	</aside>
 {/if}
+
+<style>
+	/* Navigation Links - Almost invisible with smooth animations */
+	.nav-link {
+		color: oklch(85% 0.005 264);
+		transition:
+			all 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+			transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+		--mouse-x: 50%;
+		--mouse-y: 50%;
+	}
+
+	/* Mouse-following radial gradient with lighter colors */
+	.nav-link::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(
+			circle 150px at var(--mouse-x) var(--mouse-y),
+			oklch(68% 0.21 45 / 0.25) 0%,
+			oklch(65% 0.23 40 / 0.18) 30%,
+			oklch(62% 0.25 38 / 0.1) 60%,
+			transparent 100%
+		);
+		opacity: 0;
+		transition: opacity 0.4s ease;
+		pointer-events: none;
+	}
+
+	.nav-link:hover::before {
+		opacity: 1;
+	}
+
+	/* Border shimmer that follows mouse */
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 1rem;
+		padding: 1px;
+		background: radial-gradient(
+			circle 200px at var(--mouse-x) var(--mouse-y),
+			oklch(68% 0.21 45 / 0.7) 0%,
+			oklch(65% 0.23 40 / 0.5) 50%,
+			transparent 100%
+		);
+		-webkit-mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		-webkit-mask-composite: xor;
+		mask:
+			linear-gradient(#fff 0 0) content-box,
+			linear-gradient(#fff 0 0);
+		mask-composite: exclude;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.nav-link:hover::after {
+		opacity: 1;
+	}
+
+	.nav-link:hover {
+		color: oklch(68% 0.21 45);
+		transform: translateX(4px);
+		background: radial-gradient(
+			circle 250px at var(--mouse-x) var(--mouse-y),
+			oklch(65% 0.23 40 / 0.15) 0%,
+			oklch(62% 0.25 38 / 0.08) 100%
+		);
+	}
+
+	.nav-link:active {
+		transform: translateX(2px) scale(0.98);
+		transition:
+			all 0.1s cubic-bezier(0.4, 0, 0.6, 1),
+			transform 0.1s ease;
+	}
+
+	/* Active state - colored and visible */
+	.nav-link--active {
+		background: linear-gradient(
+			45deg,
+			oklch(68% 0.21 45) 0%,
+			oklch(65% 0.23 40) 50%,
+			oklch(62% 0.25 38) 100%
+		);
+		color: oklch(15.22% 0.008 68.34);
+		box-shadow:
+			0 2px 8px oklch(65% 0.23 40 / 0.5),
+			0 0 20px oklch(62% 0.25 38 / 0.2),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		transform: translateX(0);
+	}
+
+	.nav-link--active::before,
+	.nav-link--active::after {
+		display: none;
+	}
+
+	/* Disable all hover and active effects for active navigation link */
+	.nav-link--active:hover,
+	.nav-link--active:active {
+		background: linear-gradient(
+			45deg,
+			oklch(68% 0.21 45) 0%,
+			oklch(65% 0.23 40) 50%,
+			oklch(62% 0.25 38) 100%
+		);
+		color: oklch(15.22% 0.008 68.34);
+		transform: translateX(0);
+		box-shadow:
+			0 2px 8px oklch(65% 0.23 40 / 0.5),
+			0 0 20px oklch(62% 0.25 38 / 0.2),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		filter: brightness(1);
+	}
+</style>
