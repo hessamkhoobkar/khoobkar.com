@@ -57,8 +57,9 @@
 		</div>
 		<div class="flex flex-col gap-2">
 			<a
-				href="/resume"
-				class="resume-button btn h-12 w-full rounded-2xl border-2 border-surface-600 bg-surface-800 btn-lg text-surface-200 transition-colors duration-300 ease-in-out active:scale-[0.98]"
+				href="/hessam_khoobkar_resume.pdf"
+				download="Hessam Khoobkar - Resume.pdf"
+				class="resume-button btn h-12 w-full rounded-2xl bg-surface-800 btn-lg text-surface-200 transition-colors duration-300 ease-in-out active:scale-[0.98]"
 				title="Resume"
 			>
 				<span class="text-sm font-bold"> My Resume </span>
