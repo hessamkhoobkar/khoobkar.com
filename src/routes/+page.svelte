@@ -697,31 +697,6 @@
 									/>
 								</a>
 
-								<!-- Services Action -->
-								<a
-									href="/services"
-									class="group relative flex items-center gap-4 rounded-2xl border border-transparent bg-gradient-to-r from-surface-700/40 to-surface-600/30 p-6 text-surface-200 transition-all duration-300 hover:scale-105 hover:border-blue-500/30 hover:bg-gradient-to-r hover:from-blue-600/20 hover:to-blue-500/10"
-								>
-									<div
-										class="relative rounded-xl bg-gradient-to-br from-blue-500/30 to-blue-600/20 p-3 transition-all group-hover:scale-110 group-hover:rotate-6"
-									>
-										<Palette class="h-6 w-6 text-blue-300" />
-										<div
-											class="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/20 to-transparent opacity-0 transition-opacity group-hover:opacity-100"
-										></div>
-									</div>
-									<div class="flex-1">
-										<span
-											class="block text-lg font-bold text-surface-100 transition-colors group-hover:text-blue-300"
-											>View Services</span
-										>
-										<span class="text-sm text-surface-400">What I can do for you</span>
-									</div>
-									<ArrowRight
-										class="h-5 w-5 transition-all group-hover:translate-x-2 group-hover:text-blue-400"
-									/>
-								</a>
-
 								<!-- Contact Action - Premium -->
 								<a
 									href="/contact"
@@ -983,10 +958,10 @@
 									Let's choose the perfect stack for your project.
 								</p>
 								<a
-									href="/services"
+									href="/contact"
 									class="inline-flex items-center gap-2 rounded-xl border border-primary-500/30 bg-primary-600/20 px-4 py-2 text-sm font-semibold text-primary-300 transition-all hover:scale-105 hover:bg-primary-600/30"
 								>
-									<span>Explore Services</span>
+									<span>Contact me</span>
 									<ArrowRight class="h-4 w-4" />
 								</a>
 							</div>
@@ -1050,129 +1025,6 @@
 					</div>
 				</div>
 			</div>
-
-			<!-- Persona-Specific Sections with Enhanced Design -->
-			<section>
-				<div class="mb-8 text-center">
-					<h2 class="mb-4 text-4xl font-bold text-surface-50">How Can I Help You?</h2>
-					<p class="text-xl text-surface-300">Tailored solutions for every type of collaboration</p>
-				</div>
-				<div class="grid gap-8 lg:grid-cols-3">
-					<!-- For Alex the Recruiter -->
-					<div
-						class="group relative overflow-hidden rounded-2xl border border-surface-700/50 bg-gradient-to-br from-blue-600/10 to-blue-500/5 p-8 backdrop-blur-sm transition-all hover:scale-105 hover:border-blue-500/50"
-					>
-						<div
-							class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-blue-500/20 opacity-0 blur-xl transition-opacity group-hover:opacity-100"
-						></div>
-						<div class="relative">
-							<div class="mb-6 flex items-center gap-3">
-								<div class="rounded-xl bg-blue-500/20 p-3">
-									<Users class="h-8 w-8 text-blue-400" />
-								</div>
-								<h3 class="text-2xl font-bold text-surface-50">For Recruiters</h3>
-							</div>
-							<p class="mb-6 text-surface-300">
-								Senior-level front-end expertise with <strong class="text-blue-400">6+ years</strong
-								>
-								of experience. Proven track record delivering
-								<strong class="text-surface-50">30-60% performance improvements</strong>
-								and mentoring teams of 7+ developers.
-							</p>
-							<div class="space-y-3">
-								<a
-									href="/work"
-									class="block rounded-xl bg-blue-600 px-6 py-3 text-center font-semibold text-white transition-all hover:scale-105 hover:bg-blue-500"
-								>
-									View Portfolio
-								</a>
-								<a
-									href="/contact"
-									class="block rounded-xl border border-blue-500 bg-blue-500/10 px-6 py-3 text-center font-semibold text-blue-300 transition-all hover:bg-blue-500/20"
-								>
-									Schedule Interview
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<!-- For Jordan the Freelance Client -->
-					<div
-						class="group relative overflow-hidden rounded-2xl border border-surface-700/50 bg-gradient-to-br from-yellow-600/10 to-yellow-500/5 p-8 backdrop-blur-sm transition-all hover:scale-105 hover:border-yellow-500/50"
-					>
-						<div
-							class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-yellow-500/20 opacity-0 blur-xl transition-opacity group-hover:opacity-100"
-						></div>
-						<div class="relative">
-							<div class="mb-6 flex items-center gap-3">
-								<div class="rounded-xl bg-yellow-500/20 p-3">
-									<Award class="h-8 w-8 text-yellow-400" />
-								</div>
-								<h3 class="text-2xl font-bold text-surface-50">For Clients</h3>
-							</div>
-							<p class="mb-6 text-surface-300">
-								Reliable freelance developer with <strong class="text-yellow-400"
-									>transparent communication</strong
-								>
-								and proven results. <strong class="text-surface-50">50+ projects delivered</strong>
-								with
-								<strong class="text-yellow-400">30+ happy clients</strong> worldwide.
-							</p>
-							<div class="space-y-3">
-								<a
-									href="/services"
-									class="block rounded-xl bg-yellow-600 px-6 py-3 text-center font-semibold text-white transition-all hover:scale-105 hover:bg-yellow-500"
-								>
-									View Services
-								</a>
-								<a
-									href="/contact"
-									class="block rounded-xl border border-yellow-500 bg-yellow-500/10 px-6 py-3 text-center font-semibold text-yellow-300 transition-all hover:bg-yellow-500/20"
-								>
-									Start Project
-								</a>
-							</div>
-						</div>
-					</div>
-
-					<!-- For Sam the Peer Developer -->
-					<div
-						class="group relative overflow-hidden rounded-2xl border border-surface-700/50 bg-gradient-to-br from-green-600/10 to-green-500/5 p-8 backdrop-blur-sm transition-all hover:scale-105 hover:border-green-500/50"
-					>
-						<div
-							class="absolute -top-4 -right-4 h-24 w-24 rounded-full bg-green-500/20 opacity-0 blur-xl transition-opacity group-hover:opacity-100"
-						></div>
-						<div class="relative">
-							<div class="mb-6 flex items-center gap-3">
-								<div class="rounded-xl bg-green-500/20 p-3">
-									<Zap class="h-8 w-8 text-green-400" />
-								</div>
-								<h3 class="text-2xl font-bold text-surface-50">For Developers</h3>
-							</div>
-							<p class="mb-6 text-surface-300">
-								Educational content, resources, and insights for fellow developers.
-								<strong class="text-green-400">7 developers mentored</strong> and
-								<strong class="text-surface-50">open-source contributions</strong>
-								to help the community grow.
-							</p>
-							<div class="space-y-3">
-								<a
-									href="/insights"
-									class="block rounded-xl bg-green-600 px-6 py-3 text-center font-semibold text-white transition-all hover:scale-105 hover:bg-green-500"
-								>
-									Read Blog
-								</a>
-								<a
-									href="/resources"
-									class="block rounded-xl border border-green-500 bg-green-500/10 px-6 py-3 text-center font-semibold text-green-300 transition-all hover:bg-green-500/20"
-								>
-									View Resources
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
 
 			<!-- Call to Action Section -->
 			<section

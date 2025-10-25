@@ -8,12 +8,9 @@ export interface NavigationItem {
 export const mainNavigation: NavigationItem[] = [
 	{ href: '/', label: 'Overview', description: 'Home page overview' },
 	{ href: '/work', label: 'Work', description: 'Portfolio and projects' },
-	{ href: '/services', label: 'Services', description: 'Freelance development services' },
 	{ href: '/insights', label: 'Insights', description: 'Blog posts and articles' },
 	{ href: '/resources', label: 'Resources', description: 'Useful resources and tools' },
-	{ href: '/about', label: 'About', description: 'About us and our story' },
-	{ href: '/now', label: 'Now', description: "What we're currently working on" }
-	// { href: '/contact', label: 'Contact', description: 'Get in touch and start your project' }
+	{ href: '/about', label: 'About', description: 'About us and our story' }
 ];
 
 export const footerNavigation: NavigationItem[] = [

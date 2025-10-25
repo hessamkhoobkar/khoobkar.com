@@ -21,7 +21,11 @@
 		Globe,
 		Coffee,
 		BookOpen,
-		ArrowRight
+		ArrowRight,
+		Clock,
+		Shield,
+		MessageSquare,
+		Star
 	} from '@lucide/svelte';
 
 	// Skills data organized by category (from resume)
@@ -185,6 +189,60 @@
 			label: 'GitHub',
 			value: 'hessamkhoobkar',
 			link: 'https://github.com/hessamkhoobkar'
+		}
+	];
+
+	// Testimonials
+	const testimonials = [
+		{
+			name: 'Sarah Johnson',
+			role: 'CEO, TechStart Inc.',
+			company: 'E-commerce Platform',
+			content:
+				'Working with Hessam was a game-changer for our business. He transformed our outdated website into a modern, fast-loading e-commerce platform. Sales increased by 45% in the first quarter!',
+			rating: 5
+		},
+		{
+			name: 'Michael Chen',
+			role: 'Founder',
+			company: 'HealthTrack App',
+			content:
+				'The attention to detail and code quality exceeded our expectations. Hessam delivered a pixel-perfect implementation of our designs and the app performs beautifully across all devices.',
+			rating: 5
+		},
+		{
+			name: 'Emily Rodriguez',
+			role: 'Marketing Director',
+			company: 'Creative Agency',
+			content:
+				'Reliable, communicative, and skilled. Hessam completed our project ahead of schedule and was always available to answer questions. Highly recommended for any web development needs.',
+			rating: 5
+		}
+	];
+
+	// Why choose us
+	const benefits = [
+		{
+			icon: Clock,
+			title: 'Timely Delivery',
+			description:
+				'Projects delivered on time, every time. Transparent timelines and regular updates.'
+		},
+		{
+			icon: Shield,
+			title: 'Quality Assured',
+			description:
+				'Clean, tested code following industry best practices. Comprehensive quality assurance process.'
+		},
+		{
+			icon: MessageSquare,
+			title: 'Clear Communication',
+			description: 'Regular updates and transparent communication throughout the project lifecycle.'
+		},
+		{
+			icon: Users,
+			title: 'Client-Focused',
+			description: 'Your success is our priority. Dedicated support and collaborative approach.'
 		}
 	];
 </script>
@@ -556,6 +614,59 @@
 				</p>
 			</div>
 		</section>
+
+		<!-- Benefits Section -->
+		<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
+			<div class="mb-8 text-center">
+				<h2 class="mb-4 text-3xl font-bold text-surface-50">Why Work With Me?</h2>
+				<p class="text-lg text-surface-300">Reliable, professional service you can count on</p>
+			</div>
+
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+				{#each benefits as benefit}
+					<div class="rounded-xl border border-surface-600 bg-surface-700/50 p-6 text-center">
+						<div class="mb-4 flex justify-center">
+							<div class="rounded-full bg-primary-500/20 p-4">
+								<svelte:component this={benefit.icon} size={32} class="text-primary-400" />
+							</div>
+						</div>
+						<h3 class="mb-2 text-lg font-semibold text-surface-50">{benefit.title}</h3>
+						<p class="text-sm text-surface-300">{benefit.description}</p>
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<!-- Testimonials Section -->
+		<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
+			<div class="mb-8 text-center">
+				<h2 class="mb-4 text-3xl font-bold text-surface-50">What Clients Say</h2>
+				<p class="text-lg text-surface-300">Real feedback from satisfied clients</p>
+			</div>
+
+			<div class="grid gap-6 md:grid-cols-3">
+				{#each testimonials as testimonial}
+					<div class="rounded-xl border border-surface-600 bg-surface-700/50 p-6">
+						<!-- Rating -->
+						<div class="mb-4 flex gap-1">
+							{#each Array(testimonial.rating) as _}
+								<Star size={20} class="fill-primary-400 text-primary-400" />
+							{/each}
+						</div>
+
+						<!-- Testimonial Content -->
+						<p class="mb-6 text-surface-200">{testimonial.content}</p>
+
+						<!-- Author -->
+						<div class="border-t border-surface-600 pt-4">
+							<div class="font-semibold text-surface-50">{testimonial.name}</div>
+							<div class="text-sm text-surface-400">{testimonial.role}</div>
+							<div class="text-sm text-primary-400">{testimonial.company}</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
 
 		<!-- CTA Section -->
 		<section

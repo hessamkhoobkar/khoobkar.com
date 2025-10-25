@@ -450,16 +450,6 @@
 							<Rocket size={20} />
 							<span>Start a Project</span>
 						</a>
-						<a
-							href="/services"
-							class="group inline-flex items-center gap-2 rounded-lg border border-surface-600 bg-surface-800/50 px-8 py-4 font-medium text-surface-300 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-						>
-							<span>View Services</span>
-							<ArrowRight
-								size={20}
-								class="transition-transform duration-200 group-hover:translate-x-1"
-							/>
-						</a>
 					</div>
 
 					<!-- Quick stats reminder -->
