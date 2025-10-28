@@ -388,7 +388,6 @@
 
 ---
 
-## Current findings. 
+## Current findings.
 
-- 
-
+-

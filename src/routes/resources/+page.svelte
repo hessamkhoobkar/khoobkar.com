@@ -3,6 +3,7 @@
 	import { loadContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
 	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import {
 		BookOpen,
 		Code2,
@@ -293,84 +294,13 @@
 		{:else}
 			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 				{#each resources as resource}
-					<article
-						class="group hover:bg-surface-750 flex flex-col overflow-hidden rounded-2xl border border-surface-600 bg-surface-800 transition-all duration-300 hover:border-primary-500/50 hover:shadow-2xl hover:shadow-primary-500/20"
-					>
-						{#if resource.meta.image}
-							<div class="aspect-video overflow-hidden bg-surface-700">
-								<a href="/resources/{resource.meta.slug}" class="block h-full w-full">
-									<img
-										src={resource.meta.image}
-										alt={resource.meta.title}
-										class="h-full w-full object-cover transition-all duration-500 group-hover:scale-110"
-									/>
-								</a>
-							</div>
-						{/if}
-
-						<div class="flex flex-1 flex-col p-6">
-							<div class="mb-3 flex items-center gap-2 text-sm text-surface-400">
-								<span
-									class="rounded-full bg-primary-500/20 px-3 py-1 text-xs font-semibold text-primary-300"
-								>
-									Resource
-								</span>
-								<time datetime={resource.meta.date}>
-									{new Date(resource.meta.date).toLocaleDateString('en-US', {
-										year: 'numeric',
-										month: 'short',
-										day: 'numeric'
-									})}
-								</time>
-								{#if resource.meta.readingTime}
-									<span>•</span>
-									<span>{resource.meta.readingTime} min</span>
-								{/if}
-							</div>
-
-							<h3 class="mb-3 line-clamp-2 text-xl font-bold text-surface-50">
-								<a
-									href="/resources/{resource.meta.slug}"
-									class="transition-colors hover:text-primary-400"
-								>
-									{resource.meta.title}
-								</a>
-							</h3>
-
-							<p class="mb-4 line-clamp-3 flex-1 text-surface-300">
-								{resource.meta.description}
-							</p>
-
-							{#if resource.meta.tags && resource.meta.tags.length > 0}
-								<div class="mb-4 flex flex-wrap gap-2">
-									{#each resource.meta.tags.slice(0, 3) as tag}
-										<span class="rounded-full bg-surface-700 px-3 py-1 text-xs text-surface-300">
-											{tag}
-										</span>
-									{/each}
-									{#if resource.meta.tags.length > 3}
-										<span class="rounded-full bg-surface-700 px-2 py-1 text-xs text-surface-400">
-											+{resource.meta.tags.length - 3}
-										</span>
-									{/if}
-								</div>
-							{/if}
-
-							<a
-								href="/resources/{resource.meta.slug}"
-								class="group/btn relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg border border-surface-600 bg-surface-800/50 px-6 py-2.5 text-sm font-medium text-surface-300 transition-all duration-500 hover:border-primary-400/80 hover:bg-gradient-to-r hover:from-primary-600/10 hover:via-primary-500/30 hover:to-primary-600/10 hover:text-primary-300 hover:shadow-lg hover:shadow-primary-500/30"
-							>
-								<span
-									class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover/btn:translate-x-full"
-								></span>
-								<span class="relative">View resource</span>
-								<ArrowRight
-									size={16}
-									class="relative transition-transform duration-200 group-hover/btn:translate-x-1"
-								/>
-							</a>
-						</div>
-					</article>
+					<ArticleCard
+						post={resource}
+						basePath="/resources"
+						contentTypeIcon={BookOpen}
+						contentTypeLabel="Resource"
+						buttonText="View resource"
+					/>
 				{/each}
 			</div>
 

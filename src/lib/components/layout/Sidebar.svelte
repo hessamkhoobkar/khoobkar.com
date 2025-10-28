@@ -3,6 +3,7 @@
 	import { mainNavigation } from '$lib/data/navigation';
 	import Logo from './sidebar/Logo.svelte';
 	import UserCard from './sidebar/UserCard.svelte';
+	import { House, Briefcase, Lightbulb, Workflow, User, Mail, Rocket } from '@lucide/svelte';
 
 	interface Props {
 		isMobile?: boolean;
@@ -13,6 +14,22 @@
 	let { isMobile = false, isOpen = false, onClose = () => {} }: Props = $props();
 
 	let currentPath = $derived($page.url.pathname);
+
+	// Icon mapping
+	const iconMap = {
+		home: House,
+		briefcase: Briefcase,
+		rocket: Rocket,
+		workflow: Workflow,
+		lightbulb: Lightbulb,
+		user: User,
+		mail: Mail
+	};
+
+	// Get icon component by name
+	function getIconComponent(iconName: string) {
+		return iconMap[iconName as keyof typeof iconMap] || null;
+	}
 
 	// Check if a navigation item is active (exact match or child route)
 	function isActive(href: string, currentPath: string): boolean {
@@ -97,6 +114,7 @@
 			<!-- Main Navigation -->
 			<nav class="flex w-full flex-col items-start justify-start px-4 pb-4">
 				{#each mainNavigation as item}
+					{@const IconComponent = getIconComponent(item.icon || '')}
 					<a
 						href={item.href}
 						class="nav-link relative block w-full overflow-hidden rounded-2xl px-4 py-3 {isActive(
@@ -109,7 +127,12 @@
 						onclick={handleNavClick}
 						onmousemove={handleNavMouseMove}
 					>
-						<span class="font-medium">{item.label}</span>
+						<div class="flex items-center gap-3">
+							{#if IconComponent}
+								<IconComponent size={18} />
+							{/if}
+							<span class="font-medium">{item.label}</span>
+						</div>
 					</a>
 				{/each}
 			</nav>
@@ -131,6 +154,7 @@
 		<!-- Main Navigation -->
 		<nav class="flex w-full flex-col items-start justify-start px-4">
 			{#each mainNavigation as item}
+				{@const IconComponent = getIconComponent(item.icon || '')}
 				<a
 					href={item.href}
 					class="nav-link relative block w-full overflow-hidden rounded-2xl px-4 py-3 {isActive(
@@ -142,7 +166,12 @@
 					title={item.description}
 					onmousemove={handleNavMouseMove}
 				>
-					<span class="font-medium">{item.label}</span>
+					<div class="flex items-center gap-3">
+						{#if IconComponent}
+							<IconComponent size={18} />
+						{/if}
+						<span class="font-medium">{item.label}</span>
+					</div>
 				</a>
 			{/each}
 		</nav>

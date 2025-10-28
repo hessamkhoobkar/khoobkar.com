@@ -7,7 +7,7 @@ export interface ContentMeta {
 	featured?: boolean;
 	published?: boolean;
 	slug: string;
-	category: 'blog' | 'case-study' | 'resource' | 'work';
+	category: 'work' | 'projects' | 'process' | 'insight';
 	readingTime?: number;
 	image?: string;
 }
@@ -37,28 +37,28 @@ export const contentConfig = {
 
 // Content categories configuration
 export const contentCategories = {
-	blog: {
-		title: 'Blog Posts',
-		description: 'Insights, thoughts, and updates from our team',
-		path: '/insights',
-		icon: '📝'
-	},
-	'case-study': {
-		title: 'Case Studies',
-		description: 'Detailed analysis of our projects and their outcomes',
-		path: '/work/case-studies',
-		icon: '📊'
-	},
-	resource: {
-		title: 'Resources',
-		description: 'Useful tools, guides, and resources for developers',
-		path: '/resources',
-		icon: '🛠️'
-	},
 	work: {
-		title: 'Work',
-		description: 'Our portfolio and project showcases',
+		title: 'Previous Work',
+		description: 'Client projects and freelance work showcase',
 		path: '/work',
 		icon: '💼'
+	},
+	projects: {
+		title: 'Projects',
+		description: 'SaaS applications, experiments, and complex components',
+		path: '/projects',
+		icon: '🚀'
+	},
+	process: {
+		title: 'Process',
+		description: 'Dev logs, case studies, and building journey - showcasing my development process',
+		path: '/process',
+		icon: '⚡'
+	},
+	insight: {
+		title: 'Strategic Insights',
+		description: 'Business impact and technology strategy for leaders',
+		path: '/insights',
+		icon: '💡'
 	}
 };

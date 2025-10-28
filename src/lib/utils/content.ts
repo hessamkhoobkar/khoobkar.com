@@ -13,6 +13,8 @@ interface MdsvexModule {
 marked.use({
 	breaks: true,
 	gfm: true,
+	sanitize: false,
+	escapeHtml: true,
 	renderer: {
 		code({ text, lang }: { text: string; lang?: string }): string {
 			const language = lang || 'plaintext';
@@ -47,6 +49,11 @@ function markdownToHtml(markdown: string): string {
 	// Remove the first H1 if it exists (since we display title separately)
 	withoutFrontmatter = withoutFrontmatter.replace(/^# .*$/m, '').trim();
 
+	// Escape standalone < and > characters that aren't part of HTML tags
+	// Handle patterns like "< 2 seconds", "< 200ms", etc.
+	withoutFrontmatter = withoutFrontmatter.replace(/<(\s*\d)/g, '&lt;$1');
+	withoutFrontmatter = withoutFrontmatter.replace(/(\d\s*)>/g, '$1&gt;');
+
 	// Convert markdown to HTML using marked
 	const html = marked.parse(withoutFrontmatter, { async: false }) as string;
 
@@ -62,7 +69,6 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
 		query: '?raw',
 		import: 'default'
 	});
-	const metaModules = import.meta.glob('../../content/**/*.md', { eager: true });
 
 	const items: ContentItem[] = [];
 
@@ -73,21 +79,56 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
 		if (pathCategory !== category) continue;
 
 		const slug = path.split('/').pop()?.replace('.md', '') || '';
-		const metaMod = metaModules[path] as MdsvexModule;
+		const markdownContent = rawContent as string;
 
-		if (metaMod?.metadata) {
-			const content = markdownToHtml(rawContent as string);
+		// Parse frontmatter manually
+		const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---\n/);
+		if (!frontmatterMatch) continue;
 
-			items.push({
-				meta: {
-					...metaMod.metadata,
-					slug,
-					category: pathCategory as ContentMeta['category']
-				},
-				content,
-				path
-			});
-		}
+		const frontmatter = frontmatterMatch[1];
+		const metadata: ContentMeta = {
+			title: '',
+			description: '',
+			date: '',
+			slug,
+			category: pathCategory as ContentMeta['category']
+		};
+
+		// Parse frontmatter fields
+		frontmatter.split('\n').forEach((line) => {
+			const [key, ...valueParts] = line.split(':');
+			if (key && valueParts.length > 0) {
+				const value = valueParts
+					.join(':')
+					.trim()
+					.replace(/^['"]|['"]$/g, '');
+				const cleanKey = key.trim();
+
+				if (cleanKey === 'title') metadata.title = value;
+				else if (cleanKey === 'description') metadata.description = value;
+				else if (cleanKey === 'date') metadata.date = value;
+				else if (cleanKey === 'author') metadata.author = value;
+				else if (cleanKey === 'featured') metadata.featured = value === 'true';
+				else if (cleanKey === 'published') metadata.published = value === 'true';
+				else if (cleanKey === 'readingTime') metadata.readingTime = parseInt(value);
+				else if (cleanKey === 'image') metadata.image = value;
+				else if (cleanKey === 'tags') {
+					// Parse tags array
+					const tagsMatch = value.match(/\[(.*?)\]/);
+					if (tagsMatch) {
+						metadata.tags = tagsMatch[1].split(',').map((tag) => tag.trim().replace(/['"]/g, ''));
+					}
+				}
+			}
+		});
+
+		const content = markdownToHtml(markdownContent);
+
+		items.push({
+			meta: metadata,
+			content,
+			path
+		});
 	}
 
 	// Sort by date (newest first)
@@ -103,7 +144,6 @@ export async function loadContentItem(category: string, slug: string): Promise<C
 		query: '?raw',
 		import: 'default'
 	});
-	const metaModules = import.meta.glob('../../content/**/*.md', { eager: true });
 
 	for (const [path, rawContent] of Object.entries(rawModules)) {
 		const pathParts = path.split('/');
@@ -111,21 +151,56 @@ export async function loadContentItem(category: string, slug: string): Promise<C
 		const pathSlug = pathParts[pathParts.length - 1].replace('.md', '');
 
 		if (pathCategory === category && pathSlug === slug) {
-			const metaMod = metaModules[path] as MdsvexModule;
+			const markdownContent = rawContent as string;
 
-			if (metaMod?.metadata) {
-				const content = markdownToHtml(rawContent as string);
+			// Parse frontmatter manually
+			const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---\n/);
+			if (!frontmatterMatch) continue;
 
-				return {
-					meta: {
-						...metaMod.metadata,
-						slug,
-						category: category as ContentMeta['category']
-					},
-					content,
-					path
-				};
-			}
+			const frontmatter = frontmatterMatch[1];
+			const metadata: ContentMeta = {
+				title: '',
+				description: '',
+				date: '',
+				slug,
+				category: category as ContentMeta['category']
+			};
+
+			// Parse frontmatter fields
+			frontmatter.split('\n').forEach((line) => {
+				const [key, ...valueParts] = line.split(':');
+				if (key && valueParts.length > 0) {
+					const value = valueParts
+						.join(':')
+						.trim()
+						.replace(/^['"]|['"]$/g, '');
+					const cleanKey = key.trim();
+
+					if (cleanKey === 'title') metadata.title = value;
+					else if (cleanKey === 'description') metadata.description = value;
+					else if (cleanKey === 'date') metadata.date = value;
+					else if (cleanKey === 'author') metadata.author = value;
+					else if (cleanKey === 'featured') metadata.featured = value === 'true';
+					else if (cleanKey === 'published') metadata.published = value === 'true';
+					else if (cleanKey === 'readingTime') metadata.readingTime = parseInt(value);
+					else if (cleanKey === 'image') metadata.image = value;
+					else if (cleanKey === 'tags') {
+						// Parse tags array
+						const tagsMatch = value.match(/\[(.*?)\]/);
+						if (tagsMatch) {
+							metadata.tags = tagsMatch[1].split(',').map((tag) => tag.trim().replace(/['"]/g, ''));
+						}
+					}
+				}
+			});
+
+			const content = markdownToHtml(markdownContent);
+
+			return {
+				meta: metadata,
+				content,
+				path
+			};
 		}
 	}
 
@@ -136,7 +211,7 @@ export async function loadContentItem(category: string, slug: string): Promise<C
  * Get all published content items
  */
 export async function getAllPublishedContent(): Promise<ContentItem[]> {
-	const categories = ['blog', 'case-studies', 'resources', 'work'];
+	const categories = ['work', 'projects', 'process', 'insight'];
 	const allContent: ContentItem[] = [];
 
 	for (const category of categories) {

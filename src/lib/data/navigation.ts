@@ -1,17 +1,44 @@
 export interface NavigationItem {
 	href: string;
 	label: string;
+	icon?: string;
 	external?: boolean;
 	description?: string;
 }
 
 export const mainNavigation: NavigationItem[] = [
-	{ href: '/', label: 'Overview', description: 'Home page overview' },
-	{ href: '/work', label: 'Work', description: 'Portfolio and projects' },
-	{ href: '/insights', label: 'Insights', description: 'Blog posts and articles' },
-	{ href: '/resources', label: 'Resources', description: 'Useful resources and tools' },
-	{ href: '/about', label: 'About', description: 'About me and my story' },
-	{ href: '/contact', label: 'Contact', description: 'Contact me and get in touch' }
+	{ href: '/', label: 'Home', icon: 'home', description: 'Overview and value proposition' },
+	{
+		href: '/work',
+		label: 'Work',
+		icon: 'briefcase',
+		description: 'Previous projects and client work'
+	},
+	{
+		href: '/projects',
+		label: 'Projects',
+		icon: 'rocket',
+		description: 'SaaS, experiments, and complex components'
+	},
+	{
+		href: '/process',
+		label: 'Process',
+		icon: 'workflow',
+		description: 'Dev logs, case studies, and building journey'
+	},
+	{
+		href: '/insights',
+		label: 'Insights',
+		icon: 'lightbulb',
+		description: 'Strategic content for business leaders'
+	},
+	{ href: '/about', label: 'About', icon: 'user', description: 'My story, expertise, and value' },
+	{
+		href: '/contact',
+		label: 'Contact',
+		icon: 'mail',
+		description: 'Get in touch and start a conversation'
+	}
 ];
 
 export const footerNavigation: NavigationItem[] = [

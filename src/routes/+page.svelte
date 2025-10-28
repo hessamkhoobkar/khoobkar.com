@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { getFeaturedContent, getAllPublishedContent } from '$lib/utils/content';
-	import type { ContentItem } from '$lib/data/content';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import { TextPlugin } from 'gsap/TextPlugin';
@@ -11,35 +10,23 @@
 	import Clock from '@lucide/svelte/icons/clock';
 	import Award from '@lucide/svelte/icons/award';
 	import Code from '@lucide/svelte/icons/code';
-	import Palette from '@lucide/svelte/icons/palette';
 	import Zap from '@lucide/svelte/icons/zap';
 	import MessageSquare from '@lucide/svelte/icons/message-square';
-	import ExternalLink from '@lucide/svelte/icons/external-link';
-	import Calendar from '@lucide/svelte/icons/calendar';
 	import Star from '@lucide/svelte/icons/star';
 	import Rocket from '@lucide/svelte/icons/rocket';
-	import Target from '@lucide/svelte/icons/target';
 	import Heart from '@lucide/svelte/icons/heart';
 	import Briefcase from '@lucide/svelte/icons/briefcase';
 	import Mail from '@lucide/svelte/icons/mail';
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import CheckCircle2 from '@lucide/svelte/icons/check-circle-2';
-	import Sparkles from '@lucide/svelte/icons/sparkles';
 	import Globe from '@lucide/svelte/icons/globe';
-	import Coffee from '@lucide/svelte/icons/coffee';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import Linkedin from '@lucide/svelte/icons/linkedin';
-	import Github from '@lucide/svelte/icons/github';
 	import Trophy from '@lucide/svelte/icons/trophy';
 
 	// Register GSAP plugins
 	if (typeof window !== 'undefined') {
 		gsap.registerPlugin(ScrollTrigger, TextPlugin);
 	}
-
-	let featuredContent: ContentItem[] = $state([]);
-	let recentContent: ContentItem[] = $state([]);
-	let loading = $state(true);
 
 	// Real data based on about page
 	const stats = [

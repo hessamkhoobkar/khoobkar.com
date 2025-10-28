@@ -35,7 +35,7 @@
 	<meta name="description" content="Insights, thoughts, and updates from our team" />
 
 	<!-- JSON-LD Structured Data for SEO -->
-	{@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
+	{@html '<script type="application/ld+json">' + JSON.stringify(structuredData) + '</script>'}
 </svelte:head>
 
 <div class="mt-4">
@@ -64,9 +64,9 @@
 			<p class="text-surface-400">Check back soon for new insights and articles.</p>
 		</div>
 	{:else}
-		<div class="masonry-grid">
+		<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 			{#each blogPosts as post}
-				<ArticleCard {post} basePath="/insights" />
+				<ArticleCard {post} basePath="/insights" buttonText="Read more" />
 			{/each}
 		</div>
 	{/if}

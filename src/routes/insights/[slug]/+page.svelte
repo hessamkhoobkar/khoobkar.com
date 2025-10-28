@@ -107,7 +107,7 @@
 	{/if}
 
 	<!-- JSON-LD Structured Data for SEO -->
-	{@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
+	{@html '<script type="application/ld+json">' + JSON.stringify(structuredData) + '</script>'}
 </svelte:head>
 
 <div class="mx-auto mt-4 max-w-6xl">

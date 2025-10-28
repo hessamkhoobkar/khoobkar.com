@@ -1,20 +1,23 @@
 # Content Management System Guide
 
-This guide explains the markdown-based content management system implemented for the Khoobkar website.
+This guide explains the markdown-based content management system implemented for the Khoobkar website, designed to showcase expertise to hiring managers, entrepreneurs, and potential clients.
 
 ## Overview
 
-The system provides a structured way to manage dynamic content like blog posts, case studies, and resources using markdown files with frontmatter metadata.
+The system provides a structured way to manage dynamic content across multiple categories, focusing on business impact and technical expertise demonstration.
 
 ## Directory Structure
 
 ```
 src/
 ├── content/                    # Markdown content files
-│   ├── blog/                  # Blog posts
-│   ├── case-studies/          # Case studies
-│   ├── resources/             # Resources and guides
-│   └── work/                  # Portfolio items
+│   ├── work/                  # Previous client projects and freelance work
+│   ├── projects/              # SaaS applications, experiments, complex components
+│   ├── process/               # Development process content
+│   │   ├── dev-logs/         # SaaS building series
+│   │   ├── case-studies/      # Technical deep dives
+│   │   └── idea-to-product/   # Rebuilt freelance work showcase
+│   └── insights/              # Strategic business content
 ├── lib/
 │   ├── data/                  # Data configuration
 │   │   ├── navigation.ts      # Navigation structure
@@ -25,11 +28,16 @@ src/
 │       └── layouts/           # Markdown layout components
 │           ├── BlogLayout.svelte
 │           ├── CaseStudyLayout.svelte
+│           ├── ProjectLayout.svelte
 │           └── DefaultLayout.svelte
 └── routes/                    # Page routes
-    ├── insights/              # Blog listing and posts
-    ├── work/                  # Case studies listing and detail
-    └── resources/             # Resources listing and detail
+    ├── work/                  # Previous work showcase
+    ├── projects/              # Current projects and experiments
+    ├── process/               # Development process content
+    │   ├── dev-logs/         # Dev log series
+    │   ├── case-studies/     # Technical case studies
+    │   └── idea-to-product/  # Idea to product series
+    └── insights/              # Strategic insights
 ```
 
 ## Content Structure
@@ -48,7 +56,7 @@ tags: ["tag1", "tag2", "tag3"]
 featured: true
 published: true
 slug: "url-slug"
-category: "blog" | "case-study" | "resource" | "work"
+category: "work" | "projects" | "dev-log" | "case-study" | "insight" | "idea-to-product"
 readingTime: 5
 image: "/images/path/to/image.jpg"
 ---
@@ -56,10 +64,12 @@ image: "/images/path/to/image.jpg"
 
 ### Content Categories
 
-- **blog**: Blog posts and articles (displayed at `/insights`)
-- **case-study**: Project case studies (displayed at `/work`)
-- **resource**: Tools, guides, and resources (displayed at `/resources`)
-- **work**: Portfolio items (displayed at `/work`)
+- **work**: Previous client projects and freelance work (displayed at `/work`)
+- **projects**: SaaS applications, experiments, complex components (displayed at `/projects`)
+- **dev-log**: SaaS building series and development journey (displayed at `/process/dev-logs`)
+- **case-study**: Technical deep dives and problem-solving (displayed at `/process/case-studies`)
+- **insight**: Strategic business content for leaders (displayed at `/insights`)
+- **idea-to-product**: Rebuilt freelance work showcase (displayed at `/process/idea-to-product`)
 
 ## Key Features
 
@@ -93,18 +103,33 @@ image: "/images/path/to/image.jpg"
 
 ## Usage Examples
 
-### Creating a New Blog Post
+### Creating a New Project Showcase
 
-1. Create a new `.md` file in `src/content/blog/`
-2. Add frontmatter with required fields
-3. Write your content in markdown
-4. The post will automatically appear in `/insights`
+1. Create a new `.md` file in `src/content/projects/`
+2. Add frontmatter with `category: "projects"`
+3. Include metrics, tech stack, and business impact
+4. The project will appear in `/projects`
+
+### Creating a Dev Log Entry
+
+1. Create a new `.md` file in `src/content/process/dev-logs/`
+2. Use `category: "dev-log"` in frontmatter
+3. Document your development process and decisions
+4. The dev log will appear in `/process/dev-logs`
+
+### Creating a Strategic Insight
+
+1. Create a new `.md` file in `src/content/insights/`
+2. Use `category: "insight"` in frontmatter
+3. Focus on business impact and actionable advice
+4. The insight will appear in `/insights`
 
 ### Creating a Case Study
 
-1. Create a new `.md` file in `src/content/case-studies/`
+1. Create a new `.md` file in `src/content/process/case-studies/`
 2. Use `category: "case-study"` in frontmatter
-3. The case study will appear in `/work`
+3. Include problem, solution, and results
+4. The case study will appear in `/process/case-studies`
 
 ### Navigation Management
 
