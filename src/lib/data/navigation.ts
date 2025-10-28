@@ -10,7 +10,8 @@ export const mainNavigation: NavigationItem[] = [
 	{ href: '/work', label: 'Work', description: 'Portfolio and projects' },
 	{ href: '/insights', label: 'Insights', description: 'Blog posts and articles' },
 	{ href: '/resources', label: 'Resources', description: 'Useful resources and tools' },
-	{ href: '/about', label: 'About', description: 'About us and our story' }
+	{ href: '/about', label: 'About', description: 'About me and my story' },
+	{ href: '/contact', label: 'Contact', description: 'Contact me and get in touch' }
 ];
 
 export const footerNavigation: NavigationItem[] = [
