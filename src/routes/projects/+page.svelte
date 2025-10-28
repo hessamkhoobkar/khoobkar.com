@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { loadContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
-	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import Hero from '$lib/components/ui/Hero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import {
 		Rocket,
@@ -96,32 +96,30 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<section class="relative flex min-h-screen items-center justify-center overflow-hidden">
-	<Silk />
-	<div class="relative z-10 container mx-auto px-4 text-center">
-		<div class="mx-auto max-w-4xl">
-			<h1
-				class="mb-6 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-6xl font-bold text-transparent md:text-8xl"
+<Hero
+	icon={Rocket}
+	title="Innovation in Action"
+	subtitle="SaaS applications, experiments, and complex components that push the boundaries of what's possible on the web"
+	silkColor="#ef5e03"
+	silkSpeed={5}
+	silkScale={1}
+	silkNoiseIntensity={1.5}
+	silkRotation={0}
+/>
+
+<!-- Stats Section -->
+<section class="relative z-10 container mx-auto -mt-20 px-4">
+	<div class="flex flex-wrap justify-center gap-4">
+		{#each stats as stat}
+			{@const Icon = stat.icon}
+			<div
+				class="flex items-center gap-2 rounded-full border border-surface-700 bg-surface-800/50 px-4 py-2 backdrop-blur-sm"
 			>
-				Innovation in Action
-			</h1>
-			<p class="mb-8 text-xl leading-relaxed text-surface-300 md:text-2xl">
-				SaaS applications, experiments, and complex components that push the boundaries of what's
-				possible on the web
-			</p>
-			<div class="mb-12 flex flex-wrap justify-center gap-4">
-				{#each stats as stat}
-					{@const Icon = stat.icon}
-					<div
-						class="flex items-center gap-2 rounded-full border border-surface-700 bg-surface-800/50 px-4 py-2 backdrop-blur-sm"
-					>
-						<Icon size={20} class="text-primary-400" />
-						<span class="text-sm font-medium text-surface-200">{stat.value}</span>
-						<span class="text-xs text-surface-400">{stat.label}</span>
-					</div>
-				{/each}
+				<Icon size={20} class="text-primary-400" />
+				<span class="text-sm font-medium text-surface-200">{stat.value}</span>
+				<span class="text-xs text-surface-400">{stat.label}</span>
 			</div>
-		</div>
+		{/each}
 	</div>
 </section>
 

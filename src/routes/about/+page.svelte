@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import Hero from '$lib/components/ui/Hero.svelte';
 	import {
 		User,
 		Code2,
@@ -278,20 +278,16 @@
 
 <div class="mt-4">
 	<!-- Hero Section with Silk Animation -->
-	<header class="relative mb-8 h-96 w-full overflow-hidden rounded-2xl border border-surface-600">
-		<Silk speed={5} scale={1} color="#ef5e03" noiseIntensity={1.5} rotation={0} />
-		<div class="absolute inset-0 z-2 flex flex-col items-center justify-center px-4">
-			<div class="mb-4 flex items-center gap-2 text-primary-400">
-				<User size={40} class="animate-pulse" />
-			</div>
-			<h1 class="mb-4 text-center text-5xl font-bold text-surface-50 md:text-6xl">
-				About <span class="text-primary-400">Hessam Khoobkar</span>
-			</h1>
-			<p class="max-w-2xl text-center text-xl text-surface-100 md:text-2xl">
-				Senior Front-End Developer | Building Excellence Through Code
-			</p>
-		</div>
-	</header>
+	<Hero
+		icon={User}
+		title="About Hessam Khoobkar"
+		subtitle="Senior Front-End Developer | Building Excellence Through Code"
+		silkColor="#ef5e03"
+		silkSpeed={5}
+		silkScale={1}
+		silkNoiseIntensity={1.5}
+		silkRotation={0}
+	/>
 
 	<div class="mx-auto max-w-6xl space-y-12">
 		<!-- Quick Stats Bar -->

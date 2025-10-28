@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { loadContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
-	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import Hero from '$lib/components/ui/Hero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import {
 		Briefcase,
@@ -95,20 +95,16 @@
 
 <div class="mt-4">
 	<!-- Hero Section with Silk Animation -->
-	<header class="relative mb-8 h-96 w-full overflow-hidden rounded-2xl border border-surface-600">
-		<Silk speed={5} scale={1} color="#ef5e03" noiseIntensity={1.5} rotation={0} />
-		<div class="absolute inset-0 z-2 flex flex-col items-center justify-center px-4">
-			<div class="mb-4 flex items-center gap-2 text-primary-400">
-				<Briefcase size={40} class="animate-pulse" />
-			</div>
-			<h1 class="mb-4 text-center text-5xl font-bold text-surface-50 md:text-6xl">
-				Portfolio & <span class="text-primary-400">Success Stories</span>
-			</h1>
-			<p class="max-w-2xl text-center text-xl text-surface-100 md:text-2xl">
-				Real projects. Real results. Real impact on businesses and users.
-			</p>
-		</div>
-	</header>
+	<Hero
+		icon={Briefcase}
+		title="Portfolio & Success Stories"
+		subtitle="Real projects. Real results. Real impact on businesses and users."
+		silkColor="#ef5e03"
+		silkSpeed={5}
+		silkScale={1}
+		silkNoiseIntensity={1.5}
+		silkRotation={0}
+	/>
 
 	<div class="mx-auto max-w-6xl space-y-12">
 		<!-- Stats Showcase -->

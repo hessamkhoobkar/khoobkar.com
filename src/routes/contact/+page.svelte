@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { socialLinks } from '$lib/data/navigation';
-	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import Hero from '$lib/components/ui/Hero.svelte';
 	import {
 		Mail,
 		MessageSquare,
@@ -50,18 +50,16 @@
 
 <div class="mt-4">
 	<!-- Hero Section with Silk Animation -->
-	<header class="relative mb-8 h-80 w-full overflow-hidden rounded-2xl border border-surface-600">
-		<Silk speed={5} scale={1} color="#ef5e03" noiseIntensity={1.5} rotation={0} />
-		<div class="absolute inset-0 z-2 flex flex-col items-center justify-center px-4">
-			<div class="mb-4 flex items-center gap-2 text-white">
-				<Mail size={32} />
-			</div>
-			<h1 class="mb-4 text-5xl font-bold text-surface-50">Get in Touch</h1>
-			<p class="w-2xl text-center text-xl">
-				Let's discuss your project and turn your ideas into reality.
-			</p>
-		</div>
-	</header>
+	<Hero
+		icon={Mail}
+		title="Get in Touch"
+		subtitle="Let's discuss your project and turn your ideas into reality."
+		silkColor="#ef5e03"
+		silkSpeed={5}
+		silkScale={1}
+		silkNoiseIntensity={1.5}
+		silkRotation={0}
+	/>
 
 	<div class="mx-auto max-w-4xl space-y-8">
 		<!-- Quick Intro -->
