@@ -21,12 +21,6 @@ export const mainNavigation: NavigationItem[] = [
 		description: 'SaaS, experiments, and complex components'
 	},
 	{
-		href: '/process',
-		label: 'Process',
-		icon: 'workflow',
-		description: 'Dev logs, case studies, and building journey'
-	},
-	{
 		href: '/insights',
 		label: 'Insights',
 		icon: 'lightbulb',

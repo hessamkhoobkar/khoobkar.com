@@ -17,7 +17,6 @@
 		BarChart3,
 		CheckCircle2,
 		Star,
-		Eye,
 		Download,
 		Globe,
 		Smartphone,
@@ -334,13 +333,6 @@ As user base grew, I addressed:
 					>
 						<span>Start a Project</span>
 						<ExternalLink size={20} />
-					</a>
-					<a
-						href="/process"
-						class="inline-flex items-center gap-2 rounded-full border border-surface-700 px-8 py-4 font-semibold text-surface-300 transition-colors hover:border-primary-500 hover:text-surface-100"
-					>
-						<span>View My Process</span>
-						<Eye size={20} />
 					</a>
 				</div>
 			</div>

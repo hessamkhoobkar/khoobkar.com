@@ -7,7 +7,7 @@ export interface ContentMeta {
 	featured?: boolean;
 	published?: boolean;
 	slug: string;
-	category: 'work' | 'projects' | 'process' | 'insight';
+	category: 'work' | 'projects' | 'insight';
 	readingTime?: number;
 	image?: string;
 }
@@ -48,12 +48,6 @@ export const contentCategories = {
 		description: 'SaaS applications, experiments, and complex components',
 		path: '/projects',
 		icon: '🚀'
-	},
-	process: {
-		title: 'Process',
-		description: 'Dev logs, case studies, and building journey - showcasing my development process',
-		path: '/process',
-		icon: '⚡'
 	},
 	insight: {
 		title: 'Strategic Insights',

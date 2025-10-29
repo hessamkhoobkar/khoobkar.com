@@ -23,8 +23,6 @@
 	import Globe from '@lucide/svelte/icons/globe';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 	import Trophy from '@lucide/svelte/icons/trophy';
-	import Target from '@lucide/svelte/icons/target';
-	import Lightbulb from '@lucide/svelte/icons/lightbulb';
 	import Code2 from '@lucide/svelte/icons/code-2';
 	import Sparkles from '@lucide/svelte/icons/sparkles';
 	import Footer from '$lib/components/layout/Footer.svelte';
@@ -138,31 +136,6 @@
 		'Achieved 35% reduction in page load times through advanced optimization',
 		'Mentored team of 7 developers, elevating coding standards through rigorous reviews',
 		'Built real-time WebSocket data sync for low-latency trading features'
-	];
-
-	// Process highlights from process page
-	const processHighlights = [
-		{
-			icon: Zap,
-			title: 'Transparent Development',
-			description:
-				'Real-time insights into my development process, challenges faced, and solutions implemented',
-			metrics: ['Weekly Updates', 'Code Reviews', 'Performance Metrics']
-		},
-		{
-			icon: Target,
-			title: 'Problem-Solving Focus',
-			description:
-				'Detailed case studies showing how I approach complex technical challenges and deliver results',
-			metrics: ['Root Cause Analysis', 'Solution Architecture', 'Impact Measurement']
-		},
-		{
-			icon: Lightbulb,
-			title: 'Innovation Showcase',
-			description:
-				'Rebuilding previous projects with modern techniques to demonstrate continuous improvement',
-			metrics: ['Before/After Comparisons', 'Technology Upgrades', 'Performance Gains']
-		}
 	];
 
 	// Expertise showcase from projects page
@@ -476,75 +449,6 @@
 							<Rocket class="h-5 w-5" />
 							Start Your Success Story
 						</a>
-					</div>
-				</div>
-			</section>
-
-			<!-- Process Highlights Section -->
-			<section class="relative py-20">
-				<div
-					class="absolute inset-0 bg-gradient-to-r from-primary-600/5 via-transparent to-primary-600/5"
-				></div>
-				<div class="relative">
-					<div class="mb-16 text-center">
-						<div
-							class="mb-4 inline-flex items-center gap-3 rounded-full border border-primary-500/30 bg-primary-500/10 px-6 py-2 backdrop-blur-sm"
-						>
-							<Code class="h-5 w-5 text-primary-400" />
-							<span class="font-semibold text-primary-300">DEVELOPMENT PROCESS</span>
-						</div>
-						<h2 class="mb-6 text-6xl font-black text-surface-50">
-							Process <span
-								class="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent"
-								>Excellence</span
-							>
-						</h2>
-						<p class="text-2xl text-surface-300">
-							From transparent development to innovative problem-solving, every aspect is designed
-							to deliver exceptional results
-						</p>
-					</div>
-
-					<div class="grid gap-8 md:grid-cols-3">
-						{#each processHighlights as highlight}
-							{@const IconComponent = highlight.icon}
-							<div
-								class="group relative overflow-hidden rounded-3xl border border-surface-700/30 bg-gradient-to-br from-surface-800/60 to-surface-700/40 p-8 backdrop-blur-xl transition-all duration-700 hover:scale-105 hover:border-primary-500/60 hover:shadow-2xl hover:shadow-primary-500/30"
-							>
-								<!-- Premium Glow Effect -->
-								<div
-									class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-primary-500/20 via-primary-400/20 to-primary-500/20 opacity-0 blur-xl transition-opacity group-hover:opacity-100"
-								></div>
-
-								<div class="relative z-10">
-									<div class="mb-6 flex items-center gap-3">
-										<div
-											class="rounded-2xl bg-gradient-to-br from-primary-500/20 to-primary-600/10 p-4 transition-all group-hover:scale-125 group-hover:rotate-12"
-										>
-											<IconComponent class="h-6 w-6 text-primary-400" />
-										</div>
-										<h3 class="text-2xl font-bold text-surface-50 group-hover:text-primary-300">
-											{highlight.title}
-										</h3>
-									</div>
-									<p class="mb-6 leading-relaxed text-surface-400 group-hover:text-surface-300">
-										{highlight.description}
-									</p>
-									<div class="space-y-3">
-										{#each highlight.metrics as metric}
-											<div class="flex items-center gap-3">
-												<div
-													class="rounded-full bg-gradient-to-r from-primary-500/30 to-primary-600/20 p-1.5"
-												>
-													<CheckCircle2 size={16} class="text-primary-400" />
-												</div>
-												<span class="text-sm font-semibold text-surface-300">{metric}</span>
-											</div>
-										{/each}
-									</div>
-								</div>
-							</div>
-						{/each}
 					</div>
 				</div>
 			</section>

@@ -211,7 +211,7 @@ export async function loadContentItem(category: string, slug: string): Promise<C
  * Get all published content items
  */
 export async function getAllPublishedContent(): Promise<ContentItem[]> {
-	const categories = ['work', 'projects', 'process', 'insight'];
+	const categories = ['work', 'projects', 'insight'];
 	const allContent: ContentItem[] = [];
 
 	for (const category of categories) {
