@@ -21,6 +21,7 @@
 		Layout,
 		Heart
 	} from '@lucide/svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
 
 	let resources: ContentItem[] = $state([]);
 	let loading = $state(true);
@@ -305,73 +306,7 @@
 			</div>
 
 			<!-- CTA Section -->
-			<section
-				class="relative overflow-hidden rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 via-primary-600/5 to-transparent p-8 text-center md:p-12"
-			>
-				<!-- Decorative elements -->
-				<div
-					class="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
-				></div>
-				<div
-					class="absolute -right-20 -bottom-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
-				></div>
-
-				<div class="relative">
-					<div class="mb-6 flex justify-center">
-						<div class="rounded-full bg-primary-500/20 p-4">
-							<Sparkles size={48} class="text-primary-400" />
-						</div>
-					</div>
-					<h2 class="mb-4 text-3xl font-bold text-surface-50 md:text-4xl">
-						Find These <span class="text-primary-400">Resources Helpful</span>?
-					</h2>
-					<p class="mx-auto mb-8 max-w-2xl text-lg text-surface-200">
-						I regularly share new tools, tips, and insights. Follow my blog for the latest in web
-						development, or let's connect if you'd like to discuss a project.
-					</p>
-					<div class="flex flex-wrap justify-center gap-4">
-						<a
-							href="/insights"
-							class="group inline-flex items-center gap-2 rounded-lg bg-primary-600 px-8 py-4 font-medium text-white shadow-lg shadow-primary-600/30 transition-all duration-200 hover:scale-105 hover:bg-primary-500 hover:shadow-xl hover:shadow-primary-500/40"
-						>
-							<BookOpen size={20} />
-							<span>Read More Insights</span>
-						</a>
-						<a
-							href="/contact"
-							class="group inline-flex items-center gap-2 rounded-lg border border-surface-600 bg-surface-800/50 px-8 py-4 font-medium text-surface-300 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-						>
-							<span>Get in Touch</span>
-							<ArrowRight
-								size={20}
-								class="transition-transform duration-200 group-hover:translate-x-1"
-							/>
-						</a>
-					</div>
-
-					<!-- Value props -->
-					<div class="mt-12 grid gap-4 text-sm md:grid-cols-3">
-						<div
-							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
-						>
-							<div class="mb-1 text-2xl font-bold text-primary-400">100%</div>
-							<div class="text-surface-300">Free Forever</div>
-						</div>
-						<div
-							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
-						>
-							<div class="mb-1 text-2xl font-bold text-primary-400">10+</div>
-							<div class="text-surface-300">Years Experience</div>
-						</div>
-						<div
-							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
-						>
-							<div class="mb-1 text-2xl font-bold text-primary-400">Weekly</div>
-							<div class="text-surface-300">New Content</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<Footer />
 		{/if}
 	</div>
 </div>

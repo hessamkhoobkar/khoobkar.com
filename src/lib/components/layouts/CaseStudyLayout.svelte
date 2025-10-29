@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import Footer from '$lib/components/layout/Footer.svelte';
 
 	let { children } = $props();
 
@@ -73,17 +74,8 @@
 	</div>
 
 	{#if meta}
-		<footer class="mt-16 border-t border-surface-200 pt-8">
-			<div class="text-center text-surface-300">
-				<p class="mb-4">Interested in working with us on a similar project?</p>
-				<a
-					href="/contact"
-					class="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-6 py-3 text-white transition-colors hover:bg-primary-500"
-				>
-					<span>💬</span>
-					Get in touch
-				</a>
-			</div>
-		</footer>
+		<div class="mt-16">
+			<Footer />
+		</div>
 	{/if}
 </article>

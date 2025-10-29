@@ -22,6 +22,7 @@
 		Sparkles,
 		Code2
 	} from '@lucide/svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
 
 	let projects: ContentItem[] = $state([]);
 	let loading = $state(true);
@@ -159,33 +160,7 @@
 	</div>
 </section>
 
-<!-- Call to Action -->
-<section class="bg-gradient-to-br from-primary-500/10 to-primary-600/10 py-20">
-	<div class="container mx-auto px-4 text-center">
-		<div class="mx-auto max-w-3xl">
-			<h2 class="mb-6 text-4xl font-bold text-surface-100 md:text-5xl">
-				Ready to Build Something Amazing?
-			</h2>
-			<p class="mb-8 text-xl text-surface-400">
-				Let's discuss how I can help you create innovative solutions that drive real business
-				results
-			</p>
-			<div class="flex flex-col justify-center gap-4 sm:flex-row">
-				<a
-					href="/contact"
-					class="inline-flex items-center gap-2 rounded-full bg-primary-500 px-8 py-4 font-semibold text-surface-900 transition-colors hover:bg-primary-400"
-				>
-					<span>Start a Project</span>
-					<ArrowRight size={20} />
-				</a>
-				<a
-					href="/process"
-					class="inline-flex items-center gap-2 rounded-full border border-surface-700 px-8 py-4 font-semibold text-surface-300 transition-colors hover:border-primary-500 hover:text-surface-100"
-				>
-					<span>View My Process</span>
-					<Eye size={20} />
-				</a>
-			</div>
-		</div>
-	</div>
+<!-- Footer CTA -->
+<section class="container mx-auto px-4 py-20">
+	<Footer />
 </section>

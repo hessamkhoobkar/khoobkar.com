@@ -16,10 +16,10 @@
 		Code2,
 		Sparkles,
 		CheckCircle2,
-		ArrowRight,
 		Rocket,
 		Eye
 	} from '@lucide/svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
 
 	let caseStudies: ContentItem[] = $state([]);
 	let loading = $state(true);
@@ -345,63 +345,7 @@
 			</div>
 
 			<!-- CTA Section -->
-			<section
-				class="relative overflow-hidden rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 via-primary-600/5 to-transparent p-8 text-center md:p-12"
-			>
-				<!-- Decorative elements -->
-				<div
-					class="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
-				></div>
-				<div
-					class="absolute -right-20 -bottom-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
-				></div>
-
-				<div class="relative">
-					<div class="mb-6 flex justify-center">
-						<div class="rounded-full bg-primary-500/20 p-4">
-							<Rocket size={48} class="text-primary-400" />
-						</div>
-					</div>
-					<h2 class="mb-4 text-3xl font-bold text-surface-50 md:text-4xl">
-						Ready to Build Something <span class="text-primary-400">Amazing</span>?
-					</h2>
-					<p class="mx-auto mb-8 max-w-2xl text-lg text-surface-200">
-						Whether you're hiring for your team, need a freelance expert, or want to discuss a
-						project, I'd love to hear from you. Let's create something exceptional together.
-					</p>
-					<div class="flex flex-wrap justify-center gap-4">
-						<a
-							href="/contact"
-							class="group inline-flex items-center gap-2 rounded-lg bg-primary-600 px-8 py-4 font-medium text-white shadow-lg shadow-primary-600/30 transition-all duration-200 hover:scale-105 hover:bg-primary-500 hover:shadow-xl hover:shadow-primary-500/40"
-						>
-							<Rocket size={20} />
-							<span>Start a Project</span>
-						</a>
-					</div>
-
-					<!-- Quick stats reminder -->
-					<div class="mt-12 grid gap-4 text-sm md:grid-cols-3">
-						<div
-							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
-						>
-							<div class="mb-1 text-2xl font-bold text-primary-400">24h</div>
-							<div class="text-surface-300">Response Time</div>
-						</div>
-						<div
-							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
-						>
-							<div class="mb-1 text-2xl font-bold text-primary-400">100%</div>
-							<div class="text-surface-300">Client Satisfaction</div>
-						</div>
-						<div
-							class="rounded-xl border border-surface-600/50 bg-surface-800/30 p-4 backdrop-blur-sm"
-						>
-							<div class="mb-1 text-2xl font-bold text-primary-400">10+</div>
-							<div class="text-surface-300">Years Experience</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<Footer />
 		{/if}
 	</div>
 </div>

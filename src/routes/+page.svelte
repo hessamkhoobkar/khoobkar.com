@@ -27,6 +27,7 @@
 	import Lightbulb from '@lucide/svelte/icons/lightbulb';
 	import Code2 from '@lucide/svelte/icons/code-2';
 	import Sparkles from '@lucide/svelte/icons/sparkles';
+	import Footer from '$lib/components/layout/Footer.svelte';
 
 	// Register GSAP plugins
 	if (typeof window !== 'undefined') {
@@ -1209,74 +1210,7 @@
 			</div>
 
 			<!-- Call to Action Section -->
-			<section
-				class="relative overflow-hidden rounded-3xl border border-primary-500/30 bg-gradient-to-br from-primary-600/20 via-primary-500/10 to-transparent p-12 text-center backdrop-blur-sm"
-			>
-				<div class="absolute inset-0 bg-gradient-to-r from-primary-600/10 to-transparent"></div>
-				<div
-					class="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-primary-500/20 blur-3xl"
-				></div>
-				<div
-					class="absolute -right-20 -bottom-20 h-40 w-40 rounded-full bg-primary-500/20 blur-3xl"
-				></div>
-
-				<div class="relative">
-					<div class="mb-8 flex justify-center">
-						<div class="rounded-full bg-primary-500/20 p-6">
-							<Rocket class="h-12 w-12 text-primary-400" />
-						</div>
-					</div>
-					<h2 class="mb-6 text-5xl font-bold text-surface-50">
-						Let's Create Something <span
-							class="bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent"
-							>Extraordinary</span
-						>
-					</h2>
-					<p class="mx-auto mb-10 max-w-4xl text-xl text-surface-200">
-						Whether you're hiring for your team, need an expert for your next project, or want to
-						discuss web development, I'd love to connect. I respond within 24 hours and am ready to
-						dive into challenging projects.
-					</p>
-
-					<div class="flex flex-wrap justify-center gap-6">
-						<a
-							href="/contact"
-							class="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-600 to-primary-500 px-10 py-5 text-lg font-bold text-white shadow-2xl shadow-primary-500/30 transition-all duration-300 hover:scale-105 hover:shadow-primary-500/50"
-						>
-							<div
-								class="absolute inset-0 bg-gradient-to-r from-primary-400 to-primary-300 opacity-0 transition-opacity group-hover:opacity-100"
-							></div>
-							<span class="relative flex items-center gap-3">
-								<Mail class="h-6 w-6" />
-								Get in Touch
-							</span>
-						</a>
-						<a
-							href="/work"
-							class="group relative overflow-hidden rounded-2xl border-2 border-primary-500 bg-primary-500/10 px-10 py-5 text-lg font-bold text-primary-300 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-primary-500/20"
-						>
-							<span class="relative flex items-center gap-3">
-								<Code class="h-6 w-6" />
-								View Portfolio
-								<ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
-							</span>
-						</a>
-					</div>
-
-					<!-- Availability status -->
-					<div
-						class="mt-12 inline-flex items-center gap-4 rounded-2xl border border-primary-500/30 bg-primary-500/10 px-8 py-4 backdrop-blur-sm"
-					>
-						<div class="relative flex h-4 w-4">
-							<span
-								class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary-400 opacity-75"
-							></span>
-							<span class="relative inline-flex h-4 w-4 rounded-full bg-primary-500"></span>
-						</div>
-						<span class="text-lg font-semibold text-primary-300">Available for New Projects</span>
-					</div>
-				</div>
-			</section>
+			<Footer />
 		</div>
 	</div>
 </div>
