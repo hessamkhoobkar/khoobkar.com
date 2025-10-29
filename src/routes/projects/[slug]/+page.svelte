@@ -191,7 +191,7 @@ As user base grew, I addressed:
 	<!-- Hero Section -->
 	<section class="py-20">
 		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-4xl">
+			<div class="mx-auto max-w-5xl">
 				<!-- Project Header -->
 				<div class="mb-8">
 					<div class="mb-4 flex items-center gap-2">
@@ -269,7 +269,7 @@ As user base grew, I addressed:
 	<!-- Content Section -->
 	<section class="bg-surface-900 py-20">
 		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-4xl">
+			<div class="mx-auto max-w-5xl">
 				<div class="prose prose-lg max-w-none prose-invert">
 					{@html displayProject.content}
 				</div>
@@ -280,7 +280,7 @@ As user base grew, I addressed:
 	<!-- Tech Stack -->
 	<section class="py-20">
 		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-4xl">
+			<div class="mx-auto max-w-5xl">
 				<h2 class="mb-8 text-3xl font-bold text-surface-100">Technical Stack</h2>
 				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 					{#each techStack as tech}

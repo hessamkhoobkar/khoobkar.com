@@ -212,7 +212,7 @@
 				</p>
 			</div>
 
-			<div class="mx-auto max-w-4xl">
+			<div class="mx-auto max-w-6xl">
 				<div class="relative space-y-8 pb-12">
 					<!-- Vertical Timeline Line -->
 					<div
