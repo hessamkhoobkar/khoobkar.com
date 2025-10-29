@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import {
 		User,
 		Code2,
@@ -278,7 +278,7 @@
 
 <div class="mt-4">
 	<!-- Hero Section with Silk Animation -->
-	<Hero
+	<SilkHero
 		icon={User}
 		title="About Hessam Khoobkar"
 		subtitle="Senior Front-End Developer | Building Excellence Through Code"

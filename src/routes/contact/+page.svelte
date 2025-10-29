@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { socialLinks } from '$lib/data/navigation';
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import {
 		Mail,
 		MessageSquare,
@@ -50,7 +50,7 @@
 
 <div class="mt-4">
 	<!-- Hero Section with Silk Animation -->
-	<Hero
+	<SilkHero
 		icon={Mail}
 		title="Get in Touch"
 		subtitle="Let's discuss your project and turn your ideas into reality."

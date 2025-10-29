@@ -3,7 +3,7 @@
 	import { loadContent } from '$lib/utils/content';
 	import { generateBlogSchema } from '$lib/utils/structured-data';
 	import type { ContentItem } from '$lib/data/content';
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import { FileText } from '@lucide/svelte';
 
@@ -40,7 +40,7 @@
 </svelte:head>
 
 <div class="mt-4">
-	<Hero
+	<SilkHero
 		icon={FileText}
 		title="Insights"
 		subtitle="Thoughts, insights, and updates from me."

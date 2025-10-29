@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { loadContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import {
 		Briefcase,
@@ -95,7 +95,7 @@
 
 <div class="mt-4">
 	<!-- Hero Section with Silk Animation -->
-	<Hero
+	<SilkHero
 		icon={Briefcase}
 		title="Portfolio & Success Stories"
 		subtitle="Real projects. Real results. Real impact on businesses and users."

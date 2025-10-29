@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { loadContent } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
-	import Hero from '$lib/components/ui/Hero.svelte';
+	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import {
 		Rocket,
@@ -11,11 +11,6 @@
 		TrendingUp,
 		Users,
 		Award,
-		Target,
-		Zap,
-		Code2,
-		Sparkles,
-		CheckCircle2,
 		ArrowRight,
 		Eye,
 		Clock,
@@ -23,7 +18,9 @@
 		BarChart3,
 		Layers,
 		Globe,
-		Smartphone
+		Smartphone,
+		Sparkles,
+		Code2
 	} from '@lucide/svelte';
 
 	let projects: ContentItem[] = $state([]);
@@ -63,28 +60,6 @@
 		{ icon: TrendingUp, label: 'Performance Gain', value: '85%', color: 'primary' },
 		{ icon: Award, label: 'Innovation Score', value: '95%', color: 'primary' }
 	];
-
-	// Expertise areas
-	const expertise = [
-		{
-			icon: Zap,
-			title: 'SaaS Architecture',
-			description: 'Scalable, performant applications built with modern tech stacks',
-			metrics: ['99.9% Uptime', 'Sub-200ms Response', 'Auto-scaling']
-		},
-		{
-			icon: Code2,
-			title: 'Complex Components',
-			description: 'Reusable, maintainable components that solve real-world problems',
-			metrics: ['Zero Dependencies', 'TypeScript', 'Accessible']
-		},
-		{
-			icon: Sparkles,
-			title: 'Innovation Experiments',
-			description: 'Cutting-edge web technologies and creative solutions',
-			metrics: ['WebGL', 'WebAssembly', 'PWA']
-		}
-	];
 </script>
 
 <svelte:head>
@@ -96,7 +71,7 @@
 </svelte:head>
 
 <!-- Hero Section -->
-<Hero
+<SilkHero
 	icon={Rocket}
 	title="Innovation in Action"
 	subtitle="SaaS applications, experiments, and complex components that push the boundaries of what's possible on the web"
@@ -108,7 +83,7 @@
 />
 
 <!-- Stats Section -->
-<section class="relative z-10 container mx-auto -mt-20 px-4">
+<section class="relative z-10 container mx-auto px-4">
 	<div class="flex flex-wrap justify-center gap-4">
 		{#each stats as stat}
 			{@const Icon = stat.icon}
@@ -120,47 +95,6 @@
 				<span class="text-xs text-surface-400">{stat.label}</span>
 			</div>
 		{/each}
-	</div>
-</section>
-
-<!-- Expertise Showcase -->
-<section class="bg-surface-900 py-20">
-	<div class="container mx-auto px-4">
-		<div class="mb-16 text-center">
-			<h2 class="mb-6 text-4xl font-bold text-surface-100 md:text-5xl">Technical Excellence</h2>
-			<p class="mx-auto max-w-3xl text-xl text-surface-400">
-				From SaaS architecture to innovative experiments, every project demonstrates deep technical
-				expertise and business impact
-			</p>
-		</div>
-
-		<div class="mb-16 grid gap-8 md:grid-cols-3">
-			{#each expertise as area}
-				{@const Icon = area.icon}
-				<div
-					class="group relative overflow-hidden rounded-2xl border border-surface-700 bg-gradient-to-br from-surface-800 to-surface-900 p-8 transition-all duration-300 hover:border-primary-500/50"
-				>
-					<div
-						class="absolute inset-0 bg-gradient-to-br from-primary-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-					></div>
-					<div class="relative z-10">
-						<div class="mb-4 flex items-center gap-3">
-							<Icon size={24} class="text-primary-400" />
-							<h3 class="text-xl font-semibold text-surface-100">{area.title}</h3>
-						</div>
-						<p class="mb-6 text-surface-400">{area.description}</p>
-						<div class="space-y-2">
-							{#each area.metrics as metric}
-								<div class="flex items-center gap-2 text-sm text-surface-300">
-									<CheckCircle2 size={16} class="text-primary-400" />
-									<span>{metric}</span>
-								</div>
-							{/each}
-						</div>
-					</div>
-				</div>
-			{/each}
-		</div>
 	</div>
 </section>
 
