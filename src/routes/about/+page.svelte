@@ -181,13 +181,13 @@
 		{
 			icon: Linkedin,
 			label: 'LinkedIn',
-			value: 'hessam-khoobkar',
+			value: 'linkedin.com/in/hessam-khoobkar',
 			link: 'https://linkedin.com/in/hessam-khoobkar'
 		},
 		{
 			icon: Github,
 			label: 'GitHub',
-			value: 'hessamkhoobkar',
+			value: 'github.com/hessamkhoobkar',
 			link: 'https://github.com/hessamkhoobkar'
 		}
 	];
