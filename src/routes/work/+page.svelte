@@ -106,7 +106,7 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-6xl space-y-12">
+	<div class="mx-auto max-w-7xl space-y-12 px-4 py-8">
 		<!-- Stats Showcase -->
 		<section
 			class="grid gap-6 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent p-8 md:grid-cols-4"
@@ -211,7 +211,7 @@
 		</section>
 
 		{#if loading}
-			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-8 md:grid-cols-2">
 				{#each Array(6) as _}
 					<div class="animate-pulse overflow-hidden rounded-2xl bg-surface-800">
 						<div class="h-56 bg-surface-700"></div>
@@ -332,7 +332,7 @@
 				</div>
 			</div>
 		{:else}
-			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-8 md:grid-cols-2">
 				{#each caseStudies as caseStudy}
 					<ArticleCard
 						post={caseStudy}

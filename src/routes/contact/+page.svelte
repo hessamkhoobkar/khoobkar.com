@@ -61,7 +61,7 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-4xl space-y-8">
+	<div class="mx-auto max-w-6xl space-y-12 px-4 py-8">
 		<!-- Quick Intro -->
 		<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 text-center md:p-12">
 			<h2 class="mb-4 text-3xl font-bold text-surface-50">

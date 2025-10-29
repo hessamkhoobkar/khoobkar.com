@@ -84,7 +84,7 @@
 />
 
 <!-- Stats Section -->
-<section class="relative z-10 container mx-auto px-4">
+<section class="relative z-10 mx-auto max-w-7xl px-4 py-8">
 	<div class="flex flex-wrap justify-center gap-4">
 		{#each stats as stat}
 			{@const Icon = stat.icon}
@@ -101,7 +101,7 @@
 
 <!-- Project Categories -->
 <section class="py-20">
-	<div class="container mx-auto px-4">
+	<div class="mx-auto max-w-7xl px-4">
 		<div class="mb-16 text-center">
 			<h2 class="mb-6 text-4xl font-bold text-surface-100 md:text-5xl">Project Portfolio</h2>
 			<p class="mx-auto max-w-3xl text-xl text-surface-400">
@@ -129,7 +129,7 @@
 
 		<!-- Projects Grid -->
 		{#if loading}
-			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-8 py-8 md:grid-cols-2">
 				{#each Array(6) as _}
 					<div class="animate-pulse">
 						<div class="h-80 rounded-2xl bg-surface-800"></div>
@@ -137,7 +137,7 @@
 				{/each}
 			</div>
 		{:else if filteredProjects().length > 0}
-			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-8 md:grid-cols-2">
 				{#each filteredProjects() as project}
 					<ArticleCard
 						post={project}
@@ -161,6 +161,6 @@
 </section>
 
 <!-- Footer CTA -->
-<section class="container mx-auto px-4 py-20">
+<section class="mx-auto max-w-7xl px-4 py-20">
 	<Footer />
 </section>

@@ -282,7 +282,7 @@
 
 		<!-- Main Hero Content -->
 		<div class="relative z-10 flex min-h-screen items-center justify-center px-8 py-20">
-			<div class="mx-auto max-w-7xl text-center">
+			<div class="mx-auto max-w-6xl text-center">
 				<!-- Premium Status Badge -->
 				<div
 					class="floating mb-8 inline-flex items-center gap-4 rounded-full border border-primary-500/30 bg-gradient-to-r from-primary-600/20 to-primary-500/10 px-8 py-4 shadow-2xl backdrop-blur-lg"
@@ -374,7 +374,7 @@
 
 	<!-- Main Dashboard Content -->
 	<div class="py-8">
-		<div class="space-y-12">
+		<div class="mx-auto max-w-6xl space-y-12 px-4">
 			<!-- Premium Impact Metrics Section -->
 			<section class="relative py-20">
 				<div

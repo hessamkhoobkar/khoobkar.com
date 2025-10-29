@@ -63,7 +63,7 @@
 />
 
 <!-- Stats Section -->
-<section class="relative z-10 container mx-auto px-4">
+<section class="relative z-10 mx-auto max-w-7xl px-4 py-8">
 	<div class="flex flex-wrap justify-center gap-4">
 		<div
 			class="flex items-center gap-2 rounded-full border border-surface-700 bg-surface-800/50 px-4 py-2 backdrop-blur-sm"
@@ -91,7 +91,7 @@
 
 <!-- All Process Content -->
 <section class="py-20">
-	<div class="container mx-auto px-4">
+	<div class="mx-auto max-w-7xl px-4">
 		<div class="mb-16 text-center">
 			<h2 class="mb-6 text-4xl font-bold text-surface-100 md:text-5xl">Process Content</h2>
 			<p class="mx-auto max-w-3xl text-xl text-surface-400">
@@ -100,7 +100,7 @@
 		</div>
 
 		{#if processContent.length > 0}
-			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-8 py-8 md:grid-cols-2">
 				{#each processContent as item}
 					{@const typeInfo = getContentTypeInfo(item.meta.tags || [])}
 					<ArticleCard
@@ -142,6 +142,6 @@
 </section>
 
 <!-- Footer CTA -->
-<section class="container mx-auto px-4 py-20">
+<section class="mx-auto max-w-7xl px-4 py-20">
 	<Footer />
 </section>

@@ -115,7 +115,7 @@
 		</div>
 	</header>
 
-	<div class="mx-auto max-w-6xl space-y-12">
+	<div class="mx-auto max-w-7xl space-y-12 px-4 py-8">
 		<!-- Value Proposition -->
 		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-8 text-center md:p-12">
 			<div class="mb-6 flex justify-center">
@@ -190,7 +190,7 @@
 		</section>
 
 		{#if loading}
-			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-8 md:grid-cols-2">
 				{#each Array(6) as _}
 					<div class="animate-pulse rounded-2xl bg-surface-800 p-6">
 						<div class="mb-4 h-4 rounded bg-surface-700"></div>
@@ -293,7 +293,7 @@
 				</div>
 			</div>
 		{:else}
-			<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+			<div class="grid gap-8 md:grid-cols-2">
 				{#each resources as resource}
 					<ArticleCard
 						post={resource}
