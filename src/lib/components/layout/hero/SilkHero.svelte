@@ -24,7 +24,7 @@
 	<div
 		class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-white mix-blend-difference"
 	>
-		<svelte:component this={icon} size={40} class="relative animate-pulse " />
+		<svelte:component this={icon} size={40} class="relative" />
 
 		<!-- Title with enhanced typography and effects -->
 		<h1 class="text-center text-5xl font-bold md:text-6xl">
