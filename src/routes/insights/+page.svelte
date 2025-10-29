@@ -5,6 +5,7 @@
 	import type { ContentItem } from '$lib/data/content';
 	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
+	import Footer from '$lib/components/layout/Footer.svelte';
 	import { FileText } from '@lucide/svelte';
 
 	let blogPosts: ContentItem[] = $state([]);
@@ -75,5 +76,8 @@
 				{/each}
 			</div>
 		{/if}
+
+		<!-- Footer -->
+		<Footer />
 	</div>
 </div>
