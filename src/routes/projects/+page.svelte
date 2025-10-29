@@ -161,6 +161,6 @@
 </section>
 
 <!-- Footer CTA -->
-<section class="mx-auto max-w-7xl px-4 py-20">
+<section class="mx-auto max-w-7xl px-4">
 	<Footer />
 </section>

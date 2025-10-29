@@ -73,9 +73,5 @@
 		{@render children?.()}
 	</div>
 
-	{#if meta}
-		<div class="mt-16">
-			<Footer />
-		</div>
-	{/if}
+	<Footer />
 </article>
