@@ -20,6 +20,21 @@
 	import Code2 from '@lucide/svelte/icons/code-2';
 	import Sparkles from '@lucide/svelte/icons/sparkles';
 	import Footer from '$lib/components/layout/Footer.svelte';
+	import Silk from '$lib/components/layout/hero/Silk.svelte';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import Mail from '@lucide/svelte/icons/mail';
+	import Linkedin from '@lucide/svelte/icons/linkedin';
+	import Github from '@lucide/svelte/icons/github';
+	import GraduationCap from '@lucide/svelte/icons/graduation-cap';
+	import Coffee from '@lucide/svelte/icons/coffee';
+	import Target from '@lucide/svelte/icons/target';
+	import Shield from '@lucide/svelte/icons/shield';
+	import Star from '@lucide/svelte/icons/star';
+
+	// Register GSAP plugins
+	if (typeof window !== 'undefined') {
+		gsap.registerPlugin(ScrollTrigger);
+	}
 
 	// State variables
 	let featuredContent: ContentItem[] = $state([]);
@@ -149,6 +164,92 @@
 		}
 	];
 
+	// Current position
+	const currentRole = {
+		title: 'Senior Front-End Developer',
+		company: 'POMECHAIN',
+		location: 'Dubai, UAE - Remote',
+		period: 'July 2024 - Present',
+		status: 'current'
+	};
+
+	// Contact information
+	const contactInfo = [
+		{
+			icon: Mail,
+			label: 'Email',
+			value: 'amirhessam.dev@gmail.com',
+			link: 'mailto:amirhessam.dev@gmail.com'
+		},
+		{
+			icon: Linkedin,
+			label: 'LinkedIn',
+			value: 'linkedin.com/in/hessam-khoobkar',
+			link: 'https://linkedin.com/in/hessam-khoobkar'
+		},
+		{
+			icon: Github,
+			label: 'GitHub',
+			value: 'github.com/hessamkhoobkar',
+			link: 'https://github.com/hessamkhoobkar'
+		}
+	];
+
+	// Education
+	const education = {
+		degree: 'Bachelor of Science in Software Engineering',
+		school: 'Payame Noor University',
+		location: 'Tehran, Iran'
+	};
+
+	// Core values
+	const coreValues = [
+		{
+			icon: Target,
+			title: 'Precision & Quality',
+			description: 'Pixel-perfect implementations and clean code'
+		},
+		{
+			icon: TrendingUp,
+			title: 'Measurable Results',
+			description: 'Data-driven decisions with 30-60% improvements'
+		},
+		{
+			icon: Users,
+			title: 'Team Leadership',
+			description: 'Mentoring and building high-performing teams'
+		},
+		{
+			icon: Rocket,
+			title: 'Innovation',
+			description: 'Cutting-edge technologies and best practices'
+		}
+	];
+
+	// Benefits/Why choose me
+	const benefits = [
+		{
+			icon: Clock,
+			title: 'Timely Delivery',
+			description: 'Projects delivered on time, every time'
+		},
+		{
+			icon: Shield,
+			title: 'Quality Assured',
+			description: 'Clean, tested code following best practices'
+		},
+		{
+			icon: MessageSquare,
+			title: 'Clear Communication',
+			description: 'Regular updates and transparent communication'
+		},
+		{
+			icon: Coffee,
+			title: 'Flexible',
+			description: 'Available for full-time and freelance projects'
+		}
+	];
+
 	onMount(async () => {
 		try {
 			const [featured, all] = await Promise.all([getFeaturedContent(), getAllPublishedContent()]);
@@ -158,29 +259,139 @@
 
 			// Initialize GSAP animations for dashboard
 			if (typeof window !== 'undefined') {
-				// Animate stat cards
+				// Animate dashboard header
 				gsap.fromTo(
-					'.stat-card',
-					{ y: 20, opacity: 0 },
-					{ y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power2.out' }
+					'.dashboard-header',
+					{ y: -20, opacity: 0 },
+					{ y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' }
 				);
 
-				// Animate progress bars
+				// Animate stat cards with stagger
+				gsap.fromTo(
+					'.stat-card',
+					{ y: 30, opacity: 0, scale: 0.95 },
+					{
+						y: 0,
+						opacity: 1,
+						scale: 1,
+						duration: 0.7,
+						stagger: 0.15,
+						delay: 0.2,
+						ease: 'back.out(1.2)'
+					}
+				);
+
+				// Animate widgets with scroll trigger
+				gsap.fromTo(
+					'.dashboard-widget',
+					{ y: 40, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.8,
+						stagger: 0.1,
+						scrollTrigger: {
+							trigger: '.dashboard-widget',
+							start: 'top 85%',
+							toggleActions: 'play none none reverse'
+						},
+						ease: 'power3.out'
+					}
+				);
+
+				// Animate progress bars with number counting effect
 				setTimeout(() => {
 					gsap.to('.progress-bar', {
 						width: (i, el) => el.dataset.percentage + '%',
-						duration: 1,
-						delay: 0.3,
-						ease: 'power2.out'
+						duration: 1.5,
+						delay: 0.5,
+						ease: 'power2.out',
+						onStart: () => {
+							gsap.to({}, { duration: 0 });
+						}
 					});
-				}, 300);
+				}, 400);
 
-				// Animate tech tags
+				// Animate tech tags with stagger and scale
 				gsap.fromTo(
 					'.tech-tag',
-					{ scale: 0.9, opacity: 0 },
-					{ scale: 1, opacity: 1, duration: 0.3, stagger: 0.02, delay: 0.5, ease: 'power2.out' }
+					{ scale: 0.8, opacity: 0, rotation: -5 },
+					{
+						scale: 1,
+						opacity: 1,
+						rotation: 0,
+						duration: 0.4,
+						stagger: 0.03,
+						delay: 0.6,
+						ease: 'back.out(1.5)',
+						scrollTrigger: {
+							trigger: '.tech-tag',
+							start: 'top 90%',
+							toggleActions: 'play none none reverse'
+						}
+					}
 				);
+
+				// Animate activity items
+				gsap.fromTo(
+					'.activity-item',
+					{ x: -20, opacity: 0 },
+					{
+						x: 0,
+						opacity: 1,
+						duration: 0.6,
+						stagger: 0.1,
+						delay: 0.3,
+						ease: 'power2.out'
+					}
+				);
+
+				// Animate achievement items
+				gsap.fromTo(
+					'.achievement-item',
+					{ x: -15, opacity: 0 },
+					{
+						x: 0,
+						opacity: 1,
+						duration: 0.6,
+						stagger: 0.08,
+						scrollTrigger: {
+							trigger: '.achievement-item',
+							start: 'top 85%',
+							toggleActions: 'play none none reverse'
+						},
+						ease: 'power2.out'
+					}
+				);
+
+				// Animate expertise cards
+				gsap.fromTo(
+					'.expertise-card',
+					{ y: 20, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.7,
+						stagger: 0.1,
+						scrollTrigger: {
+							trigger: '.expertise-card',
+							start: 'top 85%',
+							toggleActions: 'play none none reverse'
+						},
+						ease: 'power3.out'
+					}
+				);
+
+				// Add hover animations to interactive elements
+				const hoverElements = document.querySelectorAll('.hover-lift');
+				hoverElements.forEach((el) => {
+					el.addEventListener('mouseenter', () => {
+						gsap.to(el, { scale: 1.02, duration: 0.3, ease: 'power2.out' });
+					});
+					el.addEventListener('mouseleave', () => {
+						gsap.to(el, { scale: 1, duration: 0.3, ease: 'power2.out' });
+					});
+				});
 			}
 		} catch (error) {
 			console.error('Failed to load content:', error);
@@ -202,24 +413,26 @@
 <div class="mt-4">
 	<!-- Dashboard Header Section -->
 	<section class="mx-auto max-w-7xl px-4 py-8">
-		<div class="mb-8 rounded-2xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
+		<div
+			class="dashboard-header mb-8 rounded-2xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+		>
 			<div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
 				<div>
-					<h1 class="text-3xl font-bold text-surface-50">Dashboard</h1>
-					<p class="mt-1 text-sm text-surface-400">Welcome back, Hessam</p>
+					<h1 class="text-4xl font-bold text-surface-50">Dashboard</h1>
+					<p class="mt-1 text-base text-surface-400">Welcome back, Hessam</p>
 				</div>
 				<div class="flex items-center gap-3">
 					<div
 						class="flex items-center gap-2 rounded-xl border border-surface-700 bg-surface-800 px-4 py-2"
 					>
-						<div class="h-2 w-2 rounded-full bg-green-500"></div>
-						<span class="text-sm font-medium text-surface-300">Available</span>
+						<div class="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+						<span class="text-base font-medium text-surface-300">Available</span>
 					</div>
 					<a
 						href="/contact"
-						class="rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:scale-105 hover:shadow-lg hover:shadow-primary-500/30"
+						class="hover-lift rounded-xl bg-gradient-to-r from-primary-600 to-primary-500 px-6 py-3 text-base font-semibold text-white transition-all hover:scale-105 hover:shadow-lg hover:shadow-primary-500/30"
 					>
-						<MessageSquare class="mr-2 inline h-4 w-4" />
+						<MessageSquare class="mr-2 inline h-5 w-5" />
 						Get in Touch
 					</a>
 				</div>
@@ -235,16 +448,18 @@
 				{#each stats as stat}
 					{@const Icon = stat.icon}
 					<div
-						class="stat-card group relative overflow-hidden rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm transition-all hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-500/10"
+						class="stat-card hover-lift group relative overflow-hidden rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm transition-all hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-500/10"
 					>
 						<div class="flex items-start justify-between">
 							<div class="flex-1">
-								<p class="text-sm font-medium text-surface-400">{stat.title}</p>
-								<p class="mt-2 text-3xl font-bold text-surface-50">{stat.value}</p>
-								<p class="mt-1 text-xs text-surface-500">{stat.subtitle}</p>
+								<p class="text-base font-medium text-surface-400">{stat.title}</p>
+								<p class="mt-2 text-4xl font-bold text-surface-50">{stat.value}</p>
+								<p class="mt-1 text-sm text-surface-500">{stat.subtitle}</p>
 							</div>
-							<div class="rounded-lg bg-primary-500/10 p-3">
-								<Icon class="h-5 w-5 {stat.color}" />
+							<div
+								class="rounded-lg bg-primary-500/10 p-3 transition-transform group-hover:scale-110 group-hover:rotate-3"
+							>
+								<Icon class="h-6 w-6 {stat.color}" />
 							</div>
 						</div>
 						<div class="mt-4 h-1 w-full overflow-hidden rounded-full bg-surface-700">
@@ -269,18 +484,65 @@
 			<div class="grid gap-6 lg:grid-cols-3">
 				<!-- Left Column - Sidebar Widgets -->
 				<div class="space-y-6 lg:col-span-1">
+					<!-- Silk Animation Widget -->
+					<div
+						class="dashboard-widget group relative overflow-hidden rounded-xl border border-surface-700 bg-surface-800/50 backdrop-blur-sm"
+					>
+						<div class="absolute inset-0 opacity-60">
+							<Silk speed={3} scale={1.5} color="#ef5e03" noiseIntensity={2} rotation={25} />
+						</div>
+						<div class="relative z-10 p-6 text-center">
+							<div class="mb-3 flex justify-center">
+								<div class="rounded-full bg-primary-500/20 p-3">
+									<Briefcase class="h-6 w-6 text-primary-400" />
+								</div>
+							</div>
+							<h3 class="mb-2 text-xl font-bold text-surface-50">Developer Dashboard</h3>
+							<p class="text-sm text-surface-300">Overview of expertise and achievements</p>
+						</div>
+					</div>
+
+					<!-- Current Role Widget -->
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
+						<div class="mb-4 flex items-center justify-between">
+							<h3 class="text-xl font-semibold text-surface-50">Current Role</h3>
+							<div class="flex items-center gap-2 rounded-full bg-primary-500/20 px-3 py-1">
+								<div class="h-2 w-2 animate-pulse rounded-full bg-primary-400"></div>
+								<span class="text-xs font-semibold text-primary-300">Active</span>
+							</div>
+						</div>
+						<div class="space-y-3">
+							<div>
+								<h4 class="text-lg font-bold text-surface-50">{currentRole.title}</h4>
+								<p class="text-base font-semibold text-primary-400">{currentRole.company}</p>
+							</div>
+							<div class="flex items-center gap-2 text-sm text-surface-400">
+								<MapPin class="h-4 w-4 text-primary-400" />
+								<span>{currentRole.location}</span>
+							</div>
+							<div class="flex items-center gap-2 text-sm text-surface-400">
+								<Clock class="h-4 w-4 text-primary-400" />
+								<span>{currentRole.period}</span>
+							</div>
+						</div>
+					</div>
+
 					<!-- Expertise Breakdown Widget -->
-					<div class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
 						<div class="mb-6 flex items-center justify-between">
-							<h3 class="text-lg font-semibold text-surface-50">Expertise Breakdown</h3>
-							<TrendingUp class="h-5 w-5 text-primary-400" />
+							<h3 class="text-xl font-semibold text-surface-50">Expertise Breakdown</h3>
+							<TrendingUp class="h-6 w-6 text-primary-400" />
 						</div>
 						<div class="space-y-5">
 							{#each workCategories as category}
 								<div>
 									<div class="mb-2 flex items-center justify-between">
-										<span class="text-sm font-medium text-surface-300">{category.name}</span>
-										<span class="text-sm font-semibold text-surface-50">{category.count}</span>
+										<span class="text-base font-medium text-surface-300">{category.name}</span>
+										<span class="text-base font-semibold text-surface-50">{category.count}</span>
 									</div>
 									<div class="relative h-2 overflow-hidden rounded-full bg-surface-700">
 										<div
@@ -289,66 +551,117 @@
 											style="width: 0%"
 										></div>
 									</div>
-									<div class="mt-1 text-xs text-surface-500">{category.percentage}%</div>
+									<div class="mt-1 text-sm text-surface-500">{category.percentage}%</div>
 								</div>
 							{/each}
 						</div>
 					</div>
 
 					<!-- Quick Actions Widget -->
-					<div class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
-						<h3 class="mb-4 text-lg font-semibold text-surface-50">Quick Actions</h3>
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
+						<h3 class="mb-4 text-xl font-semibold text-surface-50">Quick Actions</h3>
 						<div class="space-y-3">
 							<a
 								href="/work"
-								class="flex items-center gap-3 rounded-lg border border-surface-700 bg-surface-700/50 p-4 transition-all hover:border-primary-500/50 hover:bg-surface-700"
+								class="hover-lift flex items-center gap-3 rounded-lg border border-surface-700 bg-surface-700/50 p-4 transition-all hover:border-primary-500/50 hover:bg-surface-700"
 							>
-								<Code class="h-5 w-5 text-primary-400" />
-								<span class="flex-1 text-sm font-medium text-surface-300">View Portfolio</span>
-								<ArrowRight class="h-4 w-4 text-surface-500" />
+								<Code class="h-6 w-6 text-primary-400" />
+								<span class="flex-1 text-base font-medium text-surface-300">View Portfolio</span>
+								<ArrowRight
+									class="h-5 w-5 text-surface-500 transition-transform group-hover:translate-x-1"
+								/>
 							</a>
 							<a
 								href="/contact"
-								class="flex items-center gap-3 rounded-lg bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-primary-500/30"
+								class="hover-lift flex items-center gap-3 rounded-lg bg-gradient-to-r from-primary-600 to-primary-500 p-4 text-white transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-primary-500/30"
 							>
-								<MessageSquare class="h-5 w-5" />
-								<span class="flex-1 text-sm font-medium">Contact Me</span>
-								<ArrowRight class="h-4 w-4" />
+								<MessageSquare class="h-6 w-6" />
+								<span class="flex-1 text-base font-medium">Contact Me</span>
+								<ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
 							</a>
 						</div>
 					</div>
 
 					<!-- Profile Info Widget -->
-					<div class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
 						<div class="mb-4 flex items-center gap-4">
 							<div class="relative">
 								<img
 									src="https://khoobkar.com/_app/immutable/assets/hessam-avatar.b941527b.jpg"
-									class="h-16 w-16 rounded-xl object-cover"
+									class="h-20 w-20 rounded-xl object-cover ring-2 ring-primary-500/30"
 									alt="Hessam Khoobkar"
 								/>
 								<div
-									class="absolute -right-1 -bottom-1 h-5 w-5 rounded-full border-2 border-surface-800 bg-green-500"
+									class="absolute -right-1 -bottom-1 h-6 w-6 animate-pulse rounded-full border-2 border-surface-800 bg-green-500"
 								></div>
 							</div>
 							<div class="flex-1">
-								<h4 class="font-semibold text-surface-50">Hessam Khoobkar</h4>
-								<p class="text-sm text-surface-400">Senior Front-End Architect</p>
+								<h4 class="text-lg font-semibold text-surface-50">Hessam Khoobkar</h4>
+								<p class="text-base text-surface-400">Senior Front-End Architect</p>
 							</div>
 						</div>
-						<div class="space-y-2 text-sm">
+						<div class="space-y-3 text-base">
 							<div class="flex items-center gap-3 text-surface-400">
-								<MapPin class="h-4 w-4 text-primary-400" />
+								<MapPin class="h-5 w-5 text-primary-400" />
 								<span>Tallinn, Estonia</span>
 							</div>
 							<div class="flex items-center gap-3 text-surface-400">
-								<Globe class="h-4 w-4 text-blue-400" />
+								<Globe class="h-5 w-5 text-blue-400" />
 								<span>Remote Available</span>
 							</div>
 							<div class="flex items-center gap-3 text-surface-400">
-								<Clock class="h-4 w-4 text-green-400" />
+								<Clock class="h-5 w-5 text-green-400" />
 								<span>24h Response</span>
 							</div>
+						</div>
+					</div>
+
+					<!-- Education Widget -->
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
+						<div class="mb-4 flex items-center justify-between">
+							<h3 class="text-xl font-semibold text-surface-50">Education</h3>
+							<GraduationCap class="h-5 w-5 text-primary-400" />
+						</div>
+						<div class="space-y-2">
+							<h4 class="text-base font-bold text-surface-50">{education.degree}</h4>
+							<p class="text-base text-primary-400">{education.school}</p>
+							<div class="flex items-center gap-2 text-sm text-surface-400">
+								<MapPin class="h-4 w-4 text-primary-400" />
+								<span>{education.location}</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Contact Links Widget -->
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
+						<h3 class="mb-4 text-xl font-semibold text-surface-50">Contact</h3>
+						<div class="space-y-3">
+							{#each contactInfo as contact}
+								{@const ContactIcon = contact.icon}
+								<a
+									href={contact.link}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="hover-lift flex items-center gap-3 rounded-lg border border-surface-700 bg-surface-700/30 p-3 transition-all hover:border-primary-500/50 hover:bg-surface-700/50"
+								>
+									<div class="rounded-lg bg-primary-500/10 p-2">
+										<ContactIcon class="h-5 w-5 text-primary-400" />
+									</div>
+									<div class="flex-1">
+										<p class="text-xs text-surface-500">{contact.label}</p>
+										<p class="text-sm font-medium text-surface-300">{contact.value}</p>
+									</div>
+									<ArrowRight class="h-4 w-4 text-surface-500" />
+								</a>
+							{/each}
 						</div>
 					</div>
 				</div>
@@ -356,15 +669,17 @@
 				<!-- Right Column - Main Content -->
 				<div class="space-y-6 lg:col-span-2">
 					<!-- Recent Activity Widget -->
-					<div class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
 						<div class="mb-6 flex items-center justify-between">
 							<div>
-								<h3 class="text-lg font-semibold text-surface-50">Recent Activity</h3>
-								<p class="text-xs text-surface-500">Latest updates and milestones</p>
+								<h3 class="text-xl font-semibold text-surface-50">Recent Activity</h3>
+								<p class="mt-1 text-sm text-surface-500">Latest updates and milestones</p>
 							</div>
 							<a
 								href="/work"
-								class="text-xs text-primary-400 transition-colors hover:text-primary-300"
+								class="text-sm text-primary-400 transition-colors hover:text-primary-300"
 							>
 								View All →
 							</a>
@@ -373,17 +688,18 @@
 							{#each recentActivity as activity}
 								{@const ActivityIcon = activity.icon}
 								<div
-									class="flex items-center gap-4 rounded-lg border border-surface-700 bg-surface-700/30 p-4 transition-all hover:border-primary-500/50 hover:bg-surface-700/50"
+									class="activity-item hover-lift flex items-center gap-4 rounded-lg border border-surface-700 bg-surface-700/30 p-4 transition-all hover:border-primary-500/50 hover:bg-surface-700/50"
 								>
 									<div
-										class="rounded-lg bg-primary-500/10 p-3 {activity.status === 'completed'
+										class="rounded-lg bg-primary-500/10 p-3 transition-transform hover:scale-110 {activity.status ===
+										'completed'
 											? 'bg-green-500/10'
 											: activity.status === 'in-progress'
 												? 'bg-yellow-500/10'
 												: ''}"
 									>
 										<ActivityIcon
-											class="h-5 w-5 {activity.status === 'completed'
+											class="h-6 w-6 {activity.status === 'completed'
 												? 'text-green-400'
 												: activity.status === 'in-progress'
 													? 'text-yellow-400'
@@ -391,15 +707,15 @@
 										/>
 									</div>
 									<div class="flex-1">
-										<h4 class="text-sm font-semibold text-surface-50">{activity.title}</h4>
-										<div class="mt-1 flex items-center gap-2 text-xs text-surface-400">
+										<h4 class="text-base font-semibold text-surface-50">{activity.title}</h4>
+										<div class="mt-1 flex items-center gap-2 text-sm text-surface-400">
 											<span>{activity.type}</span>
 											<span>•</span>
 											<span>{activity.time}</span>
 										</div>
 									</div>
 									<div
-										class="rounded-full px-3 py-1 text-xs font-semibold {activity.status ===
+										class="rounded-full px-3 py-1.5 text-sm font-semibold {activity.status ===
 										'completed'
 											? 'bg-green-500/20 text-green-400'
 											: activity.status === 'in-progress'
@@ -414,17 +730,19 @@
 					</div>
 
 					<!-- Tech Stack Widget -->
-					<div class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
 						<div class="mb-6">
-							<h3 class="text-lg font-semibold text-surface-50">Tech Stack</h3>
-							<p class="mt-1 text-xs text-surface-500">
+							<h3 class="text-xl font-semibold text-surface-50">Tech Stack</h3>
+							<p class="mt-1 text-sm text-surface-500">
 								Modern technologies and tools used in production
 							</p>
 						</div>
 						<div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
 							{#each techStack as tech}
 								<div
-									class="tech-tag rounded-lg border border-surface-700 bg-surface-700/30 px-3 py-2 text-center text-xs font-medium text-surface-300 transition-all hover:border-primary-500/50 hover:bg-surface-700/50"
+									class="tech-tag hover-lift rounded-lg border border-surface-700 bg-surface-700/30 px-3 py-2.5 text-center text-sm font-medium text-surface-300 transition-all hover:border-primary-500/50 hover:bg-surface-700/50"
 								>
 									{tech}
 								</div>
@@ -433,50 +751,110 @@
 					</div>
 
 					<!-- Key Achievements Widget -->
-					<div class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
 						<div class="mb-6">
-							<h3 class="text-lg font-semibold text-surface-50">Key Achievements</h3>
-							<p class="mt-1 text-xs text-surface-500">Career highlights and milestones</p>
+							<h3 class="text-xl font-semibold text-surface-50">Key Achievements</h3>
+							<p class="mt-1 text-sm text-surface-500">Career highlights and milestones</p>
 						</div>
 						<div class="space-y-3">
 							{#each experienceHighlights as highlight}
 								<div
-									class="flex items-start gap-3 rounded-lg border border-surface-700 bg-surface-700/30 p-4"
+									class="achievement-item hover-lift flex items-start gap-3 rounded-lg border border-surface-700 bg-surface-700/30 p-4 transition-all hover:border-primary-500/50"
 								>
-									<CheckCircle2 class="mt-0.5 h-5 w-5 flex-shrink-0 text-primary-400" />
-									<p class="text-sm leading-relaxed text-surface-300">{highlight}</p>
+									<CheckCircle2
+										class="mt-0.5 h-6 w-6 flex-shrink-0 text-primary-400 transition-transform hover:scale-110"
+									/>
+									<p class="text-base leading-relaxed text-surface-300">{highlight}</p>
 								</div>
 							{/each}
 						</div>
 					</div>
 
 					<!-- Expertise Areas Widget -->
-					<div class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm">
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
 						<div class="mb-6">
-							<h3 class="text-lg font-semibold text-surface-50">Expertise Areas</h3>
-							<p class="mt-1 text-xs text-surface-500">Specialized knowledge and capabilities</p>
+							<h3 class="text-xl font-semibold text-surface-50">Expertise Areas</h3>
+							<p class="mt-1 text-sm text-surface-500">Specialized knowledge and capabilities</p>
 						</div>
 						<div class="grid gap-4 sm:grid-cols-3">
 							{#each expertiseShowcase as area}
 								{@const IconComponent = area.icon}
 								<div
-									class="rounded-lg border border-surface-700 bg-surface-700/30 p-4 transition-all hover:border-primary-500/50"
+									class="expertise-card hover-lift rounded-lg border border-surface-700 bg-surface-700/30 p-5 transition-all hover:border-primary-500/50 hover:shadow-lg"
 								>
-									<div class="mb-3 flex items-center gap-2">
-										<div class="rounded-lg bg-primary-500/10 p-2">
-											<IconComponent class="h-4 w-4 text-primary-400" />
+									<div class="mb-4 flex items-center gap-3">
+										<div
+											class="rounded-lg bg-primary-500/10 p-3 transition-transform hover:scale-110"
+										>
+											<IconComponent class="h-5 w-5 text-primary-400" />
 										</div>
-										<h4 class="text-sm font-semibold text-surface-50">{area.title}</h4>
+										<h4 class="text-base font-semibold text-surface-50">{area.title}</h4>
 									</div>
-									<p class="mb-3 text-xs leading-relaxed text-surface-400">{area.description}</p>
-									<div class="space-y-1.5">
+									<p class="mb-4 text-sm leading-relaxed text-surface-400">{area.description}</p>
+									<div class="space-y-2">
 										{#each area.metrics as metric}
-											<div class="flex items-center gap-2 text-xs text-surface-500">
-												<div class="h-1 w-1 rounded-full bg-primary-400"></div>
+											<div class="flex items-center gap-2 text-sm text-surface-500">
+												<div class="h-1.5 w-1.5 rounded-full bg-primary-400"></div>
 												<span>{metric}</span>
 											</div>
 										{/each}
 									</div>
+								</div>
+							{/each}
+						</div>
+					</div>
+
+					<!-- Core Values Widget -->
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
+						<div class="mb-6">
+							<h3 class="text-xl font-semibold text-surface-50">Core Values</h3>
+							<p class="mt-1 text-sm text-surface-500">Principles that drive my work</p>
+						</div>
+						<div class="grid gap-3 sm:grid-cols-2">
+							{#each coreValues as value}
+								{@const ValueIcon = value.icon}
+								<div
+									class="hover-lift rounded-lg border border-surface-700 bg-surface-700/30 p-4 transition-all hover:border-primary-500/50"
+								>
+									<div class="mb-2 flex items-center gap-2">
+										<div class="rounded-lg bg-primary-500/10 p-1.5">
+											<ValueIcon class="h-4 w-4 text-primary-400" />
+										</div>
+										<h4 class="text-sm font-semibold text-surface-50">{value.title}</h4>
+									</div>
+									<p class="text-xs leading-relaxed text-surface-400">{value.description}</p>
+								</div>
+							{/each}
+						</div>
+					</div>
+
+					<!-- Benefits Widget -->
+					<div
+						class="dashboard-widget rounded-xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+					>
+						<div class="mb-6">
+							<h3 class="text-xl font-semibold text-surface-50">Why Work With Me</h3>
+							<p class="mt-1 text-sm text-surface-500">Reliable, professional service</p>
+						</div>
+						<div class="grid gap-3 sm:grid-cols-2">
+							{#each benefits as benefit}
+								{@const BenefitIcon = benefit.icon}
+								<div
+									class="hover-lift rounded-lg border border-surface-700 bg-surface-700/30 p-4 transition-all hover:border-primary-500/50"
+								>
+									<div class="mb-2 flex items-center gap-2">
+										<div class="rounded-lg bg-primary-500/10 p-1.5">
+											<BenefitIcon class="h-4 w-4 text-primary-400" />
+										</div>
+										<h4 class="text-sm font-semibold text-surface-50">{benefit.title}</h4>
+									</div>
+									<p class="text-xs leading-relaxed text-surface-400">{benefit.description}</p>
 								</div>
 							{/each}
 						</div>
