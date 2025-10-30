@@ -41,6 +41,7 @@
 </svelte:head>
 
 <div class="mt-4">
+	<!-- Hero Section with Silk Animation -->
 	<SilkHero
 		icon={FileText}
 		title="Insights"
