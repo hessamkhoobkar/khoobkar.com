@@ -6,7 +6,7 @@
 	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
-	import { FileText } from '@lucide/svelte';
+	import { FileText, Lightbulb } from '@lucide/svelte';
 
 	let blogPosts: ContentItem[] = $state([]);
 	let loading = $state(true);
@@ -43,7 +43,7 @@
 <div class="mt-4">
 	<!-- Hero Section with Silk Animation -->
 	<SilkHero
-		icon={FileText}
+		icon={Lightbulb}
 		title="Insights & Ideas"
 		subtitle="Fresh perspectives, hard-earned lessons, and actionable takes from a front-end journey."
 		silkColor="#ef5e03"

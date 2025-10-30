@@ -1,3 +1,5 @@
+import { House, Briefcase, Rocket, Lightbulb, User, Mail } from '@lucide/svelte';
+
 export interface NavigationItem {
 	href: string;
 	label: string;
@@ -46,3 +48,12 @@ export const socialLinks: NavigationItem[] = [
 	{ href: 'https://linkedin.com/company/khoobkar', label: 'LinkedIn', external: true },
 	{ href: 'https://github.com/khoobkar', label: 'GitHub', external: true }
 ];
+
+export const navigationIconMap = {
+  home: House,
+  briefcase: Briefcase,
+  rocket: Rocket,
+  lightbulb: Lightbulb,
+  user: User,
+  mail: Mail
+};
