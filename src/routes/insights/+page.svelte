@@ -44,8 +44,8 @@
 	<!-- Hero Section with Silk Animation -->
 	<SilkHero
 		icon={FileText}
-		title="Insights"
-		subtitle="Thoughts, insights, and updates from me."
+		title="Insights & Ideas"
+		subtitle="Fresh perspectives, hard-earned lessons, and actionable takes from a front-end journey."
 		silkColor="#ef5e03"
 		silkSpeed={5}
 		silkScale={1}

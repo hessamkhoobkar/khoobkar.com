@@ -75,8 +75,8 @@
 	<!-- Hero Section with Silk Animation -->
 	<SilkHero
 		icon={Rocket}
-		title="Innovation in Action"
-		subtitle="SaaS applications, experiments, and complex components that push the boundaries of what's possible on the web"
+		title="Projects & Creative Solutions"
+		subtitle="From experimental prototypes to real-world solutions—a showcase of creativity in motion."
 		silkColor="#ef5e03"
 		silkSpeed={5}
 		silkScale={1}
