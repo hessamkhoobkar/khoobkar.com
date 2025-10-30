@@ -412,9 +412,9 @@
 <!-- Dashboard Layout -->
 <div class="mt-4">
 	<!-- Dashboard Header Section -->
-	<section class="mx-auto max-w-7xl px-4 py-8">
+	<section class="mx-auto mb-6 max-w-7xl">
 		<div
-			class="dashboard-header mb-8 rounded-2xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
+			class="dashboard-header rounded-2xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
 		>
 			<div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
 				<div>
@@ -441,7 +441,7 @@
 	</section>
 
 	<!-- Main Dashboard Content -->
-	<div class="mx-auto max-w-7xl space-y-12 px-4 py-8">
+	<div class="mx-auto max-w-7xl space-y-6">
 		<!-- Key Metrics Cards -->
 		<section>
 			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
