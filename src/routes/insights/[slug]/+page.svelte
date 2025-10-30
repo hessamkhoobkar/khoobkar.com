@@ -196,9 +196,9 @@
 				<h2 class="mb-4 text-3xl font-bold text-surface-50 md:text-4xl">
 					Enjoyed This <span class="text-primary-400">Article</span>?
 				</h2>
-				<p class="mx-auto mb-8 max-w-2xl text-lg text-surface-200">
-					Share it with your network or check out more insights and resources.
-				</p>
+                <p class="mx-auto mb-8 max-w-2xl text-lg text-surface-200">
+                    Share it with your network or explore more insights.
+                </p>
 				<div class="flex flex-wrap justify-center gap-4">
 					<button
 						onclick={sharePost}
