@@ -19,20 +19,8 @@
 		const urlParams = new URLSearchParams(window.location.search);
 		if (urlParams.get('success') === 'true') {
 			submitStatus = 'success';
-			resetForm();
 			// Clean URL
 			window.history.replaceState({}, '', window.location.pathname);
-			// Scroll to success message
-			setTimeout(() => {
-				const successElement = form?.querySelector('.success-message');
-				if (successElement) {
-					successElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-				}
-			}, 100);
-			// Reset status after 10 seconds
-			setTimeout(() => {
-				submitStatus = 'idle';
-			}, 10000);
 		}
 	});
 
@@ -212,6 +200,11 @@
 	async function handleSubmit(event: SubmitEvent) {
 		event.preventDefault();
 
+		// Prevent submission if already in success state
+		if (submitStatus === 'success') {
+			return;
+		}
+
 		// Reset previous errors
 		errorMessage = '';
 		submitStatus = 'idle';
@@ -294,26 +287,12 @@
 						data.errors?.map((e: any) => e.message || e).join(', ') ||
 						'Failed to send message. Please try again.';
 				} else {
-					// Success - show success message and reset form
+					// Success - show success message and disable form
 					submitStatus = 'success';
-					resetForm();
+					// Don't reset form, just clear fields but keep form disabled
 
 					// Update URL without reloading
 					window.history.pushState({}, '', '/contact?success=true');
-
-					// Scroll to success message
-					setTimeout(() => {
-						const successElement = form?.querySelector('.success-message');
-						if (successElement) {
-							successElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-						}
-					}, 100);
-
-					// Reset status after 10 seconds
-					setTimeout(() => {
-						submitStatus = 'idle';
-						window.history.replaceState({}, '', '/contact');
-					}, 10000);
 				}
 			} else {
 				// Handle HTTP errors (4xx, 5xx)
@@ -345,24 +324,6 @@
 	data-sveltekit-preload-data="off"
 	aria-label="Contact form"
 >
-	<!-- Success Message -->
-	{#if submitStatus === 'success'}
-		<div
-			role="alert"
-			aria-live="polite"
-			class="success-message mb-6 flex items-start gap-3 rounded-xl border border-primary-500/30 bg-primary-500/10 p-4 text-primary-300"
-		>
-			<CircleCheck size={24} class="mt-0.5 flex-shrink-0" aria-hidden="true" />
-			<div>
-				<h3 class="mb-1 font-bold text-primary-400">Message sent successfully!</h3>
-				<p class="text-sm">
-					Thank you for reaching out. I'll respond within 24 hours, usually much sooner during
-					business hours.
-				</p>
-			</div>
-		</div>
-	{/if}
-
 	<!-- Error Message -->
 	{#if submitStatus === 'error' && errorMessage}
 		<div
@@ -378,238 +339,268 @@
 		</div>
 	{/if}
 
-	<div class="space-y-6">
-		<!-- Formspree redirect URL (hidden field) -->
-		<input type="hidden" name="_next" value="/contact?success=true" />
+	<div class="form-content-wrapper">
+		<!-- Success Overlay -->
+		{#if submitStatus === 'success'}
+			<div role="alert" aria-live="polite" class="success-overlay">
+				<div class="success-overlay-content">
+					<CircleCheck size={48} class="mb-4 text-primary-400" aria-hidden="true" />
+					<h3 class="mb-2 text-2xl font-bold text-primary-400">Message Received!</h3>
+					<p class="text-lg text-surface-200">
+						Thank you for reaching out. I'll reach out to you soon.
+					</p>
+				</div>
+			</div>
+		{/if}
 
-		<!-- Honeypot fields (hidden from users, visible to bots) -->
-		<div class="sr-only" aria-hidden="true">
-			<label for="_hp_url">URL (leave blank)</label>
-			<input
-				id="_hp_url"
-				type="url"
-				name="_hp_url"
-				bind:value={_hp_url}
-				tabindex="-1"
-				autocomplete="off"
-				data-form-type="other"
-				aria-hidden="true"
-				style="position:absolute;left:-9999px;width:1px;height:1px;"
-			/>
-			<label for="_hp_tel">Tel (leave blank)</label>
-			<input
-				id="_hp_tel"
-				type="tel"
-				name="_hp_tel"
-				bind:value={_hp_tel}
-				tabindex="-1"
-				autocomplete="off"
-				data-form-type="other"
-				aria-hidden="true"
-				style="position:absolute;left:-9999px;width:1px;height:1px;"
-			/>
-		</div>
+		<div class="space-y-6" class:form-disabled={submitStatus === 'success'}>
+			<!-- Formspree redirect URL (hidden field) -->
+			<input type="hidden" name="_next" value="/contact?success=true" />
 
-		<!-- Name Field -->
-		<div class="form-group">
-			<label for="name" class="form-label">
-				Name
-				<span class="text-primary-400" aria-label="required">*</span>
-			</label>
-			<input
-				id="name"
-				type="text"
-				name="name"
-				bind:value={name}
-				onblur={handleNameBlur}
-				class="form-input"
-				class:error={!!nameError}
-				placeholder="Your full name"
-				required
-				aria-required="true"
-				aria-invalid={nameError ? 'true' : 'false'}
-				aria-describedby={nameError ? 'name-error' : undefined}
-				autocomplete="name"
-				aria-label="Your full name"
-			/>
-			{#if nameError}
-				<p id="name-error" class="form-error" role="alert" aria-live="polite">{nameError}</p>
-			{/if}
-		</div>
+			<!-- Honeypot fields (hidden from users, visible to bots) -->
+			<div class="sr-only" aria-hidden="true">
+				<label for="_hp_url">URL (leave blank)</label>
+				<input
+					id="_hp_url"
+					type="url"
+					name="_hp_url"
+					bind:value={_hp_url}
+					tabindex="-1"
+					autocomplete="off"
+					data-form-type="other"
+					aria-hidden="true"
+					style="position:absolute;left:-9999px;width:1px;height:1px;"
+				/>
+				<label for="_hp_tel">Tel (leave blank)</label>
+				<input
+					id="_hp_tel"
+					type="tel"
+					name="_hp_tel"
+					bind:value={_hp_tel}
+					tabindex="-1"
+					autocomplete="off"
+					data-form-type="other"
+					aria-hidden="true"
+					style="position:absolute;left:-9999px;width:1px;height:1px;"
+				/>
+			</div>
 
-		<!-- Email Field -->
-		<div class="form-group">
-			<label for="email" class="form-label">
-				Email
-				<span class="text-primary-400" aria-label="required">*</span>
-			</label>
-			<input
-				id="email"
-				type="email"
-				name="email"
-				bind:value={email}
-				onblur={handleEmailBlur}
-				class="form-input"
-				class:error={emailError}
-				placeholder="your.email@example.com"
-				required
-				aria-required="true"
-				aria-invalid={emailError ? 'true' : 'false'}
-				aria-describedby={emailError ? 'email-error' : undefined}
-				autocomplete="email"
-				aria-label="Your email address"
-			/>
-			{#if emailError}
-				<p id="email-error" class="form-error" role="alert" aria-live="polite">{emailError}</p>
-			{/if}
-		</div>
+			<!-- Name Field -->
+			<div class="form-group">
+				<label for="name" class="form-label">
+					Name
+					<span class="text-primary-400" aria-label="required">*</span>
+				</label>
+				<input
+					id="name"
+					type="text"
+					name="name"
+					bind:value={name}
+					onblur={handleNameBlur}
+					class="form-input"
+					class:error={!!nameError}
+					placeholder="Your full name"
+					required
+					aria-required="true"
+					aria-invalid={nameError ? 'true' : 'false'}
+					aria-describedby={nameError ? 'name-error' : undefined}
+					autocomplete="name"
+					aria-label="Your full name"
+					disabled={submitStatus === 'success'}
+				/>
+				{#if nameError}
+					<p id="name-error" class="form-error" role="alert" aria-live="polite">{nameError}</p>
+				{/if}
+			</div>
 
-		<!-- Subject Field -->
-		<div class="form-group">
-			<label for="subject" class="form-label">
-				Topic
-				<span class="text-primary-400" aria-label="required">*</span>
-			</label>
-			<!-- Hidden native select for form submission -->
-			<select
-				id="subject"
-				name="subject"
-				bind:value={subject}
-				class="sr-only"
-				required
-				aria-hidden="true"
-				tabindex="-1"
-			>
-				{#each subjectOptions as option}
-					<option value={option.value} disabled={option.disabled}>{option.label}</option>
-				{/each}
-			</select>
-			<!-- Custom dropdown -->
-			<div bind:this={dropdownWrapper} class="custom-select-wrapper">
-				<button
-					type="button"
-					bind:this={dropdownButton}
-					onclick={() => (isDropdownOpen = !isDropdownOpen)}
-					onkeydown={handleDropdownKeydown}
-					class="custom-select-button form-input"
-					class:error={!!subjectError}
-					class:open={isDropdownOpen}
-					aria-haspopup="listbox"
-					aria-expanded={isDropdownOpen}
-					aria-label="Select a topic for your inquiry"
-					aria-describedby={subjectError ? 'subject-error' : undefined}
+			<!-- Email Field -->
+			<div class="form-group">
+				<label for="email" class="form-label">
+					Email
+					<span class="text-primary-400" aria-label="required">*</span>
+				</label>
+				<input
+					id="email"
+					type="email"
+					name="email"
+					bind:value={email}
+					onblur={handleEmailBlur}
+					class="form-input"
+					class:error={emailError}
+					placeholder="your.email@example.com"
+					required
+					aria-required="true"
+					aria-invalid={emailError ? 'true' : 'false'}
+					aria-describedby={emailError ? 'email-error' : undefined}
+					autocomplete="email"
+					aria-label="Your email address"
+					disabled={submitStatus === 'success'}
+				/>
+				{#if emailError}
+					<p id="email-error" class="form-error" role="alert" aria-live="polite">{emailError}</p>
+				{/if}
+			</div>
+
+			<!-- Subject Field -->
+			<div class="form-group">
+				<label for="subject" class="form-label">
+					Topic
+					<span class="text-primary-400" aria-label="required">*</span>
+				</label>
+				<!-- Hidden native select for form submission -->
+				<select
+					id="subject"
+					name="subject"
+					bind:value={subject}
+					class="sr-only"
+					required
+					aria-hidden="true"
+					tabindex="-1"
 				>
-					<span class="custom-select-value">{selectedLabel}</span>
-					<svg
-						class="custom-select-arrow"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<polyline points="6 9 12 15 18 9"></polyline>
-					</svg>
-				</button>
-				{#if isDropdownOpen}
-					<div
-						class="custom-select-menu"
-						role="listbox"
-						tabindex="-1"
-						onclick={(e) => e.stopPropagation()}
-						onkeydown={(e) => {
-							if (e.key === 'Escape') {
-								isDropdownOpen = false;
-								dropdownButton?.focus();
+					{#each subjectOptions as option}
+						<option value={option.value} disabled={option.disabled}>{option.label}</option>
+					{/each}
+				</select>
+				<!-- Custom dropdown -->
+				<div bind:this={dropdownWrapper} class="custom-select-wrapper">
+					<button
+						type="button"
+						bind:this={dropdownButton}
+						onclick={() => {
+							if (submitStatus !== 'success') {
+								isDropdownOpen = !isDropdownOpen;
 							}
 						}}
+						onkeydown={handleDropdownKeydown}
+						class="custom-select-button form-input"
+						class:error={!!subjectError}
+						class:open={isDropdownOpen}
+						aria-haspopup="listbox"
+						aria-expanded={isDropdownOpen}
+						aria-label="Select a topic for your inquiry"
+						aria-describedby={subjectError ? 'subject-error' : undefined}
+						disabled={submitStatus === 'success'}
 					>
-						{#each subjectOptions as option}
-							<button
-								type="button"
-								role="option"
-								class="custom-select-option"
-								class:selected={subject === option.value}
-								class:disabled={option.disabled}
-								disabled={option.disabled}
-								onclick={() => {
-									if (!option.disabled) {
-										subject = option.value;
-										isDropdownOpen = false;
-										dropdownButton?.focus();
-										handleSubjectBlur();
-									}
-								}}
-								aria-selected={subject === option.value}
-							>
-								{option.label}
-							</button>
-						{/each}
-					</div>
-				{/if}
-			</div>
-			{#if subjectError}
-				<p id="subject-error" class="form-error" role="alert" aria-live="polite">{subjectError}</p>
-			{/if}
-		</div>
-
-		<!-- Message Field -->
-		<div class="form-group">
-			<label for="message" class="form-label">
-				Message
-				<span class="text-primary-400" aria-label="required">*</span>
-			</label>
-			<textarea
-				id="message"
-				name="message"
-				bind:value={message}
-				onblur={handleMessageBlur}
-				class="form-input form-textarea"
-				class:error={messageError}
-				placeholder="Tell me about your project, timeline, budget, or just say hello..."
-				rows="6"
-				required
-				aria-required="true"
-				aria-invalid={messageError ? 'true' : 'false'}
-				aria-describedby={messageError ? 'message-error message-counter' : 'message-counter'}
-				aria-label="Your message">{message}</textarea
-			>
-			<div class="mt-1 flex items-center justify-between">
-				{#if messageError}
-					<p id="message-error" class="form-error" role="alert" aria-live="polite">
-						{messageError}
+						<span class="custom-select-value">{selectedLabel}</span>
+						<svg
+							class="custom-select-arrow"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<polyline points="6 9 12 15 18 9"></polyline>
+						</svg>
+					</button>
+					{#if isDropdownOpen}
+						<div
+							class="custom-select-menu"
+							role="listbox"
+							tabindex="-1"
+							onclick={(e) => e.stopPropagation()}
+							onkeydown={(e) => {
+								if (e.key === 'Escape') {
+									isDropdownOpen = false;
+									dropdownButton?.focus();
+								}
+							}}
+						>
+							{#each subjectOptions as option}
+								<button
+									type="button"
+									role="option"
+									class="custom-select-option"
+									class:selected={subject === option.value}
+									class:disabled={option.disabled}
+									disabled={option.disabled}
+									onclick={() => {
+										if (!option.disabled) {
+											subject = option.value;
+											isDropdownOpen = false;
+											dropdownButton?.focus();
+											handleSubjectBlur();
+										}
+									}}
+									aria-selected={subject === option.value}
+								>
+									{option.label}
+								</button>
+							{/each}
+						</div>
+					{/if}
+				</div>
+				{#if subjectError}
+					<p id="subject-error" class="form-error" role="alert" aria-live="polite">
+						{subjectError}
 					</p>
-				{:else}
-					<span></span>
 				{/if}
-				<span
-					id="message-counter"
-					class="text-xs text-surface-400"
-					class:text-surface-300={messageLength > MAX_MESSAGE_LENGTH * 0.8}
-					class:text-primary-400={messageLength > MAX_MESSAGE_LENGTH * 0.9}
-					class:text-red-400={messageLength > MAX_MESSAGE_LENGTH}
-					aria-live="polite"
-				>
-					{messageLength} / {MAX_MESSAGE_LENGTH}
-				</span>
 			</div>
+
+			<!-- Message Field -->
+			<div class="form-group">
+				<label for="message" class="form-label">
+					Message
+					<span class="text-primary-400" aria-label="required">*</span>
+				</label>
+				<textarea
+					id="message"
+					name="message"
+					bind:value={message}
+					onblur={handleMessageBlur}
+					class="form-input form-textarea"
+					class:error={messageError}
+					placeholder="Tell me about your project, timeline, budget, or just say hello..."
+					rows="6"
+					required
+					aria-required="true"
+					aria-invalid={messageError ? 'true' : 'false'}
+					aria-describedby={messageError ? 'message-error message-counter' : 'message-counter'}
+					aria-label="Your message"
+					disabled={submitStatus === 'success'}>{message}</textarea
+				>
+				<div class="mt-1 flex items-center justify-between">
+					{#if messageError}
+						<p id="message-error" class="form-error" role="alert" aria-live="polite">
+							{messageError}
+						</p>
+					{:else}
+						<span></span>
+					{/if}
+					<span
+						id="message-counter"
+						class="text-xs text-surface-400"
+						class:text-surface-300={messageLength > MAX_MESSAGE_LENGTH * 0.8}
+						class:text-primary-400={messageLength > MAX_MESSAGE_LENGTH * 0.9}
+						class:text-red-400={messageLength > MAX_MESSAGE_LENGTH}
+						aria-live="polite"
+					>
+						{messageLength} / {MAX_MESSAGE_LENGTH}
+					</span>
+				</div>
+			</div>
+
+			<!-- Submit Button -->
+			<button
+				type="submit"
+				class="form-submit"
+				disabled={isSubmitting || submitStatus === 'success'}
+				aria-busy={isSubmitting}
+			>
+				{#if isSubmitting}
+					<LoaderCircle size={20} class="animate-spin" aria-hidden="true" />
+					<span>Sending...</span>
+				{:else}
+					<Send size={20} aria-hidden="true" />
+					<span>Send Message</span>
+				{/if}
+			</button>
+
+			<!-- Privacy Note -->
+			<p class="mt-4 text-center text-sm text-surface-400" aria-live="polite">
+				<Shield size={14} class="mr-1 mb-0.5 inline" aria-hidden="true" />
+				Your information is secure and will never be shared.
+			</p>
 		</div>
-
-		<!-- Submit Button -->
-		<button type="submit" class="form-submit" disabled={isSubmitting} aria-busy={isSubmitting}>
-			{#if isSubmitting}
-				<LoaderCircle size={20} class="animate-spin" aria-hidden="true" />
-				<span>Sending...</span>
-			{:else}
-				<Send size={20} aria-hidden="true" />
-				<span>Send Message</span>
-			{/if}
-		</button>
-
-		<!-- Privacy Note -->
-		<p class="mt-4 text-center text-sm text-surface-400" aria-live="polite">
-			<Shield size={14} class="mr-1 mb-0.5 inline" aria-hidden="true" />
-			Your information is secure and will never be shared.
-		</p>
 	</div>
 </form>
 
@@ -830,7 +821,6 @@
 	}
 
 	/* Animations */
-	.success-message,
 	.error-message {
 		animation: slideIn 0.3s ease-out;
 	}
@@ -864,5 +854,55 @@
 		clip: rect(0, 0, 0, 0);
 		white-space: nowrap;
 		border-width: 0;
+	}
+
+	/* Form content wrapper */
+	.form-content-wrapper {
+		position: relative;
+	}
+
+	/* Success overlay */
+	.success-overlay {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 10;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--color-surface-900);
+		opacity: 0.95;
+		backdrop-filter: blur(8px);
+		border-radius: 0.75rem;
+		padding: 2rem;
+		animation: overlay-fade-in 0.3s ease-out;
+	}
+
+	.success-overlay-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		max-width: 400px;
+	}
+
+	@keyframes overlay-fade-in {
+		from {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	/* Form disabled state */
+	.form-disabled {
+		pointer-events: none;
+		opacity: 0.6;
 	}
 </style>
