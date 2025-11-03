@@ -42,7 +42,7 @@
 	{/if}
 </svelte:head>
 
-<div class="mx-auto max-w-5xl">
+<div class="mx-auto max-w-8xl">
 	<!-- Navigation breadcrumb -->
 	<nav class="mb-8 flex items-center gap-2 text-sm text-surface-400">
 		<a href="/" class="transition-colors hover:text-primary-400">Home</a>

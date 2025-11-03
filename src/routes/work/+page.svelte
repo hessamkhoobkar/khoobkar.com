@@ -106,7 +106,7 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-7xl space-y-12 px-4 py-8">
+	<div class="mx-auto max-w-8xl space-y-12 py-8">
 		<!-- Stats Showcase -->
 		<section
 			class="grid gap-6 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent p-8 md:grid-cols-4"
@@ -311,9 +311,9 @@
 							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">
 								Lighthouse
 							</span>
-							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300"
-								>Core Web Vitals</span
-							>
+							<span class="rounded bg-surface-700 px-2 py-1 text-xs text-surface-300">
+								Core Web Vitals
+							</span>
 						</div>
 					</div>
 

@@ -53,7 +53,7 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-7xl space-y-12 px-4 py-8">
+	<div class="mx-auto max-w-8xl space-y-12 py-8">
 		{#if loading}
 			<div class="grid gap-8 md:grid-cols-2">
 				{#each Array(6) as _}

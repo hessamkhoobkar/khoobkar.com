@@ -191,7 +191,7 @@ As user base grew, I addressed:
 	<!-- Hero Section -->
 	<section class="py-20">
 		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-5xl">
+			<div class="mx-auto max-w-8xl">
 				<!-- Project Header -->
 				<div class="mb-8">
 					<div class="mb-4 flex items-center gap-2">
@@ -269,7 +269,7 @@ As user base grew, I addressed:
 	<!-- Content Section -->
 	<section class="bg-surface-900 py-20">
 		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-5xl">
+			<div class="mx-auto max-w-8xl">
 				<div class="prose prose-lg max-w-none prose-invert">
 					{@html displayProject.content}
 				</div>
@@ -280,7 +280,7 @@ As user base grew, I addressed:
 	<!-- Tech Stack -->
 	<section class="py-20">
 		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-5xl">
+			<div class="mx-auto max-w-8xl">
 				<h2 class="mb-8 text-3xl font-bold text-surface-100">Technical Stack</h2>
 				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 					{#each techStack as tech}
@@ -303,7 +303,7 @@ As user base grew, I addressed:
 	{#if displayProject.meta.tags && displayProject.meta.tags.length > 0}
 		<section class="bg-surface-900 py-20">
 			<div class="container mx-auto px-4">
-				<div class="mx-auto max-w-4xl">
+				<div class="mx-auto max-w-8xl">
 					<h2 class="mb-8 text-3xl font-bold text-surface-100">Technologies Used</h2>
 					<div class="flex flex-wrap gap-3">
 						{#each displayProject.meta.tags as tag}
@@ -320,7 +320,7 @@ As user base grew, I addressed:
 	<!-- Call to Action -->
 	<section class="py-20">
 		<div class="container mx-auto px-4 text-center">
-			<div class="mx-auto max-w-3xl">
+			<div class="mx-auto max-w-8xl">
 				<h2 class="mb-6 text-4xl font-bold text-surface-100">Interested in Similar Solutions?</h2>
 				<p class="mb-8 text-xl text-surface-400">
 					Let's discuss how I can help you build innovative solutions that drive real business

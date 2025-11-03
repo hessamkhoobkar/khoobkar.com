@@ -85,7 +85,7 @@
 	/>
 
 	<!-- Stats Section -->
-	<section class="relative z-10 mx-auto max-w-7xl px-4 py-8">
+	<section class="relative z-10 mx-auto max-w-8xl py-8">
 		<div class="flex flex-wrap justify-center gap-4">
 			{#each stats as stat}
 				{@const Icon = stat.icon}
@@ -102,7 +102,7 @@
 
 	<!-- Project Categories -->
 	<section class="py-20">
-		<div class="mx-auto max-w-7xl px-4">
+		<div class="mx-auto max-w-8xl">
 			<div class="mb-16 text-center">
 				<h2 class="mb-6 text-4xl font-bold text-surface-100 md:text-5xl">Project Portfolio</h2>
 				<p class="mx-auto max-w-3xl text-xl text-surface-400">
@@ -162,7 +162,7 @@
 	</section>
 
 	<!-- Footer CTA -->
-	<section class="mx-auto max-w-7xl px-4">
+	<section class="mx-auto max-w-8xl">
 		<Footer />
 	</section>
 </div>

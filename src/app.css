@@ -120,3 +120,8 @@
 .prose code {
 	font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
 }
+
+/* Custom max-width for 8xl - 1920px */
+@theme {
+	--max-width-8xl: 1920px;
+}

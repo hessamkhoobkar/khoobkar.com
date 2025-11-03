@@ -288,7 +288,7 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-6xl space-y-12 px-4 py-8">
+	<div class="mx-auto max-w-8xl py-8">
 		<!-- Quick Stats Bar -->
 		<section
 			class="grid gap-4 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent p-6 md:grid-cols-4 md:p-8"

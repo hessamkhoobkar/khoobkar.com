@@ -412,7 +412,7 @@
 <!-- Dashboard Layout -->
 <div class="mt-4">
 	<!-- Dashboard Header Section -->
-	<section class="mx-auto mb-6 max-w-7xl">
+	<section class="mx-auto mb-6 max-w-8xl">
 		<div
 			class="dashboard-header rounded-2xl border border-surface-700 bg-surface-800/50 p-6 backdrop-blur-sm"
 		>
@@ -441,7 +441,7 @@
 	</section>
 
 	<!-- Main Dashboard Content -->
-	<div class="mx-auto max-w-7xl space-y-6">
+	<div class="mx-auto max-w-8xl space-y-6">
 		<!-- Key Metrics Cards -->
 		<section>
 			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -864,7 +864,7 @@
 		</section>
 
 		<!-- Footer -->
-		<section class="mx-auto max-w-7xl px-4">
+		<section>
 			<Footer />
 		</section>
 	</div>

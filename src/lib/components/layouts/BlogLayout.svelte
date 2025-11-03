@@ -7,7 +7,7 @@
 	const meta = $derived($page.data?.meta);
 </script>
 
-<article class="mx-auto max-w-4xl">
+<article class="mx-auto max-w-8xl">
 	{#if meta}
 		<header class="mb-8 border-b border-surface-200 pb-8">
 			<h1 class="mb-4 text-4xl font-bold text-surface-50">{meta.title}</h1>

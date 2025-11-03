@@ -107,7 +107,7 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-6xl space-y-6">
+	<div class="mx-auto max-w-8xl space-y-6">
 		<!-- Contact Form - Above the Fold (Primary CTA) -->
 		<section
 			bind:this={formElement}
@@ -152,169 +152,165 @@
 				</p>
 			</div>
 
-			<div class="mx-auto max-w-6xl">
-				<div class="relative space-y-8 pb-12">
-					<!-- Vertical Timeline Line -->
+			<div class="relative space-y-8 pb-12">
+				<!-- Vertical Timeline Line -->
+				<div
+					class="absolute top-12 left-8 hidden h-[calc(100%-3rem)] w-0.5 bg-gradient-to-b from-primary-600 via-primary-500 to-transparent md:block"
+				></div>
+
+				<!-- Step 1 -->
+				<div class="group relative flex gap-6 md:gap-8">
+					<!-- Icon -->
+					<div class="relative z-10 flex-shrink-0">
+						<div
+							class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
+						>
+							<Zap size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
+						</div>
+					</div>
+
+					<!-- Content Card -->
 					<div
-						class="absolute top-12 left-8 hidden h-[calc(100%-3rem)] w-0.5 bg-gradient-to-b from-primary-600 via-primary-500 to-transparent md:block"
-					></div>
-
-					<!-- Step 1 -->
-					<div class="group relative flex gap-6 md:gap-8">
-						<!-- Icon -->
-						<div class="relative z-10 flex-shrink-0">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
+						class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+					>
+						<div class="mb-2 flex items-center gap-3">
+							<span
+								class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
 							>
-								<Zap size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
-							</div>
+								Step 1
+							</span>
+							<span class="text-xs text-surface-500">•</span>
+							<span class="text-xs text-surface-400">Immediate</span>
 						</div>
+						<h3 class="mb-3 text-2xl font-bold text-surface-50">Quick Response</h3>
+						<p class="leading-relaxed text-surface-300">
+							I'll respond within 24 hours, usually much sooner during business hours (EST). Every
+							message gets my personal attention.
+						</p>
+					</div>
+				</div>
 
-						<!-- Content Card -->
+				<!-- Step 2 -->
+				<div class="group relative flex gap-6 md:gap-8">
+					<!-- Icon -->
+					<div class="relative z-10 flex-shrink-0">
 						<div
-							class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+							class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
 						>
-							<div class="mb-2 flex items-center gap-3">
-								<span
-									class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
-								>
-									Step 1
-								</span>
-								<span class="text-xs text-surface-500">•</span>
-								<span class="text-xs text-surface-400">Immediate</span>
-							</div>
-							<h3 class="mb-3 text-2xl font-bold text-surface-50">Quick Response</h3>
-							<p class="leading-relaxed text-surface-300">
-								I'll respond within 24 hours, usually much sooner during business hours (EST). Every
-								message gets my personal attention.
-							</p>
+							<MessageSquare size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
 						</div>
 					</div>
 
-					<!-- Step 2 -->
-					<div class="group relative flex gap-6 md:gap-8">
-						<!-- Icon -->
-						<div class="relative z-10 flex-shrink-0">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
+					<!-- Content Card -->
+					<div
+						class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+					>
+						<div class="mb-2 flex items-center gap-3">
+							<span
+								class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
 							>
-								<MessageSquare size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
-							</div>
+								Step 2
+							</span>
+							<span class="text-xs text-surface-500">•</span>
+							<span class="text-xs text-surface-400">30 min call</span>
 						</div>
+						<h3 class="mb-3 text-2xl font-bold text-surface-50">Discovery Call</h3>
+						<p class="leading-relaxed text-surface-300">
+							We'll schedule a call or video chat to discuss your project needs, goals, timeline,
+							and any specific requirements you have.
+						</p>
+					</div>
+				</div>
 
-						<!-- Content Card -->
+				<!-- Step 3 -->
+				<div class="group relative flex gap-6 md:gap-8">
+					<!-- Icon -->
+					<div class="relative z-10 flex-shrink-0">
 						<div
-							class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+							class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
 						>
-							<div class="mb-2 flex items-center gap-3">
-								<span
-									class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
-								>
-									Step 2
-								</span>
-								<span class="text-xs text-surface-500">•</span>
-								<span class="text-xs text-surface-400">30 min call</span>
-							</div>
-							<h3 class="mb-3 text-2xl font-bold text-surface-50">Discovery Call</h3>
-							<p class="leading-relaxed text-surface-300">
-								We'll schedule a call or video chat to discuss your project needs, goals, timeline,
-								and any specific requirements you have.
-							</p>
+							<FileText size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
 						</div>
 					</div>
 
-					<!-- Step 3 -->
-					<div class="group relative flex gap-6 md:gap-8">
-						<!-- Icon -->
-						<div class="relative z-10 flex-shrink-0">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
+					<!-- Content Card -->
+					<div
+						class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+					>
+						<div class="mb-2 flex items-center gap-3">
+							<span
+								class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
 							>
-								<FileText size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
-							</div>
+								Step 3
+							</span>
+							<span class="text-xs text-surface-500">•</span>
+							<span class="text-xs text-surface-400">Within 48 hours</span>
 						</div>
+						<h3 class="mb-3 text-2xl font-bold text-surface-50">Tailored Proposal</h3>
+						<p class="leading-relaxed text-surface-300">
+							Receive a comprehensive proposal with detailed timeline, project scope, milestones,
+							and transparent pricing. No hidden fees.
+						</p>
+					</div>
+				</div>
 
-						<!-- Content Card -->
+				<!-- Step 4 -->
+				<div class="group relative flex gap-6 md:gap-8">
+					<!-- Icon -->
+					<div class="relative z-10 flex-shrink-0">
 						<div
-							class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+							class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
 						>
-							<div class="mb-2 flex items-center gap-3">
-								<span
-									class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
-								>
-									Step 3
-								</span>
-								<span class="text-xs text-surface-500">•</span>
-								<span class="text-xs text-surface-400">Within 48 hours</span>
-							</div>
-							<h3 class="mb-3 text-2xl font-bold text-surface-50">Tailored Proposal</h3>
-							<p class="leading-relaxed text-surface-300">
-								Receive a comprehensive proposal with detailed timeline, project scope, milestones,
-								and transparent pricing. No hidden fees.
-							</p>
+							<Sparkles size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
 						</div>
 					</div>
 
-					<!-- Step 4 -->
-					<div class="group relative flex gap-6 md:gap-8">
-						<!-- Icon -->
-						<div class="relative z-10 flex-shrink-0">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
+					<!-- Content Card -->
+					<div
+						class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+					>
+						<div class="mb-2 flex items-center gap-3">
+							<span
+								class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
 							>
-								<Sparkles size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
-							</div>
+								Step 4
+							</span>
+							<span class="text-xs text-surface-500">•</span>
+							<span class="text-xs text-surface-400">Let's go! 🚀</span>
 						</div>
+						<h3 class="mb-3 text-2xl font-bold text-surface-50">Let's Build Together!</h3>
+						<p class="leading-relaxed text-surface-300">
+							Once approved, we'll kick off the project with a clear roadmap and regular updates.
+							Your vision becomes reality!
+						</p>
+					</div>
+				</div>
 
-						<!-- Content Card -->
+				<!-- Success Endpoint - Now visible on mobile -->
+				<div class="group relative flex gap-6 md:gap-8">
+					<!-- Success Icon -->
+					<div class="relative z-10 flex-shrink-0">
 						<div
-							class="flex-1 rounded-2xl border border-surface-600 bg-surface-700/50 p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:bg-surface-700 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+							class="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-primary-500/50 bg-gradient-to-br from-primary-500/20 to-primary-600/20 shadow-lg shadow-primary-500/20 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:border-primary-400 group-hover:from-primary-500/30 group-hover:to-primary-600/30"
 						>
-							<div class="mb-2 flex items-center gap-3">
-								<span
-									class="inline-flex items-center rounded-full bg-primary-500/20 px-3 py-1 text-xs font-bold tracking-wider text-primary-400 uppercase"
-								>
-									Step 4
-								</span>
-								<span class="text-xs text-surface-500">•</span>
-								<span class="text-xs text-surface-400">Let's go! 🚀</span>
-							</div>
-							<h3 class="mb-3 text-2xl font-bold text-surface-50">Let's Build Together!</h3>
-							<p class="leading-relaxed text-surface-300">
-								Once approved, we'll kick off the project with a clear roadmap and regular updates.
-								Your vision becomes reality!
-							</p>
+							<CheckCircle2
+								size={32}
+								class="text-primary-400"
+								strokeWidth={2.5}
+								aria-hidden="true"
+							/>
 						</div>
 					</div>
 
-					<!-- Success Endpoint - Now visible on mobile -->
-					<div class="group relative flex gap-6 md:gap-8">
-						<!-- Success Icon -->
-						<div class="relative z-10 flex-shrink-0">
-							<div
-								class="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-primary-500/50 bg-gradient-to-br from-primary-500/20 to-primary-600/20 shadow-lg shadow-primary-500/20 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:border-primary-400 group-hover:from-primary-500/30 group-hover:to-primary-600/30"
-							>
-								<CheckCircle2
-									size={32}
-									class="text-primary-400"
-									strokeWidth={2.5}
-									aria-hidden="true"
-								/>
-							</div>
-						</div>
-
-						<!-- Success Message -->
-						<div
-							class="flex-1 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
-						>
-							<h3 class="mb-2 text-xl font-bold text-primary-400">
-								Your Project Comes to Life! 🎉
-							</h3>
-							<p class="leading-relaxed text-surface-300">
-								From concept to completion, I'll be with you every step of the way. Let's create
-								something exceptional together.
-							</p>
-						</div>
+					<!-- Success Message -->
+					<div
+						class="flex-1 rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-transparent p-6 transition-all duration-300 group-hover:border-primary-500/50 group-hover:shadow-lg group-hover:shadow-primary-500/10 md:p-8"
+					>
+						<h3 class="mb-2 text-xl font-bold text-primary-400">Your Project Comes to Life! 🎉</h3>
+						<p class="leading-relaxed text-surface-300">
+							From concept to completion, I'll be with you every step of the way. Let's create
+							something exceptional together.
+						</p>
 					</div>
 				</div>
 			</div>
