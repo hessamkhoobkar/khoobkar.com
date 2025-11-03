@@ -57,7 +57,7 @@
 </script>
 
 <div bind:this={scrollContainer}>
-	<main bind:this={scrollContent} class="min-h-screen bg-surface-950 px-4 lg:ps-96 lg:pe-4">
+	<main bind:this={scrollContent} class="min-h-screen bg-surface-950 px-4 lg:ps-90">
 		{@render children?.()}
 	</main>
 </div>

@@ -539,8 +539,7 @@
 		<!-- Privacy Note -->
 		<p class="mt-4 text-center text-sm text-surface-400" aria-live="polite">
 			<Shield size={14} class="mr-1 mb-0.5 inline" aria-hidden="true" />
-			Your information is secure and will never be shared. I typically respond within 24 hours, usually
-			much sooner during business hours (EST).
+			Your information is secure and will never be shared.
 		</p>
 	</div>
 </form>
