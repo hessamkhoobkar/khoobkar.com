@@ -73,6 +73,42 @@
 		{ value: 'general', label: 'General Inquiry' }
 	];
 
+	// Custom dropdown state
+	let isDropdownOpen = $state(false);
+	let dropdownButton: HTMLButtonElement;
+	let dropdownWrapper: HTMLDivElement;
+	let selectedLabel = $derived(
+		subjectOptions.find((opt) => opt.value === subject)?.label || 'Select a topic...'
+	);
+
+	// Handle keyboard navigation for dropdown
+	function handleDropdownKeydown(e: KeyboardEvent) {
+		if (e.key === 'Escape') {
+			isDropdownOpen = false;
+			dropdownButton?.focus();
+		} else if (e.key === 'Enter' || e.key === ' ') {
+			if (!isDropdownOpen) {
+				e.preventDefault();
+				isDropdownOpen = true;
+			}
+		}
+	}
+
+	// Close dropdown when clicking outside
+	$effect(() => {
+		if (isDropdownOpen && dropdownWrapper) {
+			function handleClickOutside(event: MouseEvent) {
+				if (dropdownWrapper && !dropdownWrapper.contains(event.target as Node)) {
+					isDropdownOpen = false;
+				}
+			}
+			document.addEventListener('mousedown', handleClickOutside);
+			return () => {
+				document.removeEventListener('mousedown', handleClickOutside);
+			};
+		}
+	});
+
 	// Validation functions
 	function validateName(name: string): string {
 		if (!name.trim()) {
@@ -356,7 +392,6 @@
 				bind:value={_hp_url}
 				tabindex="-1"
 				autocomplete="off"
-				data-lpignore="true"
 				data-form-type="other"
 				aria-hidden="true"
 				style="position:absolute;left:-9999px;width:1px;height:1px;"
@@ -369,7 +404,6 @@
 				bind:value={_hp_tel}
 				tabindex="-1"
 				autocomplete="off"
-				data-lpignore="true"
 				data-form-type="other"
 				aria-hidden="true"
 				style="position:absolute;left:-9999px;width:1px;height:1px;"
@@ -436,23 +470,83 @@
 				Topic
 				<span class="text-primary-400" aria-label="required">*</span>
 			</label>
+			<!-- Hidden native select for form submission -->
 			<select
 				id="subject"
 				name="subject"
 				bind:value={subject}
-				onblur={handleSubjectBlur}
-				class="form-input"
-				class:error={subjectError}
+				class="sr-only"
 				required
-				aria-required="true"
-				aria-invalid={subjectError ? 'true' : 'false'}
-				aria-describedby={subjectError ? 'subject-error' : undefined}
-				aria-label="Select a topic for your inquiry"
+				aria-hidden="true"
+				tabindex="-1"
 			>
 				{#each subjectOptions as option}
 					<option value={option.value} disabled={option.disabled}>{option.label}</option>
 				{/each}
 			</select>
+			<!-- Custom dropdown -->
+			<div bind:this={dropdownWrapper} class="custom-select-wrapper">
+				<button
+					type="button"
+					bind:this={dropdownButton}
+					onclick={() => (isDropdownOpen = !isDropdownOpen)}
+					onkeydown={handleDropdownKeydown}
+					class="custom-select-button form-input"
+					class:error={!!subjectError}
+					class:open={isDropdownOpen}
+					aria-haspopup="listbox"
+					aria-expanded={isDropdownOpen}
+					aria-label="Select a topic for your inquiry"
+					aria-describedby={subjectError ? 'subject-error' : undefined}
+				>
+					<span class="custom-select-value">{selectedLabel}</span>
+					<svg
+						class="custom-select-arrow"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<polyline points="6 9 12 15 18 9"></polyline>
+					</svg>
+				</button>
+				{#if isDropdownOpen}
+					<div
+						class="custom-select-menu"
+						role="listbox"
+						tabindex="-1"
+						onclick={(e) => e.stopPropagation()}
+						onkeydown={(e) => {
+							if (e.key === 'Escape') {
+								isDropdownOpen = false;
+								dropdownButton?.focus();
+							}
+						}}
+					>
+						{#each subjectOptions as option}
+							<button
+								type="button"
+								role="option"
+								class="custom-select-option"
+								class:selected={subject === option.value}
+								class:disabled={option.disabled}
+								disabled={option.disabled}
+								onclick={() => {
+									if (!option.disabled) {
+										subject = option.value;
+										isDropdownOpen = false;
+										dropdownButton?.focus();
+										handleSubjectBlur();
+									}
+								}}
+								aria-selected={subject === option.value}
+							>
+								{option.label}
+							</button>
+						{/each}
+					</div>
+				{/if}
+			</div>
 			{#if subjectError}
 				<p id="subject-error" class="form-error" role="alert" aria-live="polite">{subjectError}</p>
 			{/if}
@@ -619,14 +713,120 @@
 		box-shadow: 0 0 0 2px var(--color-primary-500);
 	}
 
-	/* Custom select arrow */
-	select.form-input {
-		appearance: none;
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d1d5db' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-		background-position: right 0.75rem center;
-		background-repeat: no-repeat;
-		background-size: 1.25rem;
-		padding-right: 2.75rem;
+	/* Custom Select Dropdown */
+	.custom-select-wrapper {
+		position: relative;
+		width: 100%;
+	}
+
+	.custom-select-button {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		cursor: pointer;
+		text-align: left;
+	}
+
+	.custom-select-value {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.custom-select-arrow {
+		width: 1.25rem;
+		height: 1.25rem;
+		flex-shrink: 0;
+		margin-left: 0.75rem;
+		color: var(--color-primary-500);
+		transition: transform 0.2s ease;
+		pointer-events: none;
+	}
+
+	.custom-select-button.open .custom-select-arrow {
+		transform: rotate(180deg);
+	}
+
+	.custom-select-menu {
+		position: absolute;
+		top: calc(100% + 0.25rem);
+		left: 0;
+		right: 0;
+		z-index: 50;
+		max-height: 16rem;
+		overflow-y: auto;
+		background-color: var(--color-surface-700);
+		border: 1px solid var(--color-surface-600);
+		border-radius: 0.5rem;
+		box-shadow:
+			0 10px 15px -3px rgba(0, 0, 0, 0.3),
+			0 4px 6px -2px rgba(0, 0, 0, 0.2);
+		margin-top: 0.25rem;
+		animation: dropdown-fade-in 0.15s ease-out;
+	}
+
+	@keyframes dropdown-fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(-0.5rem);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.custom-select-option {
+		display: block;
+		width: 100%;
+		padding: 0.75rem 1rem;
+		text-align: left;
+		background-color: transparent;
+		color: var(--color-surface-50);
+		border: none;
+		cursor: pointer;
+		transition: all 0.15s ease;
+		font-size: inherit;
+		font-family: inherit;
+	}
+
+	.custom-select-option:first-child {
+		border-radius: 0.5rem 0.5rem 0 0;
+	}
+
+	.custom-select-option:last-child {
+		border-radius: 0 0 0.5rem 0.5rem;
+	}
+
+	.custom-select-option:not(.disabled):hover {
+		background-color: var(--color-primary-500) !important;
+		color: var(--color-surface-950) !important;
+	}
+
+	.custom-select-option:not(.disabled):focus {
+		background-color: var(--color-primary-600);
+		color: var(--color-surface-950);
+		outline: none;
+	}
+
+	.custom-select-option.selected {
+		background-color: var(--color-primary-600);
+		color: var(--color-surface-950);
+		font-weight: 600;
+	}
+
+	.custom-select-option.disabled {
+		color: var(--color-surface-500);
+		cursor: not-allowed;
+		opacity: 0.6;
+	}
+
+	.custom-select-option.disabled:hover {
+		background-color: transparent;
+		color: var(--color-surface-500);
 	}
 
 	/* Animations */
