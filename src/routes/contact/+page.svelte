@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import ContactForm from '$lib/components/ui/ContactForm.svelte';
+	import ContactCard from '$lib/components/ui/ContactCard.svelte';
 	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import {
 		Mail,
@@ -14,17 +15,55 @@
 		Zap,
 		FileText,
 		Sparkles,
-		ExternalLink
+		Copy,
+		Check
 	} from '@lucide/svelte';
 
-	// Track analytics
-	function trackCTA(type: string, method: string) {
-		if (typeof window !== 'undefined' && (window as any).gtag) {
-			(window as any).gtag('event', 'contact_cta_click', {
-				event_category: 'Contact',
-				contact_type: type,
-				contact_method: method
+	const emailAddress = 'amirhessam.dev@gmail.com';
+	let emailCopied = $state(false);
+
+	// Reactive email actions based on copy state
+	const emailActions = $derived([
+		{
+			label: emailCopied ? 'Copied!' : 'Copy Email Address',
+			onClick: copyEmailToClipboard,
+			icon: emailCopied ? Check : Copy,
+			ariaLabel: 'Copy email address to clipboard'
+		},
+		{
+			label: 'Open Email Client',
+			href: `mailto:${emailAddress}`,
+			icon: Mail,
+			ariaLabel: `Send email to ${emailAddress}`
+		}
+	]);
+
+	async function copyEmailToClipboard() {
+		const resetCopied = () => {
+			setTimeout(() => (emailCopied = false), 2000);
+		};
+
+		try {
+			await navigator.clipboard.writeText(emailAddress);
+			emailCopied = true;
+			resetCopied();
+		} catch {
+			// Fallback for older browsers
+			const textArea = Object.assign(document.createElement('textarea'), {
+				value: emailAddress,
+				style: 'position:fixed;opacity:0'
 			});
+			document.body.appendChild(textArea);
+			textArea.select();
+			try {
+				if (document.execCommand('copy')) {
+					emailCopied = true;
+					resetCopied();
+				}
+			} catch {
+				console.error('Failed to copy email');
+			}
+			document.body.removeChild(textArea);
 		}
 	}
 </script>
@@ -88,113 +127,6 @@
 	/>
 
 	<div class="mx-auto max-w-8xl space-y-6">
-		<!-- Main Content Grid -->
-		<div class="grid items-stretch gap-6 xl:grid-cols-5">
-			<!-- Contact Form Card -->
-			<section
-				id="contact-form"
-				class="mb-6 flex h-full flex-col rounded-xl border border-surface-700 bg-surface-800/50 p-6 shadow-lg md:p-8 xl:col-span-3 xl:mb-0"
-			>
-				<div class="mb-6 flex items-center gap-3">
-					<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20">
-						<MessageSquare size={20} class="text-primary-400" aria-hidden="true" />
-					</div>
-					<div>
-						<h2 class="text-xl font-bold text-surface-50">Send a Message</h2>
-						<p class="text-sm text-surface-400">Fill out the form below to get in touch</p>
-					</div>
-				</div>
-				<div class="flex-1">
-					<ContactForm />
-				</div>
-			</section>
-
-			<!-- Right Sidebar (2 columns) -->
-			<div class="space-y-6 xl:col-span-2">
-				<!-- Email Card -->
-				<section class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 shadow-lg">
-					<div class="mb-4 flex items-center gap-3">
-						<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500/20">
-							<Mail size={20} class="text-primary-400" aria-hidden="true" />
-						</div>
-						<div>
-							<h3 class="text-lg font-bold text-surface-50">Email Direct</h3>
-							<p class="text-xs text-surface-400">Direct communication</p>
-						</div>
-					</div>
-					<p class="mb-4 text-sm text-surface-300">
-						Preferred for detailed inquiries and project discussions.
-					</p>
-					<a
-						href="mailto:amirhessam.dev@gmail.com"
-						onclick={() => trackCTA('email', 'mailto')}
-						aria-label="Send email to amirhessam.dev@gmail.com"
-						class="flex w-full items-center justify-center gap-2 rounded-lg border border-surface-600 bg-surface-700/50 px-4 py-3 text-sm font-medium text-surface-300 transition-all hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-					>
-						<Mail size={18} aria-hidden="true" />
-						<span>Send Email</span>
-						<ExternalLink size={16} class="text-surface-400" aria-hidden="true" />
-					</a>
-				</section>
-
-				<!-- Calendly Card -->
-				<section class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 shadow-lg">
-					<div class="mb-4 flex items-center gap-3">
-						<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500/20">
-							<Calendar size={20} class="text-primary-400" aria-hidden="true" />
-						</div>
-						<div>
-							<h3 class="text-lg font-bold text-surface-50">Schedule Meeting</h3>
-							<p class="text-xs text-surface-400">Book a discovery call</p>
-						</div>
-					</div>
-					<p class="mb-4 text-sm text-surface-300">
-						Book a 30-minute discovery call at your convenience.
-					</p>
-					<a
-						href="https://calendly.com/khoobkar"
-						target="_blank"
-						rel="noopener noreferrer"
-						onclick={() => trackCTA('calendly', 'external')}
-						aria-label="Schedule a meeting on Calendly (opens in new tab)"
-						class="flex w-full items-center justify-center gap-2 rounded-lg border border-surface-600 bg-surface-700/50 px-4 py-3 text-sm font-medium text-surface-300 transition-all hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-					>
-						<Calendar size={18} aria-hidden="true" />
-						<span>Book a Call</span>
-						<ExternalLink size={16} class="text-surface-400" aria-hidden="true" />
-					</a>
-				</section>
-
-				<!-- LinkedIn Card -->
-				<section class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 shadow-lg">
-					<div class="mb-4 flex items-center gap-3">
-						<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500/20">
-							<Linkedin size={20} class="text-primary-400" aria-hidden="true" />
-						</div>
-						<div>
-							<h3 class="text-lg font-bold text-surface-50">LinkedIn</h3>
-							<p class="text-xs text-surface-400">Professional networking</p>
-						</div>
-					</div>
-					<p class="mb-4 text-sm text-surface-300">
-						Reach out on LinkedIn to connect and discuss opportunities.
-					</p>
-					<a
-						href="https://linkedin.com/in/hessam-khoobkar"
-						target="_blank"
-						rel="noopener noreferrer"
-						onclick={() => trackCTA('linkedin', 'external')}
-						aria-label="Connect on LinkedIn (opens in new tab)"
-						class="flex w-full items-center justify-center gap-2 rounded-lg border border-surface-600 bg-surface-700/50 px-4 py-3 text-sm font-medium text-surface-300 transition-all hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-					>
-						<Linkedin size={18} aria-hidden="true" />
-						<span>Connect on LinkedIn</span>
-						<ExternalLink size={16} class="text-surface-400" aria-hidden="true" />
-					</a>
-				</section>
-			</div>
-		</div>
-
 		<!-- Contact Types Card -->
 		<section class="rounded-xl border border-surface-700 bg-surface-800/50 p-6 shadow-lg md:p-8">
 			<div class="mb-6">
@@ -259,6 +191,74 @@
 				</div>
 			</div>
 		</section>
+
+		<!-- Main Content Grid -->
+		<div class="grid items-stretch gap-6 xl:grid-cols-5">
+			<!-- Contact Form Card -->
+			<section
+				id="contact-form"
+				class="mb-6 flex h-full flex-col rounded-xl border border-surface-700 bg-surface-800/50 p-6 shadow-lg md:p-8 xl:col-span-3 xl:mb-0"
+			>
+				<div class="mb-6 flex items-center gap-3">
+					<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600/20">
+						<MessageSquare size={20} class="text-primary-400" aria-hidden="true" />
+					</div>
+					<div>
+						<h2 class="text-xl font-bold text-surface-50">Send a Message</h2>
+						<p class="text-sm text-surface-400">Fill out the form below to get in touch</p>
+					</div>
+				</div>
+				<div class="flex-1">
+					<ContactForm />
+				</div>
+			</section>
+
+			<!-- Right Sidebar (2 columns) -->
+			<div class="space-y-6 xl:col-span-2">
+				<!-- Email Card -->
+				<ContactCard
+					icon={Mail}
+					title="Email Direct"
+					subtitle="Direct communication"
+					description="Preferred for detailed inquiries and project discussions."
+					actions={emailActions}
+				/>
+
+				<!-- Calendly Card -->
+				<ContactCard
+					icon={Calendar}
+					title="Schedule Meeting"
+					subtitle="Book a discovery call"
+					description="Book a 30-minute discovery call at your convenience."
+					actions={[
+						{
+							label: 'Book a Call',
+							href: 'https://calendly.com/khoobkar',
+							icon: Calendar,
+							external: true,
+							ariaLabel: 'Schedule a meeting on Calendly (opens in new tab)'
+						}
+					]}
+				/>
+
+				<!-- LinkedIn Card -->
+				<ContactCard
+					icon={Linkedin}
+					title="LinkedIn"
+					subtitle="Professional networking"
+					description="Reach out on LinkedIn to connect and discuss opportunities."
+					actions={[
+						{
+							label: 'Connect on LinkedIn',
+							href: 'https://linkedin.com/in/hessam-khoobkar',
+							icon: Linkedin,
+							external: true,
+							ariaLabel: 'Connect on LinkedIn (opens in new tab)'
+						}
+					]}
+				/>
+			</div>
+		</div>
 
 		<!-- What to Expect - Timeline (Full Width) -->
 		<section

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Send, CheckCircle2, AlertCircle, Loader2, Shield } from '@lucide/svelte';
+	import { Send, CircleCheck, CircleAlert, LoaderCircle, Shield } from '@lucide/svelte';
 
 	// Props for pre-filling subject
 	interface Props {
@@ -33,7 +33,6 @@
 			setTimeout(() => {
 				submitStatus = 'idle';
 			}, 10000);
-			trackEvent('form_submit_success');
 		}
 	});
 
@@ -168,16 +167,6 @@
 		errorMessage = '';
 	}
 
-	// Track analytics event
-	function trackEvent(eventName: string, eventData?: Record<string, any>) {
-		if (typeof window !== 'undefined' && (window as any).gtag) {
-			(window as any).gtag('event', eventName, {
-				event_category: 'Contact Form',
-				...eventData
-			});
-		}
-	}
-
 	// Formspree endpoint - must be set via environment variable
 	// For dev: set PUBLIC_FORMSPREE_ENDPOINT in .env.local
 	// For production: set PUBLIC_FORMSPREE_ENDPOINT in Vercel environment variables
@@ -196,7 +185,7 @@
 			submitStatus = 'error';
 			errorMessage =
 				'Form is not configured. Please set PUBLIC_FORMSPREE_ENDPOINT in .env.local for development or in Vercel environment variables for production.';
-			trackEvent('form_submit_error', { error: 'endpoint_not_configured' });
+
 			return;
 		}
 
@@ -215,20 +204,18 @@
 			if (firstErrorElement instanceof HTMLElement) {
 				firstErrorElement.focus();
 			}
-			trackEvent('form_validation_error', { error_count: 1 });
 			return;
 		}
 
 		// Submit to Formspree via fetch API
 		isSubmitting = true;
-		trackEvent('form_submit_start');
 
 		try {
 			// Create FormData from form fields
 			const formData = new FormData();
 			formData.append('name', name.trim());
 			formData.append('email', email.trim());
-			formData.append('subject', subject);
+			formData.append('subject', subject.trim());
 			formData.append('message', message.trim());
 			formData.append('_next', `${window.location.origin}/contact?success=true`);
 
@@ -270,16 +257,10 @@
 						data.error ||
 						data.errors?.map((e: any) => e.message || e).join(', ') ||
 						'Failed to send message. Please try again.';
-					trackEvent('form_submit_error', {
-						error: 'formspree_validation_error',
-						status: response.status,
-						message: data.error || data.errors
-					});
 				} else {
 					// Success - show success message and reset form
 					submitStatus = 'success';
 					resetForm();
-					trackEvent('form_submit_success');
 
 					// Update URL without reloading
 					window.history.pushState({}, '', '/contact?success=true');
@@ -306,17 +287,11 @@
 					data.message ||
 					data.errors?.map((e: any) => e.message || e).join(', ') ||
 					`Failed to send message (Status: ${response.status}). Please try again later.`;
-				trackEvent('form_submit_error', {
-					error: 'formspree_error',
-					status: response.status,
-					message: data.error || data.message
-				});
 			}
 		} catch (error: any) {
 			// Network or other errors
 			submitStatus = 'error';
 			errorMessage = error.message || 'Network error. Please check your connection and try again.';
-			trackEvent('form_submit_error', { error: 'network_error', message: error.message });
 		} finally {
 			isSubmitting = false;
 		}
@@ -341,7 +316,7 @@
 			aria-live="polite"
 			class="success-message mb-6 flex items-start gap-3 rounded-xl border border-primary-500/30 bg-primary-500/10 p-4 text-primary-300"
 		>
-			<CheckCircle2 size={24} class="mt-0.5 flex-shrink-0" aria-hidden="true" />
+			<CircleCheck size={24} class="mt-0.5 flex-shrink-0" aria-hidden="true" />
 			<div>
 				<h3 class="mb-1 font-bold text-primary-400">Message sent successfully!</h3>
 				<p class="text-sm">
@@ -359,7 +334,7 @@
 			aria-live="assertive"
 			class="error-message mb-6 flex items-start gap-3 rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-red-300"
 		>
-			<AlertCircle size={24} class="mt-0.5 flex-shrink-0" aria-hidden="true" />
+			<CircleAlert size={24} class="mt-0.5 flex-shrink-0" aria-hidden="true" />
 			<div>
 				<h3 class="mb-1 font-bold text-red-400">Error sending message</h3>
 				<p class="text-sm">{errorMessage}</p>
@@ -528,7 +503,7 @@
 		<!-- Submit Button -->
 		<button type="submit" class="form-submit" disabled={isSubmitting} aria-busy={isSubmitting}>
 			{#if isSubmitting}
-				<Loader2 size={20} class="animate-spin" aria-hidden="true" />
+				<LoaderCircle size={20} class="animate-spin" aria-hidden="true" />
 				<span>Sending...</span>
 			{:else}
 				<Send size={20} aria-hidden="true" />
