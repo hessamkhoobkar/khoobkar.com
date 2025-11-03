@@ -27,7 +27,7 @@
 		<svelte:component this={icon} size={40} class="relative" />
 
 		<!-- Title with enhanced typography and effects -->
-		<h1 class="text-center text-5xl font-bold md:text-6xl">
+		<h1 class="relative text-center text-5xl font-bold md:text-6xl">
 			{title}
 		</h1>
 

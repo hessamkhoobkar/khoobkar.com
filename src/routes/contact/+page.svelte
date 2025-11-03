@@ -2,6 +2,7 @@
 	import { socialLinks } from '$lib/data/navigation';
 	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
+	import ContactForm from '$lib/components/ui/ContactForm.svelte';
 	import {
 		Mail,
 		MessageSquare,
@@ -16,8 +17,36 @@
 		Shield,
 		Zap,
 		FileText,
-		Sparkles
+		Sparkles,
+		ExternalLink,
+		ArrowRight
 	} from '@lucide/svelte';
+
+	// State for form pre-fill
+	let selectedSubject = $state<string | undefined>(undefined);
+	let formElement: HTMLElement | undefined;
+
+	// Function to pre-fill form based on contact type
+	function selectContactType(subjectType: string) {
+		selectedSubject = subjectType;
+		// Scroll to form smoothly
+		setTimeout(() => {
+			if (formElement) {
+				formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		}, 100);
+	}
+
+	// Track analytics
+	function trackCTA(type: string, method: string) {
+		if (typeof window !== 'undefined' && (window as any).gtag) {
+			(window as any).gtag('event', 'contact_cta_click', {
+				event_category: 'Contact',
+				contact_type: type,
+				contact_method: method
+			});
+		}
+	}
 </script>
 
 <svelte:head>
@@ -47,6 +76,22 @@
 		name="twitter:description"
 		content="Ready to start your project? Contact Hessam Khoobkar for web development services."
 	/>
+
+	<!-- Structured Data -->
+	<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "ContactPage",
+			"name": "Contact - Hessam Khoobkar",
+			"description": "Get in touch with Hessam Khoobkar for web development services, freelance projects, or full-time opportunities",
+			"mainEntity": {
+				"@type": "Organization",
+				"name": "Hessam Khoobkar",
+				"email": "amirhessam.dev@gmail.com",
+				"url": "https://khoobkar.com"
+			}
+		}
+	</script>
 </svelte:head>
 
 <div class="mt-4">
@@ -62,148 +107,43 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-6xl space-y-12 px-4 py-8">
-		<!-- Quick Intro -->
-		<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 text-center md:p-12">
-			<h2 class="mb-4 text-3xl font-bold text-surface-50">
-				Ready to Start <span class="text-primary-400">Something Great</span>?
-			</h2>
-			<p class="mx-auto max-w-2xl text-lg text-surface-200">
-				Whether you're looking for a full-time developer, need freelance help on a project, or just
-				want to connect, I'd love to hear from you. I typically respond within 24 hours.
-			</p>
-		</div>
-
-		<!-- Contact Methods -->
-		<section class="grid gap-6 md:grid-cols-2">
-			<!-- Email Contact -->
-			<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-10">
-				<div class="mb-6 flex justify-center">
-					<div class="rounded-full bg-primary-500/20 p-4">
-						<Mail size={48} class="text-primary-400" />
-					</div>
-				</div>
-				<h2 class="mb-4 text-center text-2xl font-bold text-surface-50">Email Me</h2>
-				<p class="mb-6 text-center text-surface-300">
-					Preferred for detailed inquiries, project discussions, and formal communication.
-				</p>
-				<a
-					href="mailto:amirhessam.dev@gmail.com"
-					class="flex items-center justify-center gap-3 rounded-lg bg-primary-600 px-6 py-4 font-medium text-surface-950 transition-all duration-200 hover:scale-105 hover:bg-primary-500"
-				>
-					<Send size={20} />
-					<span class="text-sm font-bold"> amirhessam.dev@gmail.com </span>
-				</a>
-			</div>
-
-			<!-- Calendly Scheduling -->
-			<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-10">
-				<div class="mb-6 flex justify-center">
-					<div class="rounded-full bg-primary-500/20 p-4">
-						<Calendar size={48} class="text-primary-400" />
-					</div>
-				</div>
-				<h2 class="mb-4 text-center text-2xl font-bold text-surface-50">Schedule a Meeting</h2>
-				<p class="mb-6 text-center text-surface-300">
-					Book a 30-minute discovery call to discuss your project or opportunity.
-				</p>
-				<a
-					href="https://calendly.com/khoobkar"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="flex items-center justify-center gap-3 rounded-lg border border-primary-500 bg-primary-500/10 px-6 py-4 font-medium text-primary-300 transition-all duration-200 hover:scale-105 hover:bg-primary-500/20"
-				>
-					<Calendar size={20} />
-					<span class="text-sm font-bold"> Book a Call </span>
-				</a>
-			</div>
-		</section>
-
-		<!-- Professional Network -->
-		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
+	<div class="mx-auto max-w-6xl space-y-6">
+		<!-- Contact Form - Above the Fold (Primary CTA) -->
+		<section
+			bind:this={formElement}
+			id="contact-form"
+			class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12"
+		>
 			<div class="mb-8 text-center">
-				<div class="mb-4 flex justify-center">
-					<div class="rounded-full bg-primary-500/20 p-4">
-						<Linkedin size={40} class="text-primary-400" />
-					</div>
-				</div>
-				<h2 class="mb-4 text-2xl font-bold text-surface-50">Connect on LinkedIn</h2>
-				<p class="mb-6 text-surface-300">
-					Let's connect professionally. Great for networking, career opportunities, and staying
-					updated.
+				<h2 class="mb-3 text-3xl font-bold text-surface-50">
+					Ready to Start <span class="text-primary-400">Something Great</span>?
+				</h2>
+				<p class="mx-auto max-w-2xl text-base text-surface-300">
+					Whether you're looking for a full-time developer, need freelance help on a project, or
+					just want to connect, I'd love to hear from you.
 				</p>
-				<a
-					href="https://linkedin.com/in/hessam-khoobkar"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="inline-flex items-center gap-2 rounded-lg border border-surface-600 px-6 py-3 text-surface-300 transition-all duration-200 hover:scale-105 hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-				>
-					<Linkedin size={20} />
-					Connect on LinkedIn
-				</a>
+				<p class="mx-auto mt-4 flex items-center justify-center gap-2 text-sm text-surface-400">
+					<Clock size={16} aria-hidden="true" />
+					<span
+						>I typically respond within 24 hours, usually much sooner during business hours (EST)</span
+					>
+				</p>
+			</div>
+			<ContactForm prefillSubject={selectedSubject ?? undefined} />
+		</section>
+
+		<!-- Quick Intro Card (Condensed) -->
+		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-6 md:p-8">
+			<div class="text-center">
+				<p class="mx-auto max-w-3xl text-base leading-relaxed text-surface-300">
+					I've helped companies achieve measurable improvements through modern web development,
+					responsive design, and performance optimization. Let's discuss how I can help bring your
+					vision to life.
+				</p>
 			</div>
 		</section>
 
-		<!-- Contact Types - Persona Focused -->
-		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
-			<h2 class="mb-4 text-center text-3xl font-bold text-surface-50">How Can I Help You?</h2>
-			<p class="mb-8 text-center text-lg text-surface-300">
-				Choose the best way to reach out based on your needs
-			</p>
-			<div class="grid gap-6 md:grid-cols-3">
-				<div
-					class="group rounded-xl border border-surface-600 bg-surface-700/50 p-6 text-center transition-all hover:border-primary-500/50 hover:bg-surface-700"
-				>
-					<div class="mb-4 flex justify-center">
-						<div
-							class="rounded-full bg-primary-500/20 p-3 transition-transform group-hover:scale-110"
-						>
-							<BriefcaseBusiness size={32} class="text-primary-400" />
-						</div>
-					</div>
-					<h3 class="mb-3 text-lg font-semibold text-surface-50">Full-Time Opportunity</h3>
-					<p class="mb-4 text-sm text-surface-300">
-						Recruiting for your team? Let's discuss how I can contribute as a senior front-end
-						developer.
-					</p>
-				</div>
-
-				<div
-					class="group rounded-xl border border-surface-600 bg-surface-700/50 p-6 text-center transition-all hover:border-primary-500/50 hover:bg-surface-700"
-				>
-					<div class="mb-4 flex justify-center">
-						<div
-							class="rounded-full bg-primary-500/20 p-3 transition-transform group-hover:scale-110"
-						>
-							<Rocket size={32} class="text-primary-400" />
-						</div>
-					</div>
-					<h3 class="mb-3 text-lg font-semibold text-surface-50">Freelance Project</h3>
-					<p class="mb-4 text-sm text-surface-300">
-						Have a project in mind? I'm available for freelance work with transparent pricing and
-						timelines.
-					</p>
-				</div>
-
-				<div
-					class="group rounded-xl border border-surface-600 bg-surface-700/50 p-6 text-center transition-all hover:border-primary-500/50 hover:bg-surface-700"
-				>
-					<div class="mb-4 flex justify-center">
-						<div
-							class="rounded-full bg-primary-500/20 p-3 transition-transform group-hover:scale-110"
-						>
-							<Coffee size={32} class="text-primary-400" />
-						</div>
-					</div>
-					<h3 class="mb-3 text-lg font-semibold text-surface-50">Networking & Collaboration</h3>
-					<p class="mb-4 text-sm text-surface-300">
-						Want to chat about tech, share ideas, or explore collaborations? Let's connect.
-					</p>
-				</div>
-			</div>
-		</section>
-
-		<!-- What to Expect - Modern Flowing Timeline -->
+		<!-- What to Expect - Timeline (Moved Up) -->
 		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
 			<div class="mb-12 text-center">
 				<h2 class="mb-3 text-3xl font-bold text-surface-50">What Happens Next?</h2>
@@ -226,7 +166,7 @@
 							<div
 								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
 							>
-								<Zap size={32} class="text-white" strokeWidth={2.5} />
+								<Zap size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
 							</div>
 						</div>
 
@@ -245,7 +185,7 @@
 							</div>
 							<h3 class="mb-3 text-2xl font-bold text-surface-50">Quick Response</h3>
 							<p class="leading-relaxed text-surface-300">
-								I'll respond within 24 hours, usually much sooner during business hours. Every
+								I'll respond within 24 hours, usually much sooner during business hours (EST). Every
 								message gets my personal attention.
 							</p>
 						</div>
@@ -258,7 +198,7 @@
 							<div
 								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
 							>
-								<MessageSquare size={32} class="text-white" strokeWidth={2.5} />
+								<MessageSquare size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
 							</div>
 						</div>
 
@@ -290,7 +230,7 @@
 							<div
 								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
 							>
-								<FileText size={32} class="text-white" strokeWidth={2.5} />
+								<FileText size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
 							</div>
 						</div>
 
@@ -322,7 +262,7 @@
 							<div
 								class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 shadow-lg shadow-primary-500/30 transition-transform duration-300 group-hover:scale-110"
 							>
-								<Sparkles size={32} class="text-white" strokeWidth={2.5} />
+								<Sparkles size={32} class="text-white" strokeWidth={2.5} aria-hidden="true" />
 							</div>
 						</div>
 
@@ -347,14 +287,19 @@
 						</div>
 					</div>
 
-					<!-- Success Endpoint -->
-					<div class="group relative hidden gap-6 md:flex md:gap-8">
+					<!-- Success Endpoint - Now visible on mobile -->
+					<div class="group relative flex gap-6 md:gap-8">
 						<!-- Success Icon -->
 						<div class="relative z-10 flex-shrink-0">
 							<div
 								class="flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-primary-500/50 bg-gradient-to-br from-primary-500/20 to-primary-600/20 shadow-lg shadow-primary-500/20 backdrop-blur-sm transition-all duration-300 group-hover:scale-110 group-hover:border-primary-400 group-hover:from-primary-500/30 group-hover:to-primary-600/30"
 							>
-								<CheckCircle2 size={32} class="text-primary-400" strokeWidth={2.5} />
+								<CheckCircle2
+									size={32}
+									class="text-primary-400"
+									strokeWidth={2.5}
+									aria-hidden="true"
+								/>
 							</div>
 						</div>
 
@@ -375,37 +320,166 @@
 			</div>
 		</section>
 
-		<!-- Privacy & Additional Info -->
-		<section class="grid gap-6 md:grid-cols-2">
-			<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8">
-				<div class="mb-4 flex items-start gap-4">
-					<div class="rounded-lg bg-primary-500/20 p-3">
-						<Shield size={32} class="text-primary-400" />
-					</div>
-					<div>
-						<h3 class="mb-2 text-xl font-semibold text-surface-50">Privacy-First Communication</h3>
-						<p class="text-surface-300">
-							I value your privacy and mine. All contact methods listed here are professional
-							channels designed to protect personal information while maintaining effective
-							communication.
-						</p>
+		<!-- Alternative Contact Methods (3-column grid, equal weight) -->
+		<section class="grid gap-6 md:grid-cols-3">
+			<!-- Email Contact -->
+			<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-10">
+				<div class="mb-6 flex justify-center">
+					<div class="rounded-full bg-primary-500/20 p-4">
+						<Mail size={40} class="text-primary-400" aria-hidden="true" />
 					</div>
 				</div>
+				<h3 class="mb-4 text-center text-2xl font-bold text-surface-50">Email Me</h3>
+				<p class="mb-6 text-center text-surface-300">
+					Preferred for detailed inquiries, project discussions, and formal communication.
+				</p>
+				<a
+					href="mailto:amirhessam.dev@gmail.com"
+					onclick={() => trackCTA('email', 'mailto')}
+					aria-label="Send email to amirhessam.dev@gmail.com"
+					class="flex items-center justify-center gap-3 rounded-lg border border-primary-500 bg-primary-500/10 px-6 py-4 font-medium text-primary-300 transition-all duration-200 hover:scale-105 hover:bg-primary-500/20"
+				>
+					<Send size={20} aria-hidden="true" />
+					<span class="text-sm font-bold">Send Email</span>
+				</a>
 			</div>
 
-			<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8">
-				<div class="mb-4 flex items-start gap-4">
-					<div class="rounded-lg bg-primary-500/20 p-3">
-						<CheckCircle2 size={32} class="text-primary-400" />
-					</div>
-					<div>
-						<h3 class="mb-2 text-xl font-semibold text-surface-50">Current Availability</h3>
-						<p class="text-surface-300">
-							I'm currently accepting both full-time opportunities and freelance projects. Response
-							within 24 hours guaranteed. Most projects can start within 1-2 weeks.
-						</p>
+			<!-- Calendly Scheduling -->
+			<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-10">
+				<div class="mb-6 flex justify-center">
+					<div class="rounded-full bg-primary-500/20 p-4">
+						<Calendar size={40} class="text-primary-400" aria-hidden="true" />
 					</div>
 				</div>
+				<h3 class="mb-4 text-center text-2xl font-bold text-surface-50">Schedule a Meeting</h3>
+				<p class="mb-6 text-center text-surface-300">
+					Book a 30-minute discovery call to discuss your project or opportunity.
+				</p>
+				<a
+					href="https://calendly.com/khoobkar"
+					target="_blank"
+					rel="noopener noreferrer"
+					onclick={() => trackCTA('calendly', 'external')}
+					aria-label="Schedule a meeting on Calendly (opens in new tab)"
+					class="flex items-center justify-center gap-3 rounded-lg border border-primary-500 bg-primary-500/10 px-6 py-4 font-medium text-primary-300 transition-all duration-200 hover:scale-105 hover:bg-primary-500/20"
+				>
+					<Calendar size={20} aria-hidden="true" />
+					<span class="text-sm font-bold">Book a Call</span>
+					<ExternalLink size={16} class="text-primary-400" aria-hidden="true" />
+				</a>
+			</div>
+
+			<!-- LinkedIn Contact (Tertiary) -->
+			<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-10">
+				<div class="mb-6 flex justify-center">
+					<div class="rounded-full bg-primary-500/20 p-4">
+						<Linkedin size={40} class="text-primary-400" aria-hidden="true" />
+					</div>
+				</div>
+				<h3 class="mb-4 text-center text-2xl font-bold text-surface-50">Connect on LinkedIn</h3>
+				<p class="mb-6 text-center text-surface-300">
+					Great for networking, career opportunities, and staying updated.
+				</p>
+				<a
+					href="https://linkedin.com/in/hessam-khoobkar"
+					target="_blank"
+					rel="noopener noreferrer"
+					onclick={() => trackCTA('linkedin', 'external')}
+					aria-label="Connect on LinkedIn (opens in new tab)"
+					class="flex items-center justify-center gap-3 rounded-lg border border-surface-600 px-6 py-4 font-medium text-surface-300 transition-all duration-200 hover:scale-105 hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
+				>
+					<Linkedin size={20} aria-hidden="true" />
+					<span class="text-sm font-bold">Connect</span>
+					<ExternalLink size={16} class="text-surface-400" aria-hidden="true" />
+				</a>
+			</div>
+		</section>
+
+		<!-- Contact Types - Interactive Cards (Pre-fill Form) -->
+		<section class="rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
+			<div class="mb-8 text-center">
+				<h2 class="mb-3 text-3xl font-bold text-surface-50">How Can I Help You?</h2>
+				<p class="text-lg text-surface-300">
+					Select a category below to pre-fill the contact form, or use any method above
+				</p>
+			</div>
+			<div class="grid gap-6 md:grid-cols-3">
+				<button
+					type="button"
+					onclick={() => selectContactType('full-time')}
+					class="group rounded-xl border border-surface-600 bg-surface-700/50 p-6 text-center transition-all hover:border-primary-500/50 hover:bg-surface-700 hover:shadow-lg hover:shadow-primary-500/10 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-surface-800 focus:outline-none"
+					aria-label="Select Full-Time Opportunity and scroll to contact form"
+				>
+					<div class="mb-4 flex justify-center">
+						<div
+							class="rounded-full bg-primary-500/20 p-3 transition-transform group-hover:scale-110"
+						>
+							<BriefcaseBusiness size={32} class="text-primary-400" aria-hidden="true" />
+						</div>
+					</div>
+					<h3 class="mb-3 text-lg font-semibold text-surface-50">Full-Time Opportunity</h3>
+					<p class="mb-4 text-sm text-surface-300">
+						Recruiting for your team? Let's discuss how I can contribute as a senior front-end
+						developer.
+					</p>
+					<div
+						class="flex items-center justify-center gap-2 text-sm font-medium text-primary-400 opacity-0 transition-opacity group-hover:opacity-100"
+					>
+						<span>Get Started</span>
+						<ArrowRight size={16} aria-hidden="true" />
+					</div>
+				</button>
+
+				<button
+					type="button"
+					onclick={() => selectContactType('freelance')}
+					class="group rounded-xl border border-surface-600 bg-surface-700/50 p-6 text-center transition-all hover:border-primary-500/50 hover:bg-surface-700 hover:shadow-lg hover:shadow-primary-500/10 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-surface-800 focus:outline-none"
+					aria-label="Select Freelance Project and scroll to contact form"
+				>
+					<div class="mb-4 flex justify-center">
+						<div
+							class="rounded-full bg-primary-500/20 p-3 transition-transform group-hover:scale-110"
+						>
+							<Rocket size={32} class="text-primary-400" aria-hidden="true" />
+						</div>
+					</div>
+					<h3 class="mb-3 text-lg font-semibold text-surface-50">Freelance Project</h3>
+					<p class="mb-4 text-sm text-surface-300">
+						Have a project in mind? I'm available for freelance work with transparent pricing and
+						timelines.
+					</p>
+					<div
+						class="flex items-center justify-center gap-2 text-sm font-medium text-primary-400 opacity-0 transition-opacity group-hover:opacity-100"
+					>
+						<span>Get Started</span>
+						<ArrowRight size={16} aria-hidden="true" />
+					</div>
+				</button>
+
+				<button
+					type="button"
+					onclick={() => selectContactType('collaboration')}
+					class="group rounded-xl border border-surface-600 bg-surface-700/50 p-6 text-center transition-all hover:border-primary-500/50 hover:bg-surface-700 hover:shadow-lg hover:shadow-primary-500/10 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:ring-offset-surface-800 focus:outline-none"
+					aria-label="Select Collaboration and scroll to contact form"
+				>
+					<div class="mb-4 flex justify-center">
+						<div
+							class="rounded-full bg-primary-500/20 p-3 transition-transform group-hover:scale-110"
+						>
+							<Coffee size={32} class="text-primary-400" aria-hidden="true" />
+						</div>
+					</div>
+					<h3 class="mb-3 text-lg font-semibold text-surface-50">Networking & Collaboration</h3>
+					<p class="mb-4 text-sm text-surface-300">
+						Want to chat about tech, share ideas, or explore collaborations? Let's connect.
+					</p>
+					<div
+						class="flex items-center justify-center gap-2 text-sm font-medium text-primary-400 opacity-0 transition-opacity group-hover:opacity-100"
+					>
+						<span>Get Started</span>
+						<ArrowRight size={16} aria-hidden="true" />
+					</div>
+				</button>
 			</div>
 		</section>
 

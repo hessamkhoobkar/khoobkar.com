@@ -144,40 +144,51 @@
 		</div>
 	</div>
 {:else}
-	<!-- Desktop Sidebar (original) -->
+	<!-- Desktop Sidebar (app-like structure, no collapse) -->
 	<aside
-		class="fixed inset-y-4 start-4 z-50 flex w-[320px] flex-col justify-between rounded-2xl border border-surface-700 bg-surface-800"
+		class="fixed inset-y-4 start-4 z-50 flex w-[320px] flex-col overflow-hidden rounded-2xl border border-surface-700 bg-surface-800 shadow-xl"
+		aria-label="Primary navigation sidebar"
 	>
-		<!-- Logo/Brand -->
-		<Logo />
+		<!-- Header: Logo area -->
+		<div class="flex items-center justify-between px-3 py-3">
+			<div class="flex">
+				<Logo />
+			</div>
+		</div>
 
-		<!-- Main Navigation -->
-		<nav class="flex w-full flex-col items-start justify-start px-4">
-			{#each mainNavigation as item}
-				{@const IconComponent = getIconComponent(item.icon || '')}
-				<a
-					href={item.href}
-					class="nav-link relative block w-full overflow-hidden rounded-2xl px-4 py-3 {isActive(
-						item.href,
-						currentPath
-					)
-						? 'nav-link--active cursor-default'
-						: ''}"
-					title={item.description}
-					onmousemove={handleNavMouseMove}
-				>
-					<div class="flex items-center gap-3">
-						{#if IconComponent}
-							<IconComponent size={18} />
-						{/if}
-						<span class="font-medium">{item.label}</span>
-					</div>
-				</a>
-			{/each}
-		</nav>
+		<!-- Scrollable content -->
+		<div class="flex min-h-0 flex-1 flex-col gap-2">
+			<!-- Section: Navigation -->
+			<div class="px-6 pt-2 text-[10px] font-semibold tracking-wider text-surface-400 uppercase">
+				Navigation
+			</div>
+			<nav class="flex w-full flex-1 flex-col items-start justify-start gap-1 px-4">
+				{#each mainNavigation as item}
+					{@const IconComponent = getIconComponent(item.icon || '')}
+					<a
+						href={item.href}
+						class="nav-link group relative block w-full overflow-hidden rounded-2xl px-3 py-2.5 {isActive(
+							item.href,
+							currentPath
+						)
+							? 'nav-link--active cursor-default'
+							: ''}"
+						title={item.label}
+						onmousemove={handleNavMouseMove}
+					>
+						<div class="flex items-center gap-3">
+							{#if IconComponent}
+								<IconComponent size={18} />
+							{/if}
+							<span class="font-medium">{item.label}</span>
+						</div>
+					</a>
+				{/each}
+			</nav>
 
-		<!-- Footer -->
-		<UserCard />
+			<!-- Footer/User area -->
+			<UserCard />
+		</div>
 	</aside>
 {/if}
 
