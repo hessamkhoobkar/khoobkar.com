@@ -10,12 +10,12 @@
 
 ## Website structure
 
-- Home page (Dashboard page with overview of my work and my skills)
-- Work page (My previous works page with list of my previous works)
-- Projects page (My side projects and experiments page with list of my side projects and experiments)
-- Insights page (My thoughts and insights page with list of my thoughts and insights)
-- About page (About me page with about me information)
-- Contact page (Contact me page with contact me information)
+- [ ] Home page (Dashboard page with overview of my work and my skills)
+- [ ] Work page (My previous works page with list of my previous works)
+- [ ] Projects page (My side projects and experiments page with list of my side projects and experiments)
+- [ ] Insights page (My thoughts and insights page with list of my thoughts and insights)
+- [ ] About page (About me page with about me information)
+- [x] Contact page (Contact me page with contact me information)
 
 ## TODO - Content
 

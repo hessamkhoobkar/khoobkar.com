@@ -10,6 +10,7 @@ slug: 'ai-revolutionizing-web-development'
 category: 'blog'
 readingTime: 8
 image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=400&fit=crop&crop=center'
+layout: 'blog'
 ---
 
 # How AI is Revolutionizing Web Development

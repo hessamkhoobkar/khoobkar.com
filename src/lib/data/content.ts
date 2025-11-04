@@ -1,3 +1,5 @@
+import type { Component } from 'svelte';
+
 export interface ContentMeta {
 	title: string;
 	description: string;
@@ -14,8 +16,9 @@ export interface ContentMeta {
 
 export interface ContentItem {
 	meta: ContentMeta;
-	content?: string;
+	content?: string; // Kept for backward compatibility
 	path?: string;
+	component?: Component; // mdsvex component
 }
 
 export interface ContentCollection {

@@ -10,6 +10,7 @@ slug: 'modern-css-features'
 category: 'blog'
 readingTime: 9
 image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=400&fit=crop&crop=center'
+layout: 'blog'
 ---
 
 # Modern CSS Features You Should Know in 2024

@@ -10,6 +10,7 @@ slug: 'e-commerce-platform-redesign'
 category: 'case-study'
 readingTime: 8
 image: '/images/case-studies/ecommerce-redesign.jpg'
+layout: 'case-study'
 ---
 
 # E-commerce Platform Redesign: 40% Increase in Conversions

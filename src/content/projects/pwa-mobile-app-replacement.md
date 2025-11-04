@@ -10,6 +10,7 @@ slug: 'pwa-mobile-app-replacement'
 category: 'case-study'
 readingTime: 8
 image: '/images/case-studies/pwa-success.jpg'
+layout: 'case-study'
 ---
 
 # PWA Success: Replacing Native App, Reducing Costs by 70%

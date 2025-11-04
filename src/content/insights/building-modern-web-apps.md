@@ -10,6 +10,7 @@ slug: 'building-modern-web-apps'
 category: 'blog'
 readingTime: 12
 image: '/images/blog/sveltekit-guide.jpg'
+layout: 'blog'
 ---
 
 # Building Modern Web Applications with SvelteKit

@@ -137,11 +137,19 @@
 	</header>
 
 	<!-- Case study content -->
-	<article
-		class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
-	>
-		{@html data.caseStudy.content}
-	</article>
+	{#if data.caseStudy.component}
+		<article
+			class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
+		>
+			<svelte:component this={data.caseStudy.component} />
+		</article>
+	{:else}
+		<article
+			class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
+		>
+			{@html data.caseStudy.content}
+		</article>
+	{/if}
 
 	<!-- Call to action -->
 	<section

@@ -10,6 +10,7 @@ slug: 'design-system-implementation'
 category: 'case-study'
 readingTime: 11
 image: '/images/case-studies/design-system.jpg'
+layout: 'case-study'
 ---
 
 # Enterprise Design System: Unifying 12 Products Under One Language

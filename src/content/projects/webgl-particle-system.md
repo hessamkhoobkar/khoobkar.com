@@ -10,6 +10,7 @@ slug: 'webgl-particle-system'
 category: 'projects'
 readingTime: 6
 image: '/images/projects/particle-system.jpg'
+layout: 'blog'
 ---
 
 # WebGL Particle System Experiment

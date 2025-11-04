@@ -10,6 +10,7 @@ slug: 'saas-dashboard-transformation'
 category: 'case-study'
 readingTime: 10
 image: '/images/case-studies/saas-dashboard.jpg'
+layout: 'case-study'
 ---
 
 # SaaS Dashboard Transformation: 3x Faster & User Delight

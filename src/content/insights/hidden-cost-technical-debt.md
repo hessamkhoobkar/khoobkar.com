@@ -10,6 +10,7 @@ slug: 'hidden-cost-technical-debt'
 category: 'insight'
 readingTime: 10
 image: '/images/insights/technical-debt.jpg'
+layout: 'blog'
 ---
 
 # The Hidden Cost of Technical Debt: A $500K Lesson

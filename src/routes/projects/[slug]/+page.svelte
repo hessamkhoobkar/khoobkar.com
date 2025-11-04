@@ -271,7 +271,11 @@ As user base grew, I addressed:
 		<div class="container mx-auto px-4">
 			<div class="mx-auto max-w-8xl">
 				<div class="prose prose-lg max-w-none prose-invert">
-					{@html displayProject.content}
+					{#if displayProject.component}
+						<svelte:component this={displayProject.component} />
+					{:else}
+						{@html displayProject.content}
+					{/if}
 				</div>
 			</div>
 		</div>

@@ -10,6 +10,7 @@ slug: 'accessibility-transformation'
 category: 'case-study'
 readingTime: 10
 image: '/images/case-studies/accessibility.jpg'
+layout: 'case-study'
 ---
 
 # Accessibility Transformation: From 23% to 100% WCAG Compliance

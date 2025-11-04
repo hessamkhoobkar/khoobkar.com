@@ -1,63 +1,25 @@
 import type { ContentItem, ContentMeta, ContentCollection } from '$lib/data/content';
 import { contentConfig } from '$lib/data/content';
-import { marked } from 'marked';
-import hljs from 'highlight.js';
+import type { Component } from 'svelte';
 
 // Type for mdsvex module exports
+// mdsvex exports frontmatter as individual named exports
 interface MdsvexModule {
 	metadata?: ContentMeta;
-	default?: unknown;
-}
-
-// Configure marked with syntax highlighting using extensions
-marked.use({
-	breaks: true,
-	gfm: true,
-	sanitize: false,
-	escapeHtml: true,
-	renderer: {
-		code({ text, lang }: { text: string; lang?: string }): string {
-			const language = lang || 'plaintext';
-
-			if (language && hljs.getLanguage(language)) {
-				try {
-					const highlighted = hljs.highlight(text, { language }).value;
-					return `<pre><code class="hljs language-${language}">${highlighted}</code></pre>`;
-				} catch (err) {
-					console.error('Highlight.js error:', err);
-				}
-			}
-
-			// Escape HTML for plain code
-			const escaped = text
-				.replace(/&/g, '&amp;')
-				.replace(/</g, '&lt;')
-				.replace(/>/g, '&gt;')
-				.replace(/"/g, '&quot;')
-				.replace(/'/g, '&#039;');
-
-			return `<pre><code>${escaped}</code></pre>`;
-		}
-	}
-});
-
-// Markdown to HTML converter using marked
-function markdownToHtml(markdown: string): string {
-	// Remove frontmatter
-	let withoutFrontmatter = markdown.replace(/^---\n[\s\S]*?\n---\n/, '');
-
-	// Remove the first H1 if it exists (since we display title separately)
-	withoutFrontmatter = withoutFrontmatter.replace(/^# .*$/m, '').trim();
-
-	// Escape standalone < and > characters that aren't part of HTML tags
-	// Handle patterns like "< 2 seconds", "< 200ms", etc.
-	withoutFrontmatter = withoutFrontmatter.replace(/<(\s*\d)/g, '&lt;$1');
-	withoutFrontmatter = withoutFrontmatter.replace(/(\d\s*)>/g, '$1&gt;');
-
-	// Convert markdown to HTML using marked
-	const html = marked.parse(withoutFrontmatter, { async: false }) as string;
-
-	return html;
+	title?: string;
+	description?: string;
+	date?: string;
+	author?: string;
+	tags?: string[];
+	featured?: boolean;
+	published?: boolean;
+	slug?: string;
+	category?: string;
+	readingTime?: number;
+	image?: string;
+	layout?: string;
+	default: Component;
+	[key: string]: any; // Allow any other exports
 }
 
 /**
@@ -65,69 +27,65 @@ function markdownToHtml(markdown: string): string {
  */
 export async function loadContent(category: string): Promise<ContentItem[]> {
 	const modules = import.meta.glob('../../content/**/*.md', {
-		eager: true,
-		query: '?raw',
-		import: 'default'
-	});
+		eager: true
+	}) as Record<string, MdsvexModule>;
 
 	const items: ContentItem[] = [];
 
-	for (const [path, rawContent] of Object.entries(modules)) {
-		const pathParts = path.split('/');
+	for (const [path, module] of Object.entries(modules)) {
+		// Normalize path separators (handle both / and \ for Windows)
+		const normalizedPath = path.replace(/\\/g, '/');
+		const pathParts = normalizedPath.split('/');
 		const pathCategory = pathParts[pathParts.length - 2];
 
-		if (pathCategory !== category) continue;
+		// Map category names
+		let normalizedCategory = pathCategory;
+		if (pathCategory === 'case-studies') normalizedCategory = 'work';
+		if (pathCategory === 'insights') normalizedCategory = 'insight';
 
-		const slug = path.split('/').pop()?.replace('.md', '') || '';
-		const markdownContent = rawContent as string;
+		if (normalizedCategory !== category) continue;
 
-		// Parse frontmatter manually
-		const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---\n/);
-		if (!frontmatterMatch) continue;
-
-		const frontmatter = frontmatterMatch[1];
-		const metadata: ContentMeta = {
-			title: '',
-			description: '',
-			date: '',
-			slug,
-			category: pathCategory as ContentMeta['category']
+		const slug = pathParts[pathParts.length - 1].replace('.md', '') || '';
+		
+		// mdsvex exports frontmatter as individual named exports
+		// Prefer individual exports over metadata object
+		const metadata = {
+			title: (module as any).title,
+			description: (module as any).description,
+			date: (module as any).date,
+			author: (module as any).author,
+			tags: (module as any).tags,
+			featured: (module as any).featured,
+			published: (module as any).published,
+			slug: (module as any).slug,
+			category: (module as any).category,
+			readingTime: (module as any).readingTime,
+			image: (module as any).image,
+			// Fallback to metadata object if individual exports don't exist
+			...(Object.keys((module as any).metadata || {}).length > 0 ? (module as any).metadata : {})
 		};
 
-		// Parse frontmatter fields
-		frontmatter.split('\n').forEach((line) => {
-			const [key, ...valueParts] = line.split(':');
-			if (key && valueParts.length > 0) {
-				const value = valueParts
-					.join(':')
-					.trim()
-					.replace(/^['"]|['"]$/g, '');
-				const cleanKey = key.trim();
+		if (!metadata || !metadata.title) continue;
 
-				if (cleanKey === 'title') metadata.title = value;
-				else if (cleanKey === 'description') metadata.description = value;
-				else if (cleanKey === 'date') metadata.date = value;
-				else if (cleanKey === 'author') metadata.author = value;
-				else if (cleanKey === 'featured') metadata.featured = value === 'true';
-				else if (cleanKey === 'published') metadata.published = value === 'true';
-				else if (cleanKey === 'readingTime') metadata.readingTime = parseInt(value);
-				else if (cleanKey === 'image') metadata.image = value;
-				else if (cleanKey === 'tags') {
-					// Parse tags array
-					const tagsMatch = value.match(/\[(.*?)\]/);
-					if (tagsMatch) {
-						metadata.tags = tagsMatch[1].split(',').map((tag) => tag.trim().replace(/['"]/g, ''));
-					}
-				}
-			}
-		});
-
-		const content = markdownToHtml(markdownContent);
+		// Ensure metadata has required fields
+		const fullMetadata: ContentMeta = {
+			title: metadata.title || '',
+			description: metadata.description || '',
+			date: metadata.date || '',
+			author: metadata.author,
+			tags: metadata.tags,
+			featured: metadata.featured,
+			published: metadata.published !== false,
+			slug: metadata.slug || slug,
+			category: (normalizedCategory as ContentMeta['category']) || metadata.category || normalizedCategory,
+			readingTime: metadata.readingTime,
+			image: metadata.image
+		};
 
 		items.push({
-			meta: metadata,
-			content,
-			path
+			meta: fullMetadata,
+			path,
+			component: module.default
 		});
 	}
 
@@ -139,72 +97,20 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
  * Load a single content item by category and slug
  */
 export async function loadContentItem(category: string, slug: string): Promise<ContentItem | null> {
-	const rawModules = import.meta.glob('../../content/**/*.md', {
-		eager: true,
-		query: '?raw',
-		import: 'default'
+	// Reuse loadContent to ensure consistent logic
+	const items = await loadContent(category);
+	
+	// Find the item matching the slug (check both path slug and metadata slug)
+	const item = items.find((item) => {
+		const pathParts = item.path?.replace(/\\/g, '/').split('/') || [];
+		const pathSlug = pathParts[pathParts.length - 1]?.replace('.md', '') || '';
+		const metadataSlug = item.meta.slug;
+		
+		// Match by either path slug or metadata slug
+		return pathSlug === slug || metadataSlug === slug;
 	});
 
-	for (const [path, rawContent] of Object.entries(rawModules)) {
-		const pathParts = path.split('/');
-		const pathCategory = pathParts[pathParts.length - 2];
-		const pathSlug = pathParts[pathParts.length - 1].replace('.md', '');
-
-		if (pathCategory === category && pathSlug === slug) {
-			const markdownContent = rawContent as string;
-
-			// Parse frontmatter manually
-			const frontmatterMatch = markdownContent.match(/^---\n([\s\S]*?)\n---\n/);
-			if (!frontmatterMatch) continue;
-
-			const frontmatter = frontmatterMatch[1];
-			const metadata: ContentMeta = {
-				title: '',
-				description: '',
-				date: '',
-				slug,
-				category: category as ContentMeta['category']
-			};
-
-			// Parse frontmatter fields
-			frontmatter.split('\n').forEach((line) => {
-				const [key, ...valueParts] = line.split(':');
-				if (key && valueParts.length > 0) {
-					const value = valueParts
-						.join(':')
-						.trim()
-						.replace(/^['"]|['"]$/g, '');
-					const cleanKey = key.trim();
-
-					if (cleanKey === 'title') metadata.title = value;
-					else if (cleanKey === 'description') metadata.description = value;
-					else if (cleanKey === 'date') metadata.date = value;
-					else if (cleanKey === 'author') metadata.author = value;
-					else if (cleanKey === 'featured') metadata.featured = value === 'true';
-					else if (cleanKey === 'published') metadata.published = value === 'true';
-					else if (cleanKey === 'readingTime') metadata.readingTime = parseInt(value);
-					else if (cleanKey === 'image') metadata.image = value;
-					else if (cleanKey === 'tags') {
-						// Parse tags array
-						const tagsMatch = value.match(/\[(.*?)\]/);
-						if (tagsMatch) {
-							metadata.tags = tagsMatch[1].split(',').map((tag) => tag.trim().replace(/['"]/g, ''));
-						}
-					}
-				}
-			});
-
-			const content = markdownToHtml(markdownContent);
-
-			return {
-				meta: metadata,
-				content,
-				path
-			};
-		}
-	}
-
-	return null;
+	return item || null;
 }
 
 /**
@@ -302,13 +208,11 @@ export async function searchContent(query: string): Promise<ContentItem[]> {
 		const title = item.meta.title.toLowerCase();
 		const description = item.meta.description.toLowerCase();
 		const tags = (item.meta.tags || []).join(' ').toLowerCase();
-		const content = item.content?.toLowerCase() || '';
 
 		return (
 			title.includes(searchQuery) ||
 			description.includes(searchQuery) ||
-			tags.includes(searchQuery) ||
-			content.includes(searchQuery)
+			tags.includes(searchQuery)
 		);
 	});
 }
@@ -324,11 +228,15 @@ export function calculateReadingTime(content: string): number {
 
 /**
  * Generate excerpt from content
+ * Note: With mdsvex, we can't easily extract text from components.
+ * This function is kept for backward compatibility but may need refactoring.
  */
 export function generateExcerpt(
-	content: string,
+	content: string | undefined,
 	length: number = contentConfig.excerptLength
 ): string {
+	if (!content) return '';
+
 	// Remove markdown syntax and HTML tags
 	const plainText = content
 		.replace(/[#*`_~[\]]/g, '')

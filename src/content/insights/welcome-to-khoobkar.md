@@ -10,6 +10,7 @@ slug: 'welcome-to-khoobkar'
 category: 'blog'
 readingTime: 5
 image: '/images/blog/welcome.jpg'
+layout: 'blog'
 ---
 
 # Welcome to Khoobkar

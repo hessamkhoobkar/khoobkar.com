@@ -10,6 +10,7 @@ slug: 'saas-analytics-platform'
 category: 'projects'
 readingTime: 8
 image: '/images/projects/analytics-platform.jpg'
+layout: 'blog'
 ---
 
 # SaaS Analytics Platform

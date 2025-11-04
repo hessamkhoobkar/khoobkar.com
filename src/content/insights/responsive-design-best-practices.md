@@ -10,6 +10,7 @@ slug: 'responsive-design-best-practices'
 category: 'blog'
 readingTime: 10
 image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop&crop=center'
+layout: 'blog'
 ---
 
 # Responsive Design Best Practices for 2024

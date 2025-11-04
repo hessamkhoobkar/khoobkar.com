@@ -10,6 +10,7 @@ slug: 'e-commerce-conversion-boost'
 category: 'case-study'
 readingTime: 9
 image: '/images/case-studies/ecommerce-boost.jpg'
+layout: 'case-study'
 ---
 
 # E-commerce Conversion Boost: From 2.1% to 5.8% in 8 Weeks

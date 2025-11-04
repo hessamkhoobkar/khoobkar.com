@@ -168,11 +168,19 @@
 	</header>
 
 	<!-- Article content -->
-	<article
-		class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
-	>
-		{@html data.post.content}
-	</article>
+	{#if data.post.component}
+		<article
+			class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
+		>
+			<data.post.component />
+		</article>
+	{:else}
+		<article
+			class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
+		>
+			{@html data.post.content}
+		</article>
+	{/if}
 
 	<!-- CTA Section -->
 	<section

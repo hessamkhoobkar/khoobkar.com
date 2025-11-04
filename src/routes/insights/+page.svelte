@@ -13,9 +13,9 @@
 
 	onMount(async () => {
 		try {
-			blogPosts = await loadContent('blog');
+			blogPosts = await loadContent('insight');
 		} catch (error) {
-			console.error('Failed to load blog posts:', error);
+			console.error('Failed to load insight posts:', error);
 		} finally {
 			loading = false;
 		}

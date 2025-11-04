@@ -10,6 +10,7 @@ slug: 'web-performance-optimization'
 category: 'blog'
 readingTime: 12
 image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&fit=crop&crop=center'
+layout: 'blog'
 ---
 
 # Web Performance Optimization: Speed Up Your Site
