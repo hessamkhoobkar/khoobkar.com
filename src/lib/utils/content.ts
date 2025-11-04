@@ -19,7 +19,7 @@ interface MdsvexModule {
 	image?: string;
 	layout?: string;
 	default: Component;
-	[key: string]: any; // Allow any other exports
+	[key: string]: unknown; // Allow any other exports
 }
 
 /**
@@ -46,23 +46,23 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
 		if (normalizedCategory !== category) continue;
 
 		const slug = pathParts[pathParts.length - 1].replace('.md', '') || '';
-		
+
 		// mdsvex exports frontmatter as individual named exports
 		// Prefer individual exports over metadata object
 		const metadata = {
-			title: (module as any).title,
-			description: (module as any).description,
-			date: (module as any).date,
-			author: (module as any).author,
-			tags: (module as any).tags,
-			featured: (module as any).featured,
-			published: (module as any).published,
-			slug: (module as any).slug,
-			category: (module as any).category,
-			readingTime: (module as any).readingTime,
-			image: (module as any).image,
+			title: module.title,
+			description: module.description,
+			date: module.date,
+			author: module.author,
+			tags: module.tags,
+			featured: module.featured,
+			published: module.published,
+			slug: module.slug,
+			category: module.category,
+			readingTime: module.readingTime,
+			image: module.image,
 			// Fallback to metadata object if individual exports don't exist
-			...(Object.keys((module as any).metadata || {}).length > 0 ? (module as any).metadata : {})
+			...(Object.keys(module.metadata || {}).length > 0 ? module.metadata : {})
 		};
 
 		if (!metadata || !metadata.title) continue;
@@ -77,7 +77,8 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
 			featured: metadata.featured,
 			published: metadata.published !== false,
 			slug: metadata.slug || slug,
-			category: (normalizedCategory as ContentMeta['category']) || metadata.category || normalizedCategory,
+			category:
+				(normalizedCategory as ContentMeta['category']) || metadata.category || normalizedCategory,
 			readingTime: metadata.readingTime,
 			image: metadata.image
 		};
@@ -99,13 +100,13 @@ export async function loadContent(category: string): Promise<ContentItem[]> {
 export async function loadContentItem(category: string, slug: string): Promise<ContentItem | null> {
 	// Reuse loadContent to ensure consistent logic
 	const items = await loadContent(category);
-	
+
 	// Find the item matching the slug (check both path slug and metadata slug)
 	const item = items.find((item) => {
 		const pathParts = item.path?.replace(/\\/g, '/').split('/') || [];
 		const pathSlug = pathParts[pathParts.length - 1]?.replace('.md', '') || '';
 		const metadataSlug = item.meta.slug;
-		
+
 		// Match by either path slug or metadata slug
 		return pathSlug === slug || metadataSlug === slug;
 	});
@@ -210,42 +211,7 @@ export async function searchContent(query: string): Promise<ContentItem[]> {
 		const tags = (item.meta.tags || []).join(' ').toLowerCase();
 
 		return (
-			title.includes(searchQuery) ||
-			description.includes(searchQuery) ||
-			tags.includes(searchQuery)
+			title.includes(searchQuery) || description.includes(searchQuery) || tags.includes(searchQuery)
 		);
 	});
-}
-
-/**
- * Generate reading time estimate
- */
-export function calculateReadingTime(content: string): number {
-	const wordsPerMinute = 200;
-	const wordCount = content.split(/\s+/).length;
-	return Math.ceil(wordCount / wordsPerMinute);
-}
-
-/**
- * Generate excerpt from content
- * Note: With mdsvex, we can't easily extract text from components.
- * This function is kept for backward compatibility but may need refactoring.
- */
-export function generateExcerpt(
-	content: string | undefined,
-	length: number = contentConfig.excerptLength
-): string {
-	if (!content) return '';
-
-	// Remove markdown syntax and HTML tags
-	const plainText = content
-		.replace(/[#*`_~[\]]/g, '')
-		.replace(/<[^>]*>/g, '')
-		.trim();
-
-	if (plainText.length <= length) {
-		return plainText;
-	}
-
-	return plainText.substring(0, length).trim() + '...';
 }

@@ -1,13 +1,22 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { getRelatedContent } from '$lib/utils/content';
 	import { generateBlogPostingSchema } from '$lib/utils/structured-data';
 	import type { ContentItem } from '$lib/data/content';
 	import type { PageData } from './$types';
 	import { Calendar, Clock, User, Tag, Share2, ArrowLeft } from '@lucide/svelte';
+	import { ProgressRing } from '@skeletonlabs/skeleton-svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	let { data }: { data: PageData } = $props();
 	let relatedPosts: ContentItem[] = $state([]);
+	let readingProgress = $state(0);
+	let readingProgressCard: HTMLElement;
+	let articleContent: HTMLElement;
+
+	// Register ScrollTrigger plugin
+	gsap.registerPlugin(ScrollTrigger);
 
 	onMount(() => {
 		// Load related posts
@@ -16,6 +25,35 @@
 				relatedPosts = posts;
 			});
 		}
+
+		// Set up sticky reading progress card and reading progress tracking with GSAP
+		if (readingProgressCard && articleContent) {
+			// Pin the reading progress card
+			ScrollTrigger.create({
+				trigger: readingProgressCard,
+				start: 'top top+=16px',
+				end: () => `+=${document.body.scrollHeight}`,
+				pin: true,
+				pinSpacing: false,
+				scrub: false,
+				refreshPriority: -1
+			});
+
+			// Track reading progress based on article content
+			ScrollTrigger.create({
+				trigger: articleContent,
+				start: 'top top',
+				end: 'bottom bottom',
+				onUpdate: (self) => {
+					readingProgress = Math.min(self.progress * 100, 100);
+				}
+			});
+		}
+	});
+
+	onDestroy(() => {
+		// Clean up all ScrollTrigger instances to prevent memory leaks
+		ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 	});
 
 	function sharePost() {
@@ -72,218 +110,256 @@
 	{@html '<script type="application/ld+json">' + JSON.stringify(structuredData) + '</script>'}
 </svelte:head>
 
-<div class="mx-auto mt-4 max-w-8xl">
-	<!-- Navigation breadcrumb -->
-	<nav class="mb-8 flex items-center gap-2 text-sm text-surface-400">
-		<a href="/" class="transition-colors hover:text-primary-400">Home</a>
-		<span>→</span>
-		<a href="/insights" class="transition-colors hover:text-primary-400">Insights</a>
-		<span>→</span>
-		<span class="text-surface-300">{data.post.meta.title}</span>
-	</nav>
-
-	<!-- Article header -->
-	<header class="mb-12">
-		{#if data.post.meta.image}
-			<div
-				class="group relative mb-8 overflow-hidden rounded-2xl border border-surface-600 shadow-2xl"
-			>
-				<img
-					src={data.post.meta.image}
-					alt={data.post.meta.title}
-					class="h-80 w-full object-cover transition-transform duration-700 group-hover:scale-105"
-				/>
-				<!-- Gradient overlay -->
-				<div
-					class="absolute inset-0 bg-gradient-to-t from-surface-900/80 via-transparent to-transparent"
-				></div>
-			</div>
-		{/if}
-
-		<div class="mb-6 flex items-center justify-center gap-3">
-			<div
-				class="inline-flex items-center gap-2 rounded-full bg-primary-500/20 px-4 py-2 text-sm font-semibold text-primary-300"
-			>
-				<span>📝</span>
-				<span>Article</span>
-			</div>
-		</div>
-
-		<h1
-			class="mb-6 text-center text-4xl leading-tight font-bold text-surface-50 md:text-5xl lg:text-6xl"
-		>
-			{data.post.meta.title}
-		</h1>
-
-		{#if data.post.meta.description}
-			<p class="mx-auto mb-8 max-w-3xl text-center text-xl leading-relaxed text-surface-200">
-				{data.post.meta.description}
-			</p>
-		{/if}
-
-		<!-- Meta information grid -->
-		<div
-			class="mx-auto mb-8 flex max-w-2xl flex-wrap items-center justify-center gap-6 rounded-xl border border-surface-600 bg-surface-800/50 p-6 text-sm backdrop-blur-sm"
-		>
-			{#if data.post.meta.date}
-				<div class="flex items-center gap-2 text-surface-300">
-					<Calendar size={18} class="text-primary-400" />
-					<span>
-						{new Date(data.post.meta.date).toLocaleDateString('en-US', {
-							year: 'numeric',
-							month: 'long',
-							day: 'numeric'
-						})}
-					</span>
-				</div>
-			{/if}
-
-			{#if data.post.meta.readingTime}
-				<div class="flex items-center gap-2 text-surface-300">
-					<Clock size={18} class="text-primary-400" />
-					<span>{data.post.meta.readingTime} min read</span>
-				</div>
-			{/if}
-
-			{#if data.post.meta.author}
-				<div class="flex items-center gap-2 text-surface-300">
-					<User size={18} class="text-primary-400" />
-					<span class="font-medium">By {data.post.meta.author}</span>
-				</div>
-			{/if}
-		</div>
-
-		{#if data.post.meta.tags && data.post.meta.tags.length > 0}
-			<div class="flex flex-wrap justify-center gap-2">
-				{#each data.post.meta.tags as tag}
-					<span
-						class="hover:bg-surface-750 inline-flex items-center gap-1 rounded-full border border-surface-600 bg-surface-800 px-4 py-2 text-xs font-medium text-surface-300 transition-all hover:border-primary-500/50"
-					>
-						<Tag size={14} class="text-primary-400" />
-						{tag}
-					</span>
-				{/each}
-			</div>
-		{/if}
-	</header>
-
-	<!-- Article content -->
-	{#if data.post.component}
-		<article
-			class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
-		>
-			<data.post.component />
-		</article>
-	{:else}
-		<article
-			class="prose prose-lg mb-12 max-w-none rounded-2xl border border-surface-600 bg-surface-800 p-8 prose-invert md:p-12"
-		>
-			{@html data.post.content}
-		</article>
-	{/if}
-
-	<!-- CTA Section -->
-	<section
-		class="mb-12 overflow-hidden rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 via-primary-600/5 to-transparent p-8 text-center md:p-12"
-	>
-		<div class="relative">
-			<!-- Decorative elements -->
-			<div
-				class="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
-			></div>
-			<div
-				class="absolute -right-20 -bottom-20 h-40 w-40 rounded-full bg-primary-500/10 blur-3xl"
-			></div>
-
-			<div class="relative">
-				<div class="mb-6 flex justify-center">
-					<div class="rounded-full bg-primary-500/20 p-4">
-						<Share2 size={48} class="text-primary-400" />
+<div class="mx-auto mt-4 max-w-6xl">
+	<div class="grid gap-8 lg:grid-cols-12">
+		<!-- Main Content Area -->
+		<div bind:this={articleContent} class="lg:col-span-8">
+			<!-- Article Header Card -->
+			<article class="mb-8 overflow-hidden rounded-2xl border border-surface-600 bg-surface-800">
+				{#if data.post.meta.image}
+					<div class="aspect-[2/1] overflow-hidden bg-surface-700">
+						<img
+							src={data.post.meta.image}
+							alt={data.post.meta.title}
+							class="h-full w-full object-cover"
+						/>
 					</div>
-				</div>
-				<h2 class="mb-4 text-3xl font-bold text-surface-50 md:text-4xl">
-					Enjoyed This <span class="text-primary-400">Article</span>?
-				</h2>
-				<p class="mx-auto mb-8 max-w-2xl text-lg text-surface-200">
-					Share it with your network or explore more insights.
-				</p>
-				<div class="flex flex-wrap justify-center gap-4">
-					<button
-						onclick={sharePost}
-						class="group inline-flex items-center gap-2 rounded-lg bg-primary-600 px-8 py-4 font-medium text-white shadow-lg shadow-primary-600/30 transition-all duration-200 hover:scale-105 hover:bg-primary-500 hover:shadow-xl hover:shadow-primary-500/40"
-					>
-						<Share2 size={20} />
-						<span>Share Article</span>
-					</button>
-					<a
-						href="/insights"
-						class="group inline-flex items-center gap-2 rounded-lg border border-surface-600 bg-surface-800/50 px-8 py-4 font-medium text-surface-300 backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-					>
-						<span>More Insights</span>
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>
+				{/if}
 
-	<!-- Related Posts -->
-	{#if relatedPosts.length > 0}
-		<section class="mb-12">
-			<div class="mb-8 text-center">
-				<h2 class="mb-3 text-3xl font-bold text-surface-50">Related Articles</h2>
-				<p class="text-lg text-surface-300">Explore more insights and articles</p>
-			</div>
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each relatedPosts as relatedPost}
-					<article
-						class="group hover:bg-surface-750 rounded-2xl border border-surface-600 bg-surface-800 p-6 transition-all duration-300 hover:border-primary-500/50 hover:shadow-lg hover:shadow-primary-500/10"
-					>
-						<h3 class="mb-2 line-clamp-2 text-lg font-bold text-surface-50">
-							<a
-								href="/insights/{relatedPost.meta.slug}"
-								class="transition-colors hover:text-primary-400"
-							>
-								{relatedPost.meta.title}
-							</a>
-						</h3>
-						<p class="mb-4 line-clamp-3 text-sm text-surface-300">
-							{relatedPost.meta.description}
-						</p>
-						<div class="flex items-center justify-between text-xs text-surface-400">
-							<time datetime={relatedPost.meta.date}>
-								{new Date(relatedPost.meta.date).toLocaleDateString('en-US', {
-									year: 'numeric',
-									month: 'short',
-									day: 'numeric'
-								})}
-							</time>
-							{#if relatedPost.meta.readingTime}
-								<span>{relatedPost.meta.readingTime} min read</span>
-							{/if}
-						</div>
-						{#if relatedPost.meta.tags && relatedPost.meta.tags.length > 0}
-							<div class="mt-4 flex flex-wrap gap-1">
-								{#each relatedPost.meta.tags.slice(0, 3) as tag}
-									<span class="rounded-full bg-surface-700 px-2 py-1 text-xs text-surface-400">
-										{tag}
-									</span>
-								{/each}
+				<div class="p-8 md:p-12">
+					<!-- Meta Information -->
+					<div class="mb-6 flex flex-wrap items-center gap-4 text-sm text-surface-400">
+						{#if data.post.meta.date}
+							<div class="flex items-center gap-2">
+								<Calendar size={16} class="text-primary-400" />
+								<time datetime={data.post.meta.date}>
+									{new Date(data.post.meta.date).toLocaleDateString('en-US', {
+										year: 'numeric',
+										month: 'long',
+										day: 'numeric'
+									})}
+								</time>
 							</div>
 						{/if}
-					</article>
-				{/each}
-			</div>
-		</section>
-	{/if}
 
-	<!-- Back to insights -->
-	<div class="border-t border-surface-600 pt-8">
-		<a
-			href="/insights"
-			class="group inline-flex items-center gap-2 rounded-lg border border-surface-600 bg-surface-800 px-6 py-3 font-medium text-surface-300 transition-all duration-200 hover:border-primary-500 hover:bg-primary-600/10 hover:text-primary-300"
-		>
-			<ArrowLeft size={20} class="transition-transform duration-200 group-hover:-translate-x-1" />
-			<span>Back to all insights</span>
-		</a>
+						{#if data.post.meta.readingTime}
+							<div class="flex items-center gap-2">
+								<Clock size={16} class="text-primary-400" />
+								<span>{data.post.meta.readingTime} min read</span>
+							</div>
+						{/if}
+
+						{#if data.post.meta.author}
+							<div class="flex items-center gap-2">
+								<User size={16} class="text-primary-400" />
+								<span>{data.post.meta.author}</span>
+							</div>
+						{/if}
+					</div>
+
+					<!-- Title -->
+					<h1 class="mb-6 text-4xl leading-tight font-bold text-surface-50 md:text-5xl">
+						{data.post.meta.title}
+					</h1>
+
+					<!-- Description -->
+					{#if data.post.meta.description}
+						<p class="mb-6 text-lg leading-relaxed text-surface-200">
+							{data.post.meta.description}
+						</p>
+					{/if}
+
+					<!-- Tags -->
+					{#if data.post.meta.tags && data.post.meta.tags.length > 0}
+						<div class="flex flex-wrap gap-2">
+							{#each data.post.meta.tags as tag}
+								<span
+									class="inline-flex items-center gap-1.5 rounded-lg border border-primary-500/30 bg-primary-500/10 px-3 py-1.5 text-sm text-primary-300"
+								>
+									<Tag size={14} />
+									{tag}
+								</span>
+							{/each}
+						</div>
+					{/if}
+				</div>
+			</article>
+
+			<!-- Article Content Card -->
+			<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
+				<div
+					class="prose prose-lg max-w-none prose-invert prose-headings:font-bold prose-headings:text-surface-50 prose-h2:mt-8 prose-h2:mb-4 prose-h2:text-3xl prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-2xl prose-p:mb-4 prose-p:leading-relaxed prose-p:text-surface-200 prose-a:text-primary-400 prose-a:no-underline hover:prose-a:text-primary-300 hover:prose-a:underline prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-surface-700/50 prose-blockquote:py-2 prose-blockquote:pr-4 prose-blockquote:pl-4 prose-blockquote:text-surface-200 prose-blockquote:italic prose-strong:text-surface-100 prose-code:rounded prose-code:bg-surface-700 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary-300 prose-pre:rounded-lg prose-pre:border prose-pre:border-surface-600 prose-pre:bg-surface-900 prose-ol:my-4 prose-ol:text-surface-200 prose-ul:my-4 prose-ul:text-surface-200 prose-li:my-2 prose-img:rounded-lg prose-img:border prose-img:border-surface-600"
+				>
+					<data.post.component />
+				</div>
+			</div>
+
+			<!-- Share Card -->
+			<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-6">
+				<div class="flex items-center justify-between">
+					<div>
+						<h3 class="mb-1 text-lg font-semibold text-surface-50">Enjoyed this article?</h3>
+						<p class="text-sm text-surface-400">Share it with your network</p>
+					</div>
+					<button
+						onclick={sharePost}
+						class="group flex items-center gap-2 rounded-lg border border-surface-600 bg-surface-700 px-6 py-3 text-sm font-medium text-surface-200 transition-all hover:border-primary-500/50 hover:bg-primary-500/10 hover:text-primary-300"
+					>
+						<Share2 size={16} class="transition-transform group-hover:scale-110" />
+						Share
+					</button>
+				</div>
+			</div>
+
+			<!-- Related Posts Card -->
+			{#if relatedPosts.length > 0}
+				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-8">
+					<h2 class="mb-6 text-2xl font-bold text-surface-50">Related Articles</h2>
+					<div class="grid gap-6 md:grid-cols-2">
+						{#each relatedPosts as relatedPost}
+							<a
+								href="/insights/{relatedPost.meta.slug}"
+								class="group rounded-xl border border-surface-600 bg-surface-700/50 p-6 transition-all hover:border-primary-500/50 hover:bg-surface-700"
+							>
+								<h3
+									class="mb-2 line-clamp-2 text-lg font-semibold text-surface-50 group-hover:text-primary-400"
+								>
+									{relatedPost.meta.title}
+								</h3>
+								<p class="mb-4 line-clamp-2 text-sm text-surface-300">
+									{relatedPost.meta.description}
+								</p>
+								<div class="flex items-center gap-3 text-xs text-surface-400">
+									<time datetime={relatedPost.meta.date}>
+										{new Date(relatedPost.meta.date).toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'short',
+											day: 'numeric'
+										})}
+									</time>
+									{#if relatedPost.meta.readingTime}
+										<span>•</span>
+										<span>{relatedPost.meta.readingTime} min read</span>
+									{/if}
+								</div>
+							</a>
+						{/each}
+					</div>
+				</div>
+			{/if}
+		</div>
+
+		<!-- Sidebar -->
+		<aside class="lg:col-span-4">
+			<div class="sidebar-sticky space-y-6" data-speed="0">
+				<!-- Back Navigation Card -->
+				<div class="rounded-2xl border border-surface-600 bg-surface-800">
+					<a
+						href="/insights"
+						class="group flex items-center gap-2 p-4 text-sm text-surface-400 transition-colors hover:text-primary-400"
+					>
+						<ArrowLeft size={16} class="transition-transform group-hover:-translate-x-1" />
+						Back to Insights
+					</a>
+				</div>
+
+				<!-- Author Card -->
+				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
+					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+						Written by
+					</h3>
+					<div class="flex items-start gap-4">
+						<div
+							class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-xl font-bold text-white"
+						>
+							{#if data.post.meta.author}
+								{data.post.meta.author.charAt(0)}
+							{:else}
+								K
+							{/if}
+						</div>
+						<div>
+							<div class="font-semibold text-surface-50">
+								{data.post.meta.author || 'Khoobkar Team'}
+							</div>
+							<div class="text-sm text-surface-400">Content Creator</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Quick Stats Card -->
+				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
+					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+						Article Stats
+					</h3>
+					<div class="space-y-3">
+						{#if data.post.meta.readingTime}
+							<div class="flex items-center justify-between">
+								<span class="text-sm text-surface-300">Reading Time</span>
+								<span class="font-semibold text-primary-400">
+									{data.post.meta.readingTime} min
+								</span>
+							</div>
+						{/if}
+						{#if data.post.meta.date}
+							<div class="flex items-center justify-between">
+								<span class="text-sm text-surface-300">Published</span>
+								<span class="font-semibold text-surface-200">
+									{new Date(data.post.meta.date).toLocaleDateString('en-US', {
+										month: 'short',
+										year: 'numeric'
+									})}
+								</span>
+							</div>
+						{/if}
+						{#if data.post.meta.tags}
+							<div class="flex items-center justify-between">
+								<span class="text-sm text-surface-300">Topics</span>
+								<span class="font-semibold text-surface-200">{data.post.meta.tags.length}</span>
+							</div>
+						{/if}
+					</div>
+				</div>
+
+				<!-- CTA Card -->
+				<div
+					class="rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-primary-600/5 p-6"
+				>
+					<h3 class="mb-2 text-lg font-bold text-surface-50">Have a project in mind?</h3>
+					<p class="mb-4 text-sm text-surface-300">
+						Let's discuss how we can help bring your ideas to life.
+					</p>
+					<a
+						href="/contact"
+						class="block rounded-lg bg-primary-600 px-4 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-primary-500"
+					>
+						Get in Touch
+					</a>
+				</div>
+
+				<!-- Reading Progress Card -->
+				<div
+					bind:this={readingProgressCard}
+					class="rounded-2xl border border-surface-600 bg-surface-800 p-6"
+				>
+					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+						Reading Progress
+					</h3>
+					<div class="flex flex-col items-center justify-center gap-4">
+						<ProgressRing
+							value={readingProgress}
+							max={100}
+							trackStroke="stroke-surface-700"
+							meterStroke="stroke-primary-500"
+							strokeLinecap="round"
+							size="w-32 h-32"
+							showLabel={false}
+						>
+							<span class="text-2xl font-bold text-surface-50">{Math.round(readingProgress)}%</span>
+						</ProgressRing>
+					</div>
+				</div>
+			</div>
+		</aside>
 	</div>
 </div>

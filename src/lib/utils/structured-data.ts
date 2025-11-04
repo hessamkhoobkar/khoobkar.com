@@ -77,7 +77,7 @@ export function generateBlogPostingSchema(post: ContentItem, baseUrl: string = '
 		},
 		keywords: post.meta.tags?.join(', ') || '',
 		articleSection: post.meta.tags?.[0] || 'General',
-		wordCount: post.content ? post.content.split(/\s+/).length : 0,
+		wordCount: post.meta.readingTime ? post.meta.readingTime * 200 : 0, // Estimate: 200 words per minute
 		timeRequired: post.meta.readingTime ? `PT${post.meta.readingTime}M` : undefined,
 		inLanguage: siteConfig.language,
 		url: articleUrl
@@ -136,7 +136,7 @@ export function generateArticleSchema(content: ContentItem, baseUrl: string) {
 			'@id': articleUrl
 		},
 		keywords: content.meta.tags?.join(', ') || '',
-		wordCount: content.content ? content.content.split(/\s+/).length : 0,
+		wordCount: content.meta.readingTime ? content.meta.readingTime * 200 : 0, // Estimate: 200 words per minute
 		inLanguage: siteConfig.language,
 		url: articleUrl
 	};

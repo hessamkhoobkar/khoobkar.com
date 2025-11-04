@@ -51,8 +51,9 @@
 		}
 	});
 
-	// Mock project data for demonstration
-	const mockProject = {
+	// Mock project data for demonstration (used as fallback when project loading fails)
+	// Note: This mock doesn't have a component, so it won't render content
+	const mockProject: Pick<ContentItem, 'meta'> = {
 		meta: {
 			title: 'SaaS Analytics Platform',
 			description:
@@ -66,73 +67,11 @@
 			category: 'projects' as const,
 			readingTime: 8,
 			image: '/images/projects/analytics-platform.jpg'
-		},
-		content: `
-# SaaS Analytics Platform
-
-A comprehensive analytics platform that helps businesses track user behavior and optimize conversion rates.
-
-## Project Overview
-
-This SaaS application was built to solve the problem of fragmented analytics data across multiple business tools. The platform provides a unified dashboard that aggregates data from various sources and presents actionable insights.
-
-## Key Features
-
-- **Real-time Analytics**: Live data streaming with sub-second updates
-- **Custom Dashboards**: Drag-and-drop interface for creating personalized views
-- **Advanced Segmentation**: Powerful user segmentation tools
-- **API Integration**: Connect with 50+ popular business tools
-- **Mobile Responsive**: Optimized for all device sizes
-
-## Technical Stack
-
-- **Frontend**: React 18, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Express, TypeScript
-- **Database**: PostgreSQL with Redis caching
-- **Infrastructure**: AWS (ECS, RDS, ElastiCache)
-- **Monitoring**: DataDog, Sentry
-
-## Results
-
-- **40% increase** in user engagement
-- **60% reduction** in time-to-insight
-- **99.9% uptime** achieved
-- **$2M ARR** generated within 12 months
-
-## Challenges Solved
-
-### Performance Optimization
-The initial version was slow due to complex queries. I implemented:
-- Database query optimization
-- Redis caching layer
-- CDN integration
-- Lazy loading for large datasets
-
-### Scalability
-As user base grew, I addressed:
-- Horizontal scaling with microservices
-- Database sharding
-- Load balancing
-- Auto-scaling infrastructure
-
-## Lessons Learned
-
-1. **Start with performance in mind** - It's harder to optimize later
-2. **User feedback is crucial** - Regular user interviews shaped the product
-3. **Technical debt compounds** - Address it early and often
-4. **Documentation saves time** - Well-documented APIs reduce support burden
-
-## Future Enhancements
-
-- Machine learning-powered insights
-- Advanced reporting features
-- White-label solutions
-- Mobile app development
-		`
+		}
 	};
 
 	// Use mock data if no real project loaded
-	const displayProject = $derived(project || mockProject);
+	const displayProject = $derived(project || (mockProject as ContentItem));
 
 	// Project metrics
 	const metrics = [
@@ -249,14 +188,11 @@ As user base grew, I addressed:
 				<!-- Project Metrics -->
 				<div class="mb-12 grid grid-cols-2 gap-6 md:grid-cols-4">
 					{#each metrics as metric}
+						{@const Icon = metric.icon}
 						<div
 							class="rounded-2xl border border-surface-700 bg-gradient-to-br from-surface-800 to-surface-900 p-6 text-center"
 						>
-							<svelte:component
-								this={metric.icon}
-								size={32}
-								class="mx-auto mb-3 text-primary-400"
-							/>
+							<Icon size={32} class="mx-auto mb-3 text-primary-400" />
 							<div class="mb-1 text-2xl font-bold text-surface-100">{metric.value}</div>
 							<div class="text-sm text-surface-400">{metric.label}</div>
 						</div>
@@ -272,9 +208,7 @@ As user base grew, I addressed:
 			<div class="mx-auto max-w-8xl">
 				<div class="prose prose-lg max-w-none prose-invert">
 					{#if displayProject.component}
-						<svelte:component this={displayProject.component} />
-					{:else}
-						{@html displayProject.content}
+						<displayProject.component />
 					{/if}
 				</div>
 			</div>
@@ -288,10 +222,11 @@ As user base grew, I addressed:
 				<h2 class="mb-8 text-3xl font-bold text-surface-100">Technical Stack</h2>
 				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 					{#each techStack as tech}
+						{@const Icon = tech.icon}
 						<div
 							class="flex items-center gap-3 rounded-xl border border-surface-700 bg-surface-800 p-4"
 						>
-							<svelte:component this={tech.icon} size={24} class="text-primary-400" />
+							<Icon size={24} class="text-primary-400" />
 							<div>
 								<div class="font-medium text-surface-100">{tech.name}</div>
 								<div class="text-sm text-surface-400">{tech.category}</div>

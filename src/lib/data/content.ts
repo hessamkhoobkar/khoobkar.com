@@ -16,9 +16,8 @@ export interface ContentMeta {
 
 export interface ContentItem {
 	meta: ContentMeta;
-	content?: string; // Kept for backward compatibility
 	path?: string;
-	component?: Component; // mdsvex component
+	component: Component; // mdsvex component
 }
 
 export interface ContentCollection {
