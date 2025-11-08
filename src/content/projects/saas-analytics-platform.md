@@ -9,7 +9,7 @@ published: true
 slug: 'saas-analytics-platform'
 category: 'projects'
 readingTime: 8
-image: '/images/projects/analytics-platform.jpg'
+image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=80'
 layout: 'blog'
 ---
 

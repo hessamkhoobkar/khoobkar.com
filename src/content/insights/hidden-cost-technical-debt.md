@@ -9,7 +9,7 @@ published: true
 slug: 'hidden-cost-technical-debt'
 category: 'insight'
 readingTime: 10
-image: '/images/insights/technical-debt.jpg'
+image: 'https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1600&q=80'
 layout: 'blog'
 ---
 

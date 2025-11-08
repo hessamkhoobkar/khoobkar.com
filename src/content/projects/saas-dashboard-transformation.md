@@ -9,7 +9,7 @@ published: true
 slug: 'saas-dashboard-transformation'
 category: 'case-study'
 readingTime: 10
-image: '/images/case-studies/saas-dashboard.jpg'
+image: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1600&q=80'
 layout: 'case-study'
 ---
 

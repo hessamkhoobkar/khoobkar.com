@@ -9,7 +9,7 @@ published: true
 slug: 'accessibility-transformation'
 category: 'case-study'
 readingTime: 10
-image: '/images/case-studies/accessibility.jpg'
+image: 'https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1600&q=80'
 layout: 'case-study'
 ---
 

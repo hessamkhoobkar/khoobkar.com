@@ -9,7 +9,7 @@ published: true
 slug: 'pwa-mobile-app-replacement'
 category: 'case-study'
 readingTime: 8
-image: '/images/case-studies/pwa-success.jpg'
+image: 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=1600&q=80'
 layout: 'case-study'
 ---
 

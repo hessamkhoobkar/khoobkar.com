@@ -9,7 +9,7 @@ published: true
 slug: 'e-commerce-conversion-boost'
 category: 'case-study'
 readingTime: 9
-image: '/images/case-studies/ecommerce-boost.jpg'
+image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1600&q=80'
 layout: 'case-study'
 ---
 

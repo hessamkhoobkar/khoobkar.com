@@ -9,7 +9,7 @@ published: true
 slug: 'webgl-particle-system'
 category: 'projects'
 readingTime: 6
-image: '/images/projects/particle-system.jpg'
+image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80'
 layout: 'blog'
 ---
 
