@@ -6,10 +6,11 @@
 	import SilkHero from '$lib/components/layout/hero/SilkHero.svelte';
 	import ArticleCard from '$lib/components/ui/ArticleCard.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
-	import { FileText, Lightbulb } from '@lucide/svelte';
+	import { Lightbulb } from '@lucide/svelte';
 
 	let blogPosts: ContentItem[] = $state([]);
 	let loading = $state(true);
+	let selectedFilter = $state('all');
 
 	onMount(async () => {
 		try {
@@ -21,7 +22,49 @@
 		}
 	});
 
-	// Generate JSON-LD structured data for blog listing page
+	const filters = $derived(() => {
+		const tagCounts = new Map<string, number>();
+		let total = 0;
+
+		for (const post of blogPosts) {
+			total += 1;
+			for (const tag of post.meta.tags || []) {
+				tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+			}
+		}
+
+		const formatLabel = (value: string) =>
+			value
+				.split('-')
+				.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+				.join(' ');
+
+		return [
+			{ value: 'all', label: 'All Insights', count: total },
+			...Array.from(tagCounts.entries())
+				.sort(([a], [b]) => a.localeCompare(b))
+				.map(([value, count]) => ({
+					value,
+					label: formatLabel(value),
+					count
+				}))
+		];
+	});
+
+	$effect(() => {
+		if (!filters().some((filter) => filter.value === selectedFilter)) {
+			selectedFilter = 'all';
+		}
+	});
+
+	const filteredPosts = $derived(() => {
+		if (selectedFilter === 'all') {
+			return blogPosts;
+		}
+
+		return blogPosts.filter((post) => post.meta.tags?.includes(selectedFilter));
+	});
+
 	const structuredData = $derived(
 		generateBlogSchema(
 			blogPosts,
@@ -41,7 +84,6 @@
 </svelte:head>
 
 <div class="mt-4">
-	<!-- Hero Section with Silk Animation -->
 	<SilkHero
 		icon={Lightbulb}
 		title="Insights & Ideas"
@@ -53,32 +95,55 @@
 		silkRotation={0}
 	/>
 
-	<div class="mx-auto max-w-8xl space-y-12 py-8">
+	<section class="mx-auto max-w-8xl space-y-12">
+		<div class="flex flex-wrap items-center justify-center gap-3 overflow-x-auto pb-2">
+			{#each filters() as filter}
+				<button
+					type="button"
+					aria-pressed={selectedFilter === filter.value}
+					class="group flex items-center gap-2 rounded-full border px-5 py-2 text-sm font-medium transition-all duration-150 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-950 focus-visible:outline-none {selectedFilter ===
+					filter.value
+						? 'border-primary-500 bg-primary-500 text-surface-900 shadow-lg shadow-primary-500/20'
+						: 'border-surface-700/80 bg-surface-900/70 text-surface-300 hover:border-primary-500/50 hover:text-surface-100'}"
+					onclick={() => (selectedFilter = filter.value)}
+				>
+					<span>{filter.label}</span>
+					<span
+						class="rounded-full bg-surface-950/60 px-2 py-0.5 text-xs font-semibold tracking-wide transition-colors duration-150 {selectedFilter ===
+						filter.value
+							? 'bg-surface-900/70 text-primary-300'
+							: 'text-surface-500 group-hover:text-primary-300'}"
+					>
+						{filter.count}
+					</span>
+				</button>
+			{/each}
+		</div>
+
 		{#if loading}
 			<div class="grid gap-8 md:grid-cols-2">
 				{#each Array(6) as _}
-					<div class="animate-pulse rounded-lg bg-surface-800 p-6">
+					<div class="animate-pulse rounded-2xl border border-surface-800 bg-surface-900/60 p-6">
 						<div class="mb-4 h-4 rounded bg-surface-700"></div>
 						<div class="mb-2 h-3 rounded bg-surface-700"></div>
 						<div class="h-3 w-2/3 rounded bg-surface-700"></div>
 					</div>
 				{/each}
 			</div>
-		{:else if blogPosts.length === 0}
+		{:else if filteredPosts().length === 0}
 			<div class="py-20 text-center">
-				<div class="mb-4 text-6xl">📝</div>
+				<Lightbulb size={64} class="mx-auto mb-4 text-surface-600" />
 				<h2 class="mb-2 text-2xl font-semibold text-surface-200">No posts yet</h2>
-				<p class="text-surface-300">Check back soon for new insights and articles.</p>
+				<p class="text-surface-400">Check back soon for fresh insights and articles.</p>
 			</div>
 		{:else}
 			<div class="grid gap-8 md:grid-cols-2">
-				{#each blogPosts as post}
+				{#each filteredPosts() as post}
 					<ArticleCard {post} basePath="/insights" buttonText="Read more" />
 				{/each}
 			</div>
 		{/if}
 
-		<!-- Footer -->
 		<Footer />
-	</div>
+	</section>
 </div>
