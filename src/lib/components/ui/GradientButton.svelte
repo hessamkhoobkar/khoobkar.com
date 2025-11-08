@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import type { Snippet } from 'svelte';
 
 	interface Props {
@@ -13,6 +13,9 @@
 	let { href = '#', class: className = '', title = '', onclick, children }: Props = $props();
 
 	let buttonElement: HTMLElement;
+	let buttonRect: DOMRect | null = null;
+	let sparkleIdCounter = 0;
+	let rippleIdCounter = 0;
 	let mouseX = $state(0);
 	let mouseY = $state(0);
 	let isHovering = $state(false);
@@ -21,38 +24,124 @@
 	let pulseIntensity = $state(0);
 	let borderGlow = $state(0);
 	let sparkles = $state<Array<{ id: number; x: number; y: number }>>([]);
+	let pointerFrame: number | null = null;
+	let styleFrame: number | null = null;
+
+	const sparkleTimers = new Set<number>();
+	const rippleTimers = new Set<number>();
+	const hoverTimers = new Set<number>();
+
+	function updateButtonRect(force = false) {
+		if (!buttonElement) return;
+		if (force || !buttonRect) {
+			buttonRect = buttonElement.getBoundingClientRect();
+		}
+	}
+
+	function clearTimers(...groups: Set<number>[]) {
+		for (const group of groups) {
+			for (const timer of group) {
+				window.clearTimeout(timer);
+			}
+			group.clear();
+		}
+	}
+
+	function registerTimeout(callback: () => void, delay: number, registry: Set<number>) {
+		const timer = window.setTimeout(() => {
+			registry.delete(timer);
+			callback();
+		}, delay);
+		registry.add(timer);
+		return timer;
+	}
+
+	function queueSparkle(x: number, y: number, lifespan = 1200) {
+		const id = ++sparkleIdCounter;
+		sparkles = [...sparkles, { id, x, y }];
+		registerTimeout(
+			() => {
+				sparkles = sparkles.filter((sparkle) => sparkle.id !== id);
+			},
+			lifespan,
+			sparkleTimers
+		);
+	}
+
+	function queueRipple(x: number, y: number, lifespan = 1000) {
+		const id = ++rippleIdCounter;
+		ripples = [...ripples, { id, x, y }];
+		registerTimeout(
+			() => {
+				ripples = ripples.filter((ripple) => ripple.id !== id);
+			},
+			lifespan,
+			rippleTimers
+		);
+	}
+
+	function getOriginFromEvent(event: MouseEvent) {
+		updateButtonRect();
+		if (!buttonRect) {
+			return { x: 0, y: 0 };
+		}
+		return {
+			x: event.clientX - buttonRect.left,
+			y: event.clientY - buttonRect.top
+		};
+	}
+
+	function getCenterOrigin() {
+		updateButtonRect();
+		if (!buttonRect) {
+			return { x: 0, y: 0 };
+		}
+		return {
+			x: buttonRect.width / 2,
+			y: buttonRect.height / 2
+		};
+	}
 
 	// Mouse move handler for interactive effects
-	function handleMouseMove(e: MouseEvent) {
+	function handleMouseMove(event: MouseEvent) {
 		if (!buttonElement) return;
+		updateButtonRect();
 
-		const rect = buttonElement.getBoundingClientRect();
-		const x = e.clientX - rect.left;
-		const y = e.clientY - rect.top;
+		const applyPointerUpdate = () => {
+			pointerFrame = null;
+			if (!buttonRect) return;
 
-		// Normalize coordinates to 0-1
-		mouseX = x / rect.width;
-		mouseY = y / rect.height;
+			const x = event.clientX - buttonRect.left;
+			const y = event.clientY - buttonRect.top;
+
+			mouseX = x / buttonRect.width;
+			mouseY = y / buttonRect.height;
+		};
+
+		if (pointerFrame !== null) {
+			window.cancelAnimationFrame(pointerFrame);
+		}
+		pointerFrame = window.requestAnimationFrame(applyPointerUpdate);
 	}
 
 	function handleMouseEnter() {
 		isHovering = true;
+		updateButtonRect(true);
 		animateBorderGlow();
 
 		// Create multiple sparkles on hover
-		if (buttonElement) {
-			const rect = buttonElement.getBoundingClientRect();
+		if (buttonRect) {
 			for (let i = 0; i < 5; i++) {
-				setTimeout(() => {
-					const sparkleId = Date.now() + i;
-					const x = Math.random() * rect.width;
-					const y = Math.random() * rect.height;
-					sparkles = [...sparkles, { id: sparkleId, x, y }];
-
-					setTimeout(() => {
-						sparkles = sparkles.filter((s) => s.id !== sparkleId);
-					}, 1200);
-				}, i * 100);
+				registerTimeout(
+					() => {
+						if (!buttonRect) return;
+						const x = Math.random() * buttonRect.width;
+						const y = Math.random() * buttonRect.height;
+						queueSparkle(x, y);
+					},
+					i * 100,
+					hoverTimers
+				);
 			}
 		}
 	}
@@ -62,47 +151,81 @@
 		mouseX = 0.5;
 		mouseY = 0.5;
 		borderGlow = 0;
+		if (pointerFrame !== null) {
+			window.cancelAnimationFrame(pointerFrame);
+			pointerFrame = null;
+		}
+		buttonRect = null;
+		clearTimers(hoverTimers);
 	}
 
-	function handleMouseDown() {
+	function handlePressStart(origin: { x: number; y: number }) {
 		isPressed = true;
 
 		// Create burst effect on click
-		if (buttonElement) {
-			const rect = buttonElement.getBoundingClientRect();
+		if (buttonRect) {
 			for (let i = 0; i < 8; i++) {
 				const angle = (i / 8) * Math.PI * 2;
 				const distance = 30 + Math.random() * 20;
-				const x = rect.width / 2 + Math.cos(angle) * distance;
-				const y = rect.height / 2 + Math.sin(angle) * distance;
-
-				const sparkleId = Date.now() + i + 1000;
-				sparkles = [...sparkles, { id: sparkleId, x, y }];
-
-				setTimeout(() => {
-					sparkles = sparkles.filter((s) => s.id !== sparkleId);
-				}, 800);
+				queueSparkle(
+					origin.x + Math.cos(angle) * distance,
+					origin.y + Math.sin(angle) * distance,
+					800
+				);
 			}
 		}
 	}
 
-	function handleMouseUp(e: MouseEvent) {
+	function handlePressEnd(origin: { x: number; y: number }) {
 		isPressed = false;
 
 		// Create ripple effect
-		if (buttonElement) {
-			const rect = buttonElement.getBoundingClientRect();
-			const x = e.clientX - rect.left;
-			const y = e.clientY - rect.top;
+		queueRipple(origin.x, origin.y);
+	}
 
-			const rippleId = Date.now();
-			ripples = [...ripples, { id: rippleId, x, y }];
+	function handleMouseDown(event: MouseEvent) {
+		updateButtonRect();
+		if (!buttonRect) return;
+		handlePressStart(getOriginFromEvent(event));
+	}
 
-			// Remove ripple after animation
-			setTimeout(() => {
-				ripples = ripples.filter((r) => r.id !== rippleId);
-			}, 1000);
+	function handleMouseUp(event: MouseEvent) {
+		updateButtonRect();
+		if (!buttonRect) return;
+		handlePressEnd(getOriginFromEvent(event));
+	}
+
+	function handleKeyDown(event: KeyboardEvent) {
+		if (event.repeat) return;
+
+		const isSpace = event.key === ' ' || event.key === 'Space';
+		const isEnter = event.key === 'Enter';
+
+		if (!isSpace && !isEnter) return;
+
+		if (isSpace) {
+			event.preventDefault();
 		}
+
+		handlePressStart(getCenterOrigin());
+	}
+
+	function handleKeyUp(event: KeyboardEvent) {
+		const isSpace = event.key === ' ' || event.key === 'Space';
+		const isEnter = event.key === 'Enter';
+
+		if (!isSpace && !isEnter) return;
+
+		if (isSpace) {
+			event.preventDefault();
+			buttonElement?.click();
+		}
+
+		handlePressEnd(getCenterOrigin());
+	}
+
+	function handleBlur() {
+		isPressed = false;
 	}
 
 	function animateBorderGlow() {
@@ -124,24 +247,65 @@
 	// Continuous subtle animation when not interacting
 	onMount(() => {
 		let frame = 0;
+		let animationFrameId = 0;
 		const animate = () => {
 			if (!isHovering) {
 				frame += 0.01;
 				pulseIntensity = Math.sin(frame) * 0.15 + 0.85;
 			}
-			requestAnimationFrame(animate);
+			animationFrameId = window.requestAnimationFrame(animate);
 		};
-		animate();
+		animationFrameId = window.requestAnimationFrame(animate);
+
+		let resizeObserver: ResizeObserver | null = null;
+		if ('ResizeObserver' in window) {
+			resizeObserver = new ResizeObserver(() => {
+				if (isHovering) {
+					updateButtonRect(true);
+				} else {
+					buttonRect = null;
+				}
+			});
+			if (buttonElement) {
+				resizeObserver.observe(buttonElement);
+			}
+		}
+
+		return () => {
+			window.cancelAnimationFrame(animationFrameId);
+			resizeObserver?.disconnect();
+		};
 	});
 
 	// Update CSS variables based on state
 	$effect(() => {
 		if (buttonElement) {
-			buttonElement.style.setProperty('--mouse-x', `${mouseX * 100}%`);
-			buttonElement.style.setProperty('--mouse-y', `${mouseY * 100}%`);
-			buttonElement.style.setProperty('--pulse-intensity', `${pulseIntensity}`);
-			buttonElement.style.setProperty('--border-glow', `${borderGlow}`);
+			if (styleFrame !== null) {
+				window.cancelAnimationFrame(styleFrame);
+			}
+			const mouseXValue = `${mouseX * 100}%`;
+			const mouseYValue = `${mouseY * 100}%`;
+			const pulseValue = `${pulseIntensity}`;
+			const borderGlowValue = `${borderGlow}`;
+
+			styleFrame = window.requestAnimationFrame(() => {
+				if (!buttonElement) return;
+				buttonElement.style.setProperty('--mouse-x', mouseXValue);
+				buttonElement.style.setProperty('--mouse-y', mouseYValue);
+				buttonElement.style.setProperty('--pulse-intensity', pulseValue);
+				buttonElement.style.setProperty('--border-glow', borderGlowValue);
+			});
 		}
+	});
+
+	onDestroy(() => {
+		if (pointerFrame !== null) {
+			window.cancelAnimationFrame(pointerFrame);
+		}
+		if (styleFrame !== null) {
+			window.cancelAnimationFrame(styleFrame);
+		}
+		clearTimers(sparkleTimers, rippleTimers, hoverTimers);
 	});
 </script>
 
@@ -158,6 +322,9 @@
 	onmouseleave={handleMouseLeave}
 	onmousedown={handleMouseDown}
 	onmouseup={handleMouseUp}
+	onkeydown={handleKeyDown}
+	onkeyup={handleKeyUp}
+	onblur={handleBlur}
 	role="button"
 	tabindex="0"
 >
@@ -206,7 +373,7 @@
 		text-decoration: none;
 		font-weight: 700;
 		font-size: 0.875rem;
-		color: oklch(15.22% 0.008 68.34);
+		color: var(--color-text);
 		cursor: pointer;
 		transition:
 			transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -216,22 +383,39 @@
 		border: 2px solid transparent;
 		box-shadow:
 			0 4px 20px rgba(0, 0, 0, 0.3),
-			0 0 0 1px rgba(239, 94, 3, 0.1),
+			0 0 0 1px var(--shadow-soft),
 			inset 0 1px 0 rgba(255, 255, 255, 0.1);
 		--mouse-x: 50%;
 		--mouse-y: 50%;
 		--pulse-intensity: 1;
 		--border-glow: 0;
 		will-change: transform;
+		--color-text: oklch(15.22% 0.008 68.34);
+		--accent-100: oklch(95% 0.01 71.44);
+		--accent-95: oklch(87.02% 0.025 71.44);
+		--accent-90: oklch(83.24% 0.032 70.46);
+		--accent-80: oklch(79.15% 0.093 67.93);
+		--accent-70: oklch(72.89% 0.148 58.17);
+		--accent-65: oklch(69.18% 0.179 49.92);
+		--accent-60: oklch(66.11% 0.195 43.01);
+		--accent-50: oklch(60.01% 0.226 32.29);
+		--accent-40: oklch(51.41% 0.207 29.86);
+		--accent-35: oklch(39.55% 0.157 30.14);
+		--shadow-strong: rgba(239, 94, 3, 0.5);
+		--shadow-medium: rgba(239, 94, 3, 0.3);
+		--shadow-soft: rgba(239, 94, 3, 0.1);
+		--shadow-outline: rgba(239, 94, 3, 0.4);
+		--shadow-intense: rgba(239, 94, 3, 0.6);
+		--shadow-light: rgba(239, 94, 3, 0.2);
 	}
 
 	.gradient-button:hover {
 		transform: translateY(-4px) scale(1.05);
 		box-shadow:
-			0 12px 40px rgba(239, 94, 3, 0.5),
-			0 0 60px rgba(239, 94, 3, 0.3),
-			0 0 100px rgba(239, 94, 3, 0.1),
-			0 0 0 2px rgba(239, 94, 3, 0.4),
+			0 12px 40px var(--shadow-strong),
+			0 0 60px var(--shadow-medium),
+			0 0 100px var(--shadow-soft),
+			0 0 0 2px var(--shadow-outline),
 			inset 0 1px 0 rgba(255, 255, 255, 0.2);
 		filter: brightness(1.1) saturate(1.2);
 	}
@@ -239,9 +423,9 @@
 	.gradient-button.pressed {
 		transform: translateY(-1px) scale(0.96);
 		box-shadow:
-			0 4px 15px rgba(239, 94, 3, 0.6),
-			0 0 30px rgba(239, 94, 3, 0.4),
-			0 0 60px rgba(239, 94, 3, 0.2),
+			0 4px 15px var(--shadow-intense),
+			0 0 30px var(--shadow-outline),
+			0 0 60px var(--shadow-light),
 			inset 0 3px 10px rgba(0, 0, 0, 0.4),
 			inset 0 1px 0 rgba(255, 255, 255, 0.1);
 		filter: brightness(1.2) saturate(1.3);
@@ -263,14 +447,14 @@
 	.gradient-button__bg-layer--base {
 		background: linear-gradient(
 			45deg,
-			oklch(83.24% 0.032 70.46) 0%,
-			oklch(79.15% 0.093 67.93) 15%,
-			oklch(72.89% 0.148 58.17) 30%,
-			oklch(69.18% 0.179 49.92) 45%,
-			oklch(66.11% 0.195 43.01) 60%,
-			oklch(60.01% 0.226 32.29) 75%,
-			oklch(51.41% 0.207 29.86) 90%,
-			oklch(39.55% 0.157 30.14) 100%
+			var(--accent-90) 0%,
+			var(--accent-80) 15%,
+			var(--accent-70) 30%,
+			var(--accent-65) 45%,
+			var(--accent-60) 60%,
+			var(--accent-50) 75%,
+			var(--accent-40) 90%,
+			var(--accent-35) 100%
 		);
 		opacity: calc(0.95 * var(--pulse-intensity));
 		z-index: 1;
@@ -284,11 +468,11 @@
 	.gradient-button__bg-layer--radial {
 		background: radial-gradient(
 			circle 600px at var(--mouse-x) var(--mouse-y),
-			oklch(87.02% 0.025 71.44) 0%,
-			oklch(83.24% 0.032 70.46) 10%,
-			oklch(79.15% 0.093 67.93) 20%,
-			oklch(72.89% 0.148 58.17) 30%,
-			oklch(69.18% 0.179 49.92) 40%,
+			var(--accent-95) 0%,
+			var(--accent-90) 10%,
+			var(--accent-80) 20%,
+			var(--accent-70) 30%,
+			var(--accent-65) 40%,
 			transparent 60%
 		);
 		opacity: 0;
@@ -332,7 +516,7 @@
 	.gradient-button__bg-layer--glow {
 		background: radial-gradient(
 			ellipse 200% 100% at var(--mouse-x) var(--mouse-y),
-			oklch(79.15% 0.093 67.93) 0%,
+			var(--accent-80) 0%,
 			transparent 50%
 		);
 		opacity: 0;
@@ -370,11 +554,11 @@
 		border-radius: 1.2rem;
 		background: linear-gradient(
 			45deg,
-			oklch(83.24% 0.032 70.46),
-			oklch(79.15% 0.093 67.93),
-			oklch(72.89% 0.148 58.17),
-			oklch(69.18% 0.179 49.92),
-			oklch(83.24% 0.032 70.46)
+			var(--accent-90),
+			var(--accent-80),
+			var(--accent-70),
+			var(--accent-65),
+			var(--accent-90)
 		);
 		background-size: 300% 300%;
 		opacity: 0;
@@ -430,9 +614,9 @@
 		margin: -4px 0 0 -4px;
 		background: radial-gradient(
 			circle,
-			oklch(95% 0.01 71.44) 0%,
-			oklch(87.02% 0.025 71.44) 20%,
-			oklch(83.24% 0.032 70.46) 40%,
+			var(--accent-100) 0%,
+			var(--accent-95) 20%,
+			var(--accent-90) 40%,
 			transparent 70%
 		);
 		border-radius: 50%;
@@ -440,9 +624,9 @@
 		opacity: 1;
 		animation: sparkle-burst 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 		box-shadow:
-			0 0 10px oklch(87.02% 0.025 71.44),
-			0 0 20px oklch(83.24% 0.032 70.46),
-			0 0 30px oklch(79.15% 0.093 67.93);
+			0 0 10px var(--accent-95),
+			0 0 20px var(--accent-90),
+			0 0 30px var(--accent-80);
 	}
 
 	@keyframes sparkle-burst {
@@ -482,10 +666,10 @@
 		margin: -15px 0 0 -15px;
 		background: radial-gradient(
 			circle,
-			oklch(95% 0.01 71.44) 0%,
-			oklch(87.02% 0.025 71.44) 15%,
-			oklch(83.24% 0.032 70.46) 30%,
-			oklch(79.15% 0.093 67.93) 50%,
+			var(--accent-100) 0%,
+			var(--accent-95) 15%,
+			var(--accent-90) 30%,
+			var(--accent-80) 50%,
 			transparent 70%
 		);
 		border-radius: 50%;
@@ -493,8 +677,8 @@
 		opacity: 1;
 		animation: ripple-expand 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 		box-shadow:
-			0 0 20px oklch(83.24% 0.032 70.46),
-			0 0 40px oklch(79.15% 0.093 67.93);
+			0 0 20px var(--accent-90),
+			0 0 40px var(--accent-80);
 	}
 
 	@keyframes ripple-expand {
@@ -529,8 +713,8 @@
 		transform: scale(1.08) translateY(-1px);
 		text-shadow:
 			0 2px 8px rgba(0, 0, 0, 0.5),
-			0 0 20px rgba(239, 94, 3, 0.4),
-			0 0 40px rgba(239, 94, 3, 0.2),
+			0 0 20px var(--shadow-outline),
+			0 0 40px var(--shadow-light),
 			0 4px 12px rgba(0, 0, 0, 0.3);
 		filter: brightness(1.1);
 		animation: content-pulse 2s ease-in-out infinite;
@@ -541,15 +725,15 @@
 		100% {
 			text-shadow:
 				0 2px 8px rgba(0, 0, 0, 0.5),
-				0 0 20px rgba(239, 94, 3, 0.4),
-				0 0 40px rgba(239, 94, 3, 0.2),
+				0 0 20px var(--shadow-outline),
+				0 0 40px var(--shadow-light),
 				0 4px 12px rgba(0, 0, 0, 0.3);
 		}
 		50% {
 			text-shadow:
 				0 2px 8px rgba(0, 0, 0, 0.5),
-				0 0 30px rgba(239, 94, 3, 0.6),
-				0 0 60px rgba(239, 94, 3, 0.3),
+				0 0 30px var(--shadow-intense),
+				0 0 60px var(--shadow-medium),
 				0 4px 12px rgba(0, 0, 0, 0.3);
 		}
 	}
@@ -558,8 +742,8 @@
 		transform: scale(0.94) translateY(1px);
 		text-shadow:
 			0 1px 4px rgba(0, 0, 0, 0.6),
-			0 0 30px rgba(239, 94, 3, 0.6),
-			0 0 60px rgba(239, 94, 3, 0.4);
+			0 0 30px var(--shadow-intense),
+			0 0 60px var(--shadow-outline);
 		filter: brightness(1.3);
 		animation: none;
 		transition:
@@ -570,20 +754,20 @@
 
 	/* Focus state for accessibility */
 	.gradient-button:focus-visible {
-		outline: 3px solid oklch(83.24% 0.032 70.46);
+		outline: 3px solid var(--accent-90);
 		outline-offset: 4px;
 		box-shadow:
-			0 8px 30px rgba(239, 94, 3, 0.5),
-			0 0 60px rgba(239, 94, 3, 0.3),
-			0 0 0 3px oklch(83.24% 0.032 70.46);
+			0 8px 30px var(--shadow-strong),
+			0 0 60px var(--shadow-medium),
+			0 0 0 3px var(--accent-90);
 	}
 
 	/* Keyboard navigation support */
 	.gradient-button:focus-visible:not(:hover) {
 		box-shadow:
-			0 4px 20px rgba(239, 94, 3, 0.4),
-			0 0 40px rgba(239, 94, 3, 0.2),
-			0 0 0 3px oklch(83.24% 0.032 70.46);
+			0 4px 20px var(--shadow-outline),
+			0 0 40px var(--shadow-light),
+			0 0 0 3px var(--accent-90);
 		animation: focus-pulse 2s ease-in-out infinite;
 	}
 
@@ -591,15 +775,15 @@
 		0%,
 		100% {
 			box-shadow:
-				0 4px 20px rgba(239, 94, 3, 0.4),
-				0 0 40px rgba(239, 94, 3, 0.2),
-				0 0 0 3px oklch(83.24% 0.032 70.46);
+				0 4px 20px var(--shadow-outline),
+				0 0 40px var(--shadow-light),
+				0 0 0 3px var(--accent-90);
 		}
 		50% {
 			box-shadow:
-				0 4px 20px rgba(239, 94, 3, 0.6),
-				0 0 60px rgba(239, 94, 3, 0.3),
-				0 0 0 3px oklch(83.24% 0.032 70.46);
+				0 4px 20px var(--shadow-intense),
+				0 0 60px var(--shadow-medium),
+				0 0 0 3px var(--accent-90);
 		}
 	}
 </style>
