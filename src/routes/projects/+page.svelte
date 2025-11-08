@@ -42,6 +42,7 @@
 			{ value: 'all', label: 'All Projects', count: total },
 			...Array.from(tagCounts.entries())
 				.sort(([a], [b]) => a.localeCompare(b))
+				.filter(([, count]) => count >= 2)
 				.map(([value, count]) => ({
 					value,
 					label: formatLabel(value),
@@ -86,8 +87,8 @@
 		silkRotation={0}
 	/>
 
-	<section class="mx-auto max-w-8xl space-y-12">
-		<div class="flex flex-wrap items-center justify-center gap-3 overflow-x-auto pb-2">
+	<section class="mx-auto max-w-8xl space-y-4">
+		<div class="flex flex-wrap items-center justify-center gap-3 overflow-x-auto pb-6">
 			{#each filters() as filter}
 				<button
 					type="button"
