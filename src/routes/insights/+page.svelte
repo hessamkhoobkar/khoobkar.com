@@ -122,7 +122,7 @@
 		</div>
 
 		{#if loading}
-			<div class="grid gap-8 md:grid-cols-2">
+			<div class="grid gap-8 md:grid-cols-2 2xl:grid-cols-3">
 				{#each Array(6) as _}
 					<div class="animate-pulse rounded-2xl border border-surface-800 bg-surface-900/60 p-6">
 						<div class="mb-4 h-4 rounded bg-surface-700"></div>
@@ -138,7 +138,7 @@
 				<p class="text-surface-400">Check back soon for fresh insights and articles.</p>
 			</div>
 		{:else}
-			<div class="grid gap-8 md:grid-cols-2">
+			<div class="grid gap-8 md:grid-cols-2 2xl:grid-cols-3">
 				{#each filteredPosts() as post}
 					<ArticleCard {post} basePath="/insights" buttonText="Read more" />
 				{/each}
