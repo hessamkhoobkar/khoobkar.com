@@ -392,30 +392,6 @@
 						</div>
 					</div>
 
-					<!-- Stakeholder Card -->
-					<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
-						<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
-							Project Lead
-						</h3>
-						<div class="flex items-start gap-4">
-							<div
-								class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-xl font-bold text-white"
-							>
-								{#if displayProject.meta.author}
-									{displayProject.meta.author.charAt(0)}
-								{:else}
-									K
-								{/if}
-							</div>
-							<div>
-								<div class="font-semibold text-surface-50">
-									{displayProject.meta.author || 'Khoobkar Team'}
-								</div>
-								<div class="text-sm text-surface-400">Lead Consultant</div>
-							</div>
-						</div>
-					</div>
-
 					<!-- Deliverables Card -->
 					<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
 						<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
@@ -514,5 +490,9 @@
 	:global(.prose blockquote) {
 		border-left: 4px solid oklch(68% 0.21 45);
 		background: oklch(25% 0.005 264);
+	}
+
+	:global(.prose > h1:first-child) {
+		display: none;
 	}
 </style>

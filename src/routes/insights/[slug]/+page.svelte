@@ -263,30 +263,6 @@
 					</a>
 				</div>
 
-				<!-- Author Card -->
-				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
-					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
-						Written by
-					</h3>
-					<div class="flex items-start gap-4">
-						<div
-							class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-xl font-bold text-white"
-						>
-							{#if data.post.meta.author}
-								{data.post.meta.author.charAt(0)}
-							{:else}
-								K
-							{/if}
-						</div>
-						<div>
-							<div class="font-semibold text-surface-50">
-								{data.post.meta.author || 'Khoobkar Team'}
-							</div>
-							<div class="text-sm text-surface-400">Content Creator</div>
-						</div>
-					</div>
-				</div>
-
 				<!-- Quick Stats Card -->
 				<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
 					<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
@@ -363,3 +339,9 @@
 		</aside>
 	</div>
 </div>
+
+<style>
+	:global(.prose > h1:first-child) {
+		display: none;
+	}
+</style>
