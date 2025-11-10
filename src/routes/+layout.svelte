@@ -12,11 +12,20 @@
 	// Components imports
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
 	import ScrollSmoother from '$lib/components/ui/ScrollSmoother.svelte';
+	import { page } from '$app/stores';
 
 	let { children } = $props();
 
 	// Mobile menu state
 	let isMobileMenuOpen = $state(false);
+
+	const currentPath = $derived($page.url.pathname);
+	const showNavigation = $derived(currentPath !== '/');
+	$effect(() => {
+		if (!showNavigation && isMobileMenuOpen) {
+			isMobileMenuOpen = false;
+		}
+	});
 
 	function toggleMobileMenu() {
 		isMobileMenuOpen = !isMobileMenuOpen;
@@ -55,48 +64,59 @@
 
 <div class="w-full">
 	<!-- Desktop Sidebar -->
-	<div class="hidden w-full lg:block">
-		<Sidebar />
-	</div>
+	{#if showNavigation}
+		<div class="hidden w-full lg:block">
+			<Sidebar />
+		</div>
+	{/if}
 
 	<!-- Mobile Menu Button -->
-	<button
-		onclick={toggleMobileMenu}
-		class="fixed right-6 bottom-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary-500 text-surface-950 shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl active:scale-95 lg:hidden"
-		aria-label="Toggle mobile menu"
-		aria-expanded={isMobileMenuOpen}
-	>
-		<svg
-			class="h-6 w-6 transition-transform duration-300 {isMobileMenuOpen ? 'rotate-90' : ''}"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-			xmlns="http://www.w3.org/2000/svg"
+	{#if showNavigation}
+		<button
+			onclick={toggleMobileMenu}
+			class="fixed right-6 bottom-6 z-30 flex h-14 w-14 items-center justify-center rounded-full bg-primary-500 text-surface-950 shadow-lg transition-all duration-200 hover:scale-110 hover:shadow-xl active:scale-95 lg:hidden"
+			aria-label="Toggle mobile menu"
+			aria-expanded={isMobileMenuOpen}
 		>
-			{#if isMobileMenuOpen}
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M6 18L18 6M6 6l12 12"
-				></path>
-			{:else}
-				<path
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M4 6h16M4 12h16M4 18h16"
-				></path>
-			{/if}
-		</svg>
-	</button>
+			<svg
+				class="h-6 w-6 transition-transform duration-300 {isMobileMenuOpen ? 'rotate-90' : ''}"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+				xmlns="http://www.w3.org/2000/svg"
+			>
+				{#if isMobileMenuOpen}
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M6 18L18 6M6 6l12 12"
+					></path>
+				{:else}
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M4 6h16M4 12h16M4 18h16"
+					></path>
+				{/if}
+			</svg>
+		</button>
+	{/if}
 
 	<!-- Mobile Bottom Sheet -->
-	<div class="lg:hidden">
-		<Sidebar isMobile={true} isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
-	</div>
+	{#if showNavigation}
+		<div class="lg:hidden">
+			<Sidebar isMobile={true} isOpen={isMobileMenuOpen} onClose={closeMobileMenu} />
+		</div>
+	{/if}
 
-	<ScrollSmoother smooth={1.4} effects={true} smoothTouch={0.2}>
+	<ScrollSmoother
+		smooth={1.4}
+		effects={true}
+		smoothTouch={0.2}
+		contentClass={showNavigation ? 'lg:ps-90' : 'lg:px-0'}
+	>
 		<div class="pb-8">
 			{@render children?.()}
 		</div>
