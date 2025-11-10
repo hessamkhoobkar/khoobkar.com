@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import { page } from '$app/stores';
 	import { loadContentItem } from '$lib/utils/content';
 	import type { ContentItem } from '$lib/data/content';
@@ -8,6 +9,7 @@
 		Github,
 		Calendar,
 		Clock,
+		User,
 		Tag,
 		TrendingUp,
 		Users,
@@ -22,6 +24,9 @@
 		Smartphone,
 		Monitor
 	} from '@lucide/svelte';
+	import { ProgressRing } from '@skeletonlabs/skeleton-svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 	let project: ContentItem | null = $state(null);
 	let loading = $state(true);
@@ -90,6 +95,50 @@
 		{ name: 'AWS', category: 'Infrastructure', icon: Globe },
 		{ name: 'Redis', category: 'Caching', icon: Zap }
 	];
+
+	let readingProgress = $state(0);
+	let readingProgressCard: HTMLElement | null = $state(null);
+	let articleContent: HTMLElement | null = $state(null);
+
+	$effect(() => {
+		if (typeof window === 'undefined') {
+			return;
+		}
+
+		if (loading || error || !articleContent || !readingProgressCard) {
+			return;
+		}
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		const pinTrigger = ScrollTrigger.create({
+			trigger: readingProgressCard,
+			start: 'top top+=16px',
+			end: () => `+=${document.body.scrollHeight}`,
+			pin: true,
+			pinSpacing: false,
+			scrub: false,
+			refreshPriority: -1
+		});
+
+		const progressTrigger = ScrollTrigger.create({
+			trigger: articleContent,
+			start: 'top top',
+			end: 'bottom bottom',
+			onUpdate: (self) => {
+				readingProgress = Math.min(self.progress * 100, 100);
+			}
+		});
+
+		return () => {
+			pinTrigger.kill();
+			progressTrigger.kill();
+		};
+	});
+
+	onDestroy(() => {
+		ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+	});
 </script>
 
 <svelte:head>
@@ -116,167 +165,313 @@
 		</div>
 	</div>
 {:else}
-	<!-- Back Navigation -->
-	<div class="container mx-auto px-4 py-8">
-		<a
-			href="/projects"
-			class="inline-flex items-center gap-2 text-surface-400 transition-colors hover:text-surface-100"
-		>
-			<ArrowLeft size={20} />
-			<span>Back to Projects</span>
-		</a>
-	</div>
+	<div class="mx-auto mt-4 max-w-6xl">
+		<div class="grid gap-8 lg:grid-cols-12">
+			<!-- Main Content Area -->
+			<div class="lg:col-span-8" bind:this={articleContent}>
+				<!-- Project Overview Card -->
+				<article class="mb-8 overflow-hidden rounded-2xl border border-surface-600 bg-surface-800">
+					{#if displayProject.meta.image}
+						<div class="aspect-[2/1] overflow-hidden bg-surface-700">
+							<img
+								src={displayProject.meta.image}
+								alt={displayProject.meta.title}
+								class="h-full w-full object-cover"
+							/>
+						</div>
+					{/if}
 
-	<!-- Hero Section -->
-	<section class="py-20">
-		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-8xl">
-				<!-- Project Header -->
-				<div class="mb-8">
-					<div class="mb-4 flex items-center gap-2">
-						{#if displayProject.meta.featured}
-							<div
-								class="flex items-center gap-1 rounded-full bg-primary-500 px-2 py-1 text-xs font-medium text-surface-900"
-							>
-								<Star size={12} />
-								Featured
-							</div>
+					<div class="p-8 md:p-12">
+						<div
+							class="mb-6 flex flex-wrap items-center gap-3 text-xs font-medium tracking-wide text-surface-400 uppercase"
+						>
+							{#if displayProject.meta.featured}
+								<span
+									class="inline-flex items-center gap-1 rounded-full bg-primary-500 px-3 py-1 text-surface-900"
+								>
+									<Star size={12} />
+									Featured
+								</span>
+							{/if}
+							{#if displayProject.meta.category}
+								<span
+									class="rounded-full border border-surface-600 bg-surface-700/70 px-3 py-1 text-surface-300"
+								>
+									{displayProject.meta.category}
+								</span>
+							{/if}
+						</div>
+
+						<h1 class="mb-6 text-4xl leading-tight font-bold text-surface-50 md:text-5xl">
+							{displayProject.meta.title}
+						</h1>
+
+						{#if displayProject.meta.description}
+							<p class="mb-6 text-lg leading-relaxed text-surface-200">
+								{displayProject.meta.description}
+							</p>
 						{/if}
-						<span class="rounded-full bg-surface-700 px-2 py-1 text-xs text-surface-300">
-							{displayProject.meta.category}
-						</span>
+
+						<div class="flex flex-wrap items-center gap-4 text-sm text-surface-400">
+							{#if displayProject.meta.date}
+								<div class="flex items-center gap-2">
+									<Calendar size={16} class="text-primary-400" />
+									<time datetime={displayProject.meta.date}>
+										{new Date(displayProject.meta.date).toLocaleDateString('en-US', {
+											year: 'numeric',
+											month: 'long',
+											day: 'numeric'
+										})}
+									</time>
+								</div>
+							{/if}
+
+							{#if displayProject.meta.readingTime}
+								<div class="flex items-center gap-2">
+									<Clock size={16} class="text-primary-400" />
+									<span>{displayProject.meta.readingTime} min read</span>
+								</div>
+							{/if}
+
+							{#if displayProject.meta.author}
+								<div class="flex items-center gap-2">
+									<User size={16} class="text-primary-400" />
+									<span>{displayProject.meta.author}</span>
+								</div>
+							{/if}
+						</div>
 					</div>
+				</article>
 
-					<h1 class="mb-6 text-5xl font-bold text-surface-100 md:text-6xl">
-						{displayProject.meta.title}
-					</h1>
-
-					<p class="mb-8 text-xl leading-relaxed text-surface-400">
-						{displayProject.meta.description}
-					</p>
-
-					<!-- Project Meta -->
-					<div class="mb-8 flex flex-wrap items-center gap-6 text-sm text-surface-400">
-						<div class="flex items-center gap-2">
-							<Calendar size={16} />
-							<span>{new Date(displayProject.meta.date).toLocaleDateString()}</span>
-						</div>
-						<div class="flex items-center gap-2">
-							<Clock size={16} />
-							<span>{displayProject.meta.readingTime} min read</span>
-						</div>
-						<div class="flex items-center gap-2">
-							<Tag size={16} />
-							<span>{displayProject.meta.author}</span>
-						</div>
+				<!-- Project Narrative -->
+				<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
+					<div
+						class="prose prose-lg max-w-none prose-invert prose-headings:font-bold prose-headings:text-surface-50 prose-h2:mt-8 prose-h2:mb-4 prose-h2:text-3xl prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-2xl prose-p:mb-4 prose-p:leading-relaxed prose-p:text-surface-200 prose-a:text-primary-400 prose-a:no-underline hover:prose-a:text-primary-300 hover:prose-a:underline prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-surface-700/50 prose-blockquote:px-4 prose-blockquote:py-2 prose-blockquote:text-surface-200 prose-blockquote:italic prose-strong:text-surface-100 prose-code:rounded prose-code:bg-surface-700 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary-300 prose-pre:rounded-lg prose-pre:border prose-pre:border-surface-600 prose-pre:bg-surface-900 prose-ol:my-4 prose-ol:text-surface-200 prose-ul:my-4 prose-ul:text-surface-200 prose-li:my-2 prose-img:rounded-lg prose-img:border prose-img:border-surface-600"
+					>
+						{#if displayProject.component}
+							<displayProject.component />
+						{:else}
+							<p>This project case study is coming soon. Check back later for detailed insights.</p>
+						{/if}
 					</div>
 				</div>
 
-				<!-- Project Image -->
-				{#if displayProject.meta.image}
-					<div
-						class="mb-12 aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-primary-500/20 to-primary-600/20"
-					>
-						<img
-							src={displayProject.meta.image}
-							alt={displayProject.meta.title}
-							class="h-full w-full object-cover"
-						/>
+				<!-- Project Metrics -->
+				{#if metrics.length > 0}
+					<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-8">
+						<h2 class="mb-6 text-2xl font-bold text-surface-50">Impact Metrics</h2>
+						<div class="grid gap-4 sm:grid-cols-2">
+							{#each metrics as metric}
+								{@const Icon = metric.icon}
+								<div
+									class="flex items-center gap-4 rounded-xl border border-surface-600 bg-surface-700/40 p-4"
+								>
+									<div
+										class="flex h-12 w-12 items-center justify-center rounded-full bg-primary-500/10 text-primary-400"
+									>
+										<Icon size={24} />
+									</div>
+									<div>
+										<div class="text-xl font-semibold text-surface-100">{metric.value}</div>
+										<div class="text-sm text-surface-400">{metric.label}</div>
+									</div>
+								</div>
+							{/each}
+						</div>
 					</div>
 				{/if}
 
-				<!-- Project Metrics -->
-				<div class="mb-12 grid grid-cols-2 gap-6 md:grid-cols-4">
-					{#each metrics as metric}
-						{@const Icon = metric.icon}
-						<div
-							class="rounded-2xl border border-surface-700 bg-gradient-to-br from-surface-800 to-surface-900 p-6 text-center"
-						>
-							<Icon size={32} class="mx-auto mb-3 text-primary-400" />
-							<div class="mb-1 text-2xl font-bold text-surface-100">{metric.value}</div>
-							<div class="text-sm text-surface-400">{metric.label}</div>
+				<!-- Tech Stack -->
+				{#if techStack.length > 0}
+					<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-8">
+						<h2 class="mb-6 text-2xl font-bold text-surface-50">Technical Stack</h2>
+						<div class="grid gap-4 sm:grid-cols-2">
+							{#each techStack as tech}
+								{@const Icon = tech.icon}
+								<div
+									class="flex items-center gap-3 rounded-xl border border-surface-600 bg-surface-700/40 p-4"
+								>
+									<div
+										class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-500/10 text-primary-400"
+									>
+										<Icon size={22} />
+									</div>
+									<div>
+										<div class="font-semibold text-surface-100">{tech.name}</div>
+										<div class="text-sm text-surface-400">{tech.category}</div>
+									</div>
+								</div>
+							{/each}
 						</div>
-					{/each}
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Content Section -->
-	<section class="bg-surface-900 py-20">
-		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-8xl">
-				<div class="prose prose-lg max-w-none prose-invert">
-					{#if displayProject.component}
-						<displayProject.component />
-					{/if}
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Tech Stack -->
-	<section class="py-20">
-		<div class="container mx-auto px-4">
-			<div class="mx-auto max-w-8xl">
-				<h2 class="mb-8 text-3xl font-bold text-surface-100">Technical Stack</h2>
-				<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-					{#each techStack as tech}
-						{@const Icon = tech.icon}
-						<div
-							class="flex items-center gap-3 rounded-xl border border-surface-700 bg-surface-800 p-4"
-						>
-							<Icon size={24} class="text-primary-400" />
-							<div>
-								<div class="font-medium text-surface-100">{tech.name}</div>
-								<div class="text-sm text-surface-400">{tech.category}</div>
-							</div>
-						</div>
-					{/each}
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Tags -->
-	{#if displayProject.meta.tags && displayProject.meta.tags.length > 0}
-		<section class="bg-surface-900 py-20">
-			<div class="container mx-auto px-4">
-				<div class="mx-auto max-w-8xl">
-					<h2 class="mb-8 text-3xl font-bold text-surface-100">Technologies Used</h2>
-					<div class="flex flex-wrap gap-3">
-						{#each displayProject.meta.tags as tag}
-							<span class="rounded-full bg-primary-500/20 px-4 py-2 font-medium text-primary-400">
-								{tag}
-							</span>
-						{/each}
 					</div>
-				</div>
-			</div>
-		</section>
-	{/if}
+				{/if}
 
-	<!-- Call to Action -->
-	<section class="py-20">
-		<div class="container mx-auto px-4 text-center">
-			<div class="mx-auto max-w-8xl">
-				<h2 class="mb-6 text-4xl font-bold text-surface-100">Interested in Similar Solutions?</h2>
-				<p class="mb-8 text-xl text-surface-400">
-					Let's discuss how I can help you build innovative solutions that drive real business
-					results
-				</p>
-				<div class="flex flex-col justify-center gap-4 sm:flex-row">
+				<!-- Tags -->
+				{#if displayProject.meta.tags && displayProject.meta.tags.length > 0}
+					<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-8">
+						<h2 class="mb-6 text-2xl font-bold text-surface-50">Technologies Used</h2>
+						<div class="flex flex-wrap gap-2">
+							{#each displayProject.meta.tags as tag}
+								<span
+									class="inline-flex items-center gap-1 rounded-full bg-primary-500/10 px-4 py-2 text-sm font-medium text-primary-300"
+								>
+									<Tag size={14} />
+									{tag}
+								</span>
+							{/each}
+						</div>
+					</div>
+				{/if}
+
+				<!-- CTA Card -->
+				<div
+					class="rounded-2xl border border-primary-500/30 bg-gradient-to-r from-primary-500/10 to-primary-600/10 p-10 text-center"
+				>
+					<h2 class="mb-4 text-3xl font-bold text-surface-50">Interested in Similar Solutions?</h2>
+					<p class="mb-6 text-lg text-surface-200">
+						Let's discuss how we can help you build innovative solutions that drive real business
+						results.
+					</p>
 					<a
 						href="/contact"
-						class="inline-flex items-center gap-2 rounded-full bg-primary-500 px-8 py-4 font-semibold text-surface-900 transition-colors hover:bg-primary-400"
+						class="inline-flex items-center gap-2 rounded-full bg-primary-500 px-6 py-3 text-sm font-semibold text-surface-900 transition-all hover:bg-primary-400"
 					>
 						<span>Start a Project</span>
-						<ExternalLink size={20} />
+						<ExternalLink size={18} />
 					</a>
 				</div>
 			</div>
+
+			<!-- Sidebar -->
+			<aside class="lg:col-span-4">
+				<div class="sidebar-sticky space-y-6" data-speed="0">
+					<!-- Back Navigation Card -->
+					<div class="rounded-2xl border border-surface-600 bg-surface-800">
+						<a
+							href="/projects"
+							class="group flex items-center gap-2 p-4 text-sm text-surface-400 transition-colors hover:text-primary-400"
+						>
+							<ArrowLeft size={16} class="transition-transform group-hover:-translate-x-1" />
+							Back to Projects
+						</a>
+					</div>
+
+					<!-- Quick Stats Card -->
+					<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
+						<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+							Project Snapshot
+						</h3>
+						<div class="space-y-4 text-sm">
+							{#if displayProject.meta.date}
+								<div class="flex items-center justify-between">
+									<span class="text-surface-300">Launched</span>
+									<span class="font-semibold text-surface-100">
+										{new Date(displayProject.meta.date).toLocaleDateString('en-US', {
+											month: 'short',
+											year: 'numeric'
+										})}
+									</span>
+								</div>
+							{/if}
+							{#if displayProject.meta.readingTime}
+								<div class="flex items-center justify-between">
+									<span class="text-surface-300">Case Study</span>
+									<span class="font-semibold text-surface-100">
+										{displayProject.meta.readingTime} min read
+									</span>
+								</div>
+							{/if}
+							{#if displayProject.meta.tags}
+								<div class="flex items-center justify-between">
+									<span class="text-surface-300">Technologies</span>
+									<span class="font-semibold text-surface-100"
+										>{displayProject.meta.tags.length}</span
+									>
+								</div>
+							{/if}
+						</div>
+					</div>
+
+					<!-- Stakeholder Card -->
+					<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
+						<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+							Project Lead
+						</h3>
+						<div class="flex items-start gap-4">
+							<div
+								class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-primary-600 text-xl font-bold text-white"
+							>
+								{#if displayProject.meta.author}
+									{displayProject.meta.author.charAt(0)}
+								{:else}
+									K
+								{/if}
+							</div>
+							<div>
+								<div class="font-semibold text-surface-50">
+									{displayProject.meta.author || 'Khoobkar Team'}
+								</div>
+								<div class="text-sm text-surface-400">Lead Consultant</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Deliverables Card -->
+					<div class="rounded-2xl border border-surface-600 bg-surface-800 p-6">
+						<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+							Key Deliverables
+						</h3>
+						<ul class="space-y-2 text-sm text-surface-300">
+							<li>• Strategy & product roadmap</li>
+							<li>• End-to-end design & development</li>
+							<li>• Performance optimization</li>
+						</ul>
+					</div>
+
+					<!-- CTA Card -->
+					<div
+						class="rounded-2xl border border-primary-500/30 bg-gradient-to-br from-primary-500/10 to-primary-600/5 p-6"
+					>
+						<h3 class="mb-2 text-lg font-bold text-surface-50">Have a similar project?</h3>
+						<p class="mb-4 text-sm text-surface-300">
+							Let's shape the right solution for your business goals.
+						</p>
+						<a
+							href="/contact"
+							class="block rounded-lg bg-primary-600 px-4 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-primary-500"
+						>
+							Get in Touch
+						</a>
+					</div>
+
+					<!-- Reading Progress Card -->
+					<div
+						bind:this={readingProgressCard}
+						class="rounded-2xl border border-surface-600 bg-surface-800 p-6"
+					>
+						<h3 class="mb-4 text-sm font-semibold tracking-wider text-surface-400 uppercase">
+							Reading Progress
+						</h3>
+						<div class="flex flex-col items-center justify-center gap-4">
+							<ProgressRing
+								value={readingProgress}
+								max={100}
+								trackStroke="stroke-surface-700"
+								meterStroke="stroke-primary-500"
+								strokeLinecap="round"
+								size="w-32 h-32"
+								showLabel={false}
+							>
+								<span class="text-2xl font-bold text-surface-50">
+									{Math.round(readingProgress)}%
+								</span>
+							</ProgressRing>
+						</div>
+					</div>
+				</div>
+			</aside>
 		</div>
-	</section>
+	</div>
 {/if}
 
 <style>
