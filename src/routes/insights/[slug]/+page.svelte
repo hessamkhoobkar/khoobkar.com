@@ -115,7 +115,7 @@
 		<!-- Main Content Area -->
 		<div bind:this={articleContent} class="lg:col-span-8">
 			<!-- Article Header Card -->
-			<article class="mb-8 overflow-hidden rounded-2xl border border-surface-600 bg-surface-800">
+			<div class="mb-8 overflow-hidden rounded-2xl border border-surface-600 bg-surface-800">
 				{#if data.post.meta.image}
 					<div class="aspect-[2/1] overflow-hidden bg-surface-700">
 						<img
@@ -183,16 +183,16 @@
 						</div>
 					{/if}
 				</div>
-			</article>
+			</div>
 
 			<!-- Article Content Card -->
-			<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
+			<article class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-8 md:p-12">
 				<div
 					class="prose prose-lg max-w-none prose-invert prose-headings:font-bold prose-headings:text-surface-50 prose-h2:mt-8 prose-h2:mb-4 prose-h2:text-3xl prose-h3:mt-6 prose-h3:mb-3 prose-h3:text-2xl prose-p:mb-4 prose-p:leading-relaxed prose-p:text-surface-200 prose-a:text-primary-400 prose-a:no-underline hover:prose-a:text-primary-300 hover:prose-a:underline prose-blockquote:border-l-4 prose-blockquote:border-primary-500 prose-blockquote:bg-surface-700/50 prose-blockquote:py-2 prose-blockquote:pr-4 prose-blockquote:pl-4 prose-blockquote:text-surface-200 prose-blockquote:italic prose-strong:text-surface-100 prose-code:rounded prose-code:bg-surface-700 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-primary-300 prose-pre:rounded-lg prose-pre:border prose-pre:border-surface-600 prose-pre:bg-surface-900 prose-ol:my-4 prose-ol:text-surface-200 prose-ul:my-4 prose-ul:text-surface-200 prose-li:my-2 prose-img:rounded-lg prose-img:border prose-img:border-surface-600"
 				>
 					<data.post.component />
 				</div>
-			</div>
+			</article>
 
 			<!-- Share Card -->
 			<div class="mb-8 rounded-2xl border border-surface-600 bg-surface-800 p-6">
