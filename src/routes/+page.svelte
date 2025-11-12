@@ -111,6 +111,50 @@
 		'Design collaboration in Figma with design tokens, theming, and WCAG 2.2 accessibility baked in.'
 	];
 
+	const capabilityGroups = [
+		{
+			label: 'Languages',
+			items: ['JavaScript (ES6+)', 'TypeScript', 'HTML5', 'CSS3']
+		},
+		{
+			label: 'Frameworks & Libraries',
+			items: ['SvelteKit', 'React/Next.js', 'Vue/Nuxt.js', 'Storybook']
+		},
+		{
+			label: 'State & Data',
+			items: ['Zustand', 'Redux', 'Vuex/Pinia', 'GraphQL & REST']
+		},
+		{
+			label: 'Tooling & Ops',
+			items: ['Vite & Webpack', 'Docker', 'GitHub Actions', 'CI/CD pipelines']
+		},
+		{
+			label: 'Performance & UX',
+			items: [
+				'Web Vitals Optimization',
+				'Accessibility (WCAG 2.2)',
+				'Experimentation & Analytics',
+				'WebSocket integrations'
+			]
+		},
+		{
+			label: 'Collaboration',
+			items: [
+				'Agile leadership',
+				'Mentorship & code review',
+				'Async-first documentation',
+				'Cross-functional alignment'
+			]
+		}
+	];
+
+	const educationDetails = {
+		degree: 'Bachelor of Science in Software Engineering',
+		institution: 'Payame Noor University · Tehran, Iran',
+		outcome:
+			'Grounded in software fundamentals that inform scalable, user-centric product delivery.'
+	};
+
 	const proofPoints = [
 		{
 			icon: ShieldCheck,
@@ -393,8 +437,27 @@
 								Senior front-end lead
 							</span>
 						</div>
-						<h1 class="mt-5 max-w-3xl text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-							Artful front-end systems for teams that refuse to ship ordinary.
+						<h1
+							class="mt-5 max-w-3xl text-4xl font-bold text-white sm:text-5xl lg:text-5xl"
+							use:reveal={{
+								childSelector: 'span',
+								delay: 0.05,
+								stagger: 0.22,
+								from: { opacity: 0, yPercent: 120, filter: 'blur(6px)' },
+								to: {
+									opacity: 1,
+									yPercent: 0,
+									filter: 'blur(0px)',
+									duration: 1,
+									ease: 'power3.out'
+								}
+							}}
+						>
+							Remote Front-End Leadership That Delivers
+							<span class="inline-block"> Performance, </span>
+							<span class="inline-block">Polish,</span>
+							<span class="inline-block">and</span>
+							<span class="inline-block">Measurable Momentum.</span>
 						</h1>
 						<p class="mt-7 max-w-2xl text-base leading-relaxed text-white/80">
 							I’m Hessam Khoobkar, a senior front-end developer blending design sensibility with
@@ -651,6 +714,84 @@
 						</li>
 					{/each}
 				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- Capabilities Section -->
+	<section
+		class="relative border-t border-surface-800/60 bg-surface-950/70"
+		use:scrollAtmosphere={{
+			target: getMainSurface,
+			from: 'rgba(8, 11, 18, 0.97)',
+			to: 'rgba(7, 9, 15, 0.98)',
+			scrub: 0.7
+		}}
+	>
+		<div
+			class="mx-auto max-w-6xl space-y-14 px-6 py-24"
+			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
+		>
+			<div
+				class="space-y-4"
+				use:reveal={{ childSelector: '[data-capabilities-headline]', stagger: 0.1 }}
+			>
+				<span
+					data-capabilities-headline
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
+				>
+					Capabilities & stack
+				</span>
+				<h2 data-capabilities-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
+					Tooling depth that keeps multi-team roadmaps moving.
+				</h2>
+				<p data-capabilities-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
+					I bring a pragmatic blend of languages, frameworks, state management, and delivery tooling
+					so your squads can focus on outcomes. From Dockerized CI/CD pipelines to real-time
+					WebSocket layers, the foundations stay future-ready.
+				</p>
+			</div>
+			<div
+				class="grid gap-6 md:grid-cols-2"
+				use:reveal={{ childSelector: '[data-capability-card]', stagger: 0.06 }}
+			>
+				{#each capabilityGroups as group}
+					<div
+						data-capability-card
+						class="flex h-full flex-col gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-6 text-surface-200 transition hover:border-primary-500/35 hover:bg-surface-900/80"
+						use:parallax={{ axis: 'x', from: -12, to: 12, scrub: 0.55 }}
+					>
+						<p class="text-xs font-semibold tracking-[0.35em] text-primary-200 uppercase">
+							{group.label}
+						</p>
+						<ul class="space-y-2 text-sm leading-relaxed text-surface-300">
+							{#each group.items as item}
+								<li class="flex items-start gap-2">
+									<span class="mt-1 h-1.5 w-1.5 rounded-full bg-primary-400"></span>
+									{item}
+								</li>
+							{/each}
+						</ul>
+					</div>
+				{/each}
+			</div>
+			<div
+				class="rounded-3xl border border-primary-500/20 bg-primary-500/10 p-6 text-primary-100"
+				use:reveal={{ childSelector: '[data-education]', stagger: 0.1 }}
+			>
+				<div
+					data-education
+					class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between"
+				>
+					<div>
+						<p class="text-xs tracking-[0.35em] text-primary-200 uppercase">Education</p>
+						<h3 class="text-lg font-semibold text-white">{educationDetails.degree}</h3>
+						<p class="text-sm text-primary-100/80">{educationDetails.institution}</p>
+					</div>
+					<p class="max-w-xl text-sm leading-relaxed text-primary-100/85">
+						{educationDetails.outcome}
+					</p>
+				</div>
 			</div>
 		</div>
 	</section>
