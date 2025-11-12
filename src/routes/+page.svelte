@@ -269,179 +269,8 @@
 	];
 
 	let heroSection: HTMLElement;
-	let heroRipple: HTMLDivElement;
-	let heroIntensity: HTMLDivElement;
-	let heroTexture: HTMLDivElement;
-	let heroBreathTimeline: gsap.core.Timeline | null = null;
-	let heroTextureTween: gsap.core.Tween | null = null;
-
-const getMainSurface = () =>
-	typeof document === 'undefined' ? null : (document.querySelector('main') as HTMLElement | null);
-
-	onMount(() => {
-		if (heroSection && heroRipple && heroIntensity) {
-			gsap.set(heroSection, {
-				'--gradient-pos-x': '20%',
-				'--gradient-pos-y': '80%',
-				'--gradient-size': '122%',
-				'--sheen-opacity': 0.24
-			});
-
-			gsap.set(heroRipple, {
-				transformOrigin: 'bottom left',
-				opacity: 0,
-				scale: 0.78,
-				xPercent: -10,
-				yPercent: 10
-			});
-
-			gsap.set(heroIntensity, {
-				transformOrigin: 'top right',
-				opacity: 0.2,
-				scale: 1.05,
-				xPercent: 18,
-				yPercent: -18,
-				filter: 'blur(28px)'
-			});
-
-			heroBreathTimeline = gsap
-				.timeline({
-					repeat: -1,
-					repeatDelay: 0.35,
-					defaults: { ease: 'sine.inOut' }
-				})
-				.addLabel('inhale', 0)
-				.to(
-					heroSection,
-					{
-						duration: 1.8,
-						'--gradient-pos-x': '60%',
-						'--gradient-pos-y': '38%',
-						'--gradient-size': '110%',
-						'--sheen-opacity': 0.34,
-						ease: 'power1.out'
-					},
-					'inhale'
-				)
-				.to(
-					heroRipple,
-					{
-						duration: 1.6,
-						opacity: 0.45,
-						scale: 1.06,
-						xPercent: 4,
-						yPercent: -4,
-						ease: 'power2.out'
-					},
-					'inhale'
-				)
-				.to(
-					heroIntensity,
-					{
-						duration: 1.6,
-						opacity: 0.48,
-						scale: 1.18,
-						xPercent: 10,
-						yPercent: -10,
-						ease: 'power1.out'
-					},
-					'inhale'
-				)
-				.addLabel('hold')
-				.to(
-					heroSection,
-					{
-						duration: 1.35,
-						'--gradient-pos-x': '34%',
-						'--gradient-pos-y': '66%',
-						'--gradient-size': '126%',
-						'--sheen-opacity': 0.28
-					},
-					'hold'
-				)
-				.to(
-					heroRipple,
-					{
-						duration: 1.35,
-						opacity: 0.2,
-						scale: 1.18,
-						xPercent: 16,
-						yPercent: -18
-					},
-					'hold'
-				)
-				.to(
-					heroIntensity,
-					{
-						duration: 1.35,
-						opacity: 0.3,
-						scale: 1.22,
-						xPercent: 18,
-						yPercent: -16
-					},
-					'hold'
-				)
-				.addLabel('exhale')
-				.to(
-					heroSection,
-					{
-						duration: 1.1,
-						'--gradient-pos-x': '20%',
-						'--gradient-pos-y': '80%',
-						'--gradient-size': '122%',
-						'--sheen-opacity': 0.24,
-						ease: 'power1.in'
-					},
-					'exhale'
-				)
-				.to(
-					heroRipple,
-					{
-						duration: 1.1,
-						opacity: 0,
-						scale: 0.78,
-						xPercent: -10,
-						yPercent: 10,
-						ease: 'sine.in'
-					},
-					'exhale'
-				)
-				.to(
-					heroIntensity,
-					{
-						duration: 1.1,
-						opacity: 0.2,
-						scale: 1.05,
-						xPercent: 18,
-						yPercent: -18,
-						ease: 'sine.in'
-					},
-					'exhale'
-				);
-		}
-
-		if (heroTexture) {
-			gsap.set(heroTexture, {
-				backgroundPosition: '0% 0%, 38% 62%, 78% 24%',
-				opacity: 0.14
-			});
-
-			heroTextureTween = gsap.to(heroTexture, {
-				backgroundPosition: '120% 90%, 68% 18%, 6% 72%',
-				duration: 9,
-				ease: 'sine.inOut',
-				repeat: -1,
-				yoyo: true
-			});
-		}
-	});
-
-	onDestroy(() => {
-		heroBreathTimeline?.kill();
-		heroBreathTimeline = null;
-		heroTextureTween?.kill();
-		heroTextureTween = null;
-	});
+	const getMainSurface = () =>
+		typeof document === 'undefined' ? null : (document.querySelector('main') as HTMLElement | null);
 </script>
 
 <svelte:head>
@@ -458,90 +287,49 @@ const getMainSurface = () =>
 </svelte:head>
 
 <main class="relative overflow-hidden">
-	<section
-		id="hero"
-		bind:this={heroSection}
-		class="hero-gradient relative min-h-screen w-screen"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(10, 6, 18, 0.96)',
-			to: 'rgba(18, 12, 26, 0.98)',
-			ease: 'power2.out',
-			scrub: 0.9
-		}}
-	>
-		<div
-			class="hero-gradient__overlay hero-gradient__ripple"
-			bind:this={heroRipple}
-			use:parallax={{ speed: 1.15, from: -60, to: 42, scrub: 0.6 }}
-		></div>
-		<div
-			class="hero-gradient__overlay hero-gradient__intensity"
-			bind:this={heroIntensity}
-			use:parallax={{ speed: 0.7, from: -32, to: 20, scrub: 0.6 }}
-		></div>
-		<div
-			class="hero-gradient__overlay hero-gradient__texture"
-			bind:this={heroTexture}
-			use:parallax={{ speed: 0.4, from: -18, to: 12, scrub: 0.4 }}
-		></div>
-		<div class="hero-gradient__overlay hero-gradient__sheen"></div>
-
+	<!-- Hero Section -->
+	<section id="hero" bind:this={heroSection} class="hero-gradient relative min-h-screen w-screen">
 		<div class="relative z-10 flex h-full items-center">
 			<div
 				class="mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-24 md:py-32"
 				use:reveal={{ childSelector: '[data-hero-item]', stagger: 0.2, delay: 0.1 }}
 			>
 				<div class="grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-					<div data-hero-item class="space-y-7">
+					<div data-hero-item>
 						<div class="flex items-center gap-3">
 							<span
-								class="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 backdrop-blur"
-							>
-								<img src={logo} alt="Hessam Khoobkar monogram" class="h-8 w-8" />
-							</span>
-							<span
-								class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-white/70"
+								class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold tracking-[0.3em] text-white/70 uppercase"
 							>
 								<Sparkles size={14} aria-hidden="true" />
 								Senior front-end lead
 							</span>
 						</div>
-						<h1 class="max-w-3xl text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+						<h1 class="mt-5 max-w-3xl text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
 							Artful front-end systems for teams that refuse to ship ordinary.
 						</h1>
-						<p class="max-w-2xl text-base leading-relaxed text-white/80">
-							I’m Hessam Khoobkar, a senior front-end developer blending design sensibility with type-safe
-							engineering. From SvelteKit migrations to design-system rollouts, I help founders and product
-							teams launch faster without compromising craft.
+						<p class="mt-7 max-w-2xl text-base leading-relaxed text-white/80">
+							I’m Hessam Khoobkar, a senior front-end developer blending design sensibility with
+							type-safe engineering. I partner with founders and product leaders to build and refine
+							their vision, whether that means architecting a project from the ground up or stepping
+							in to accelerate and polish an existing one.
 						</p>
-						<div class="flex flex-wrap items-center gap-3">
-							<GradientButton href="tel:+989196230597" title="Call Hessam" class="w-auto px-6 py-2.5">
-								<span class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide">
-									<Phone size={18} aria-hidden="true" />
-									Call me
-								</span>
-							</GradientButton>
+						<div class="mt-7 flex flex-wrap items-center gap-3">
 							<a
 								href="/hessam_khoobkar_resume.pdf"
-								class="group inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-2 text-sm font-semibold uppercase tracking-[0.28em] text-white transition hover:border-white hover:bg-white hover:text-surface-900"
+								class="group inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-2 text-sm font-semibold tracking-[0.28em] text-white uppercase transition hover:border-white hover:bg-white hover:text-surface-900"
 							>
 								<Download size={18} aria-hidden="true" />
 								Resume
 							</a>
-							<a
-								href="mailto:amirhessam.dev@gmail.com"
-								class="inline-flex items-center gap-1 text-sm font-semibold uppercase tracking-[0.28em] text-white/70 transition hover:text-white"
-							>
-								<span>Start a project</span>
-								<ArrowUpRight size={16} aria-hidden="true" />
-							</a>
 						</div>
-						<div class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] text-white/60">
+						<div
+							class="mt-7 flex flex-wrap items-center gap-3 text-xs font-semibold tracking-[0.3em] text-white/60 uppercase"
+						>
 							<div class="inline-flex items-center gap-2">
-								<Layers size={16} aria-hidden="true" />
-								Svelte · Vue · React
+								<Globe size={16} aria-hidden="true" />
+								Tallinn, Estonia
 							</div>
+							<div>·</div>
 							<div class="inline-flex items-center gap-2">
 								<Briefcase size={16} aria-hidden="true" />
 								Remote worldwide
@@ -550,31 +338,49 @@ const getMainSurface = () =>
 					</div>
 					<div data-hero-item>
 						<div
-							class="flex h-full flex-col gap-6 rounded-3xl border border-white/15 bg-white/[0.08] p-6 text-white shadow-[0_30px_120px_-60px_rgba(239,94,3,0.8)] backdrop-blur-xl"
+							class="flex h-full flex-col gap-6 rounded-3xl border border-primary-900/20 bg-primary-900/20 p-6 text-white shadow-[0_30px_120px_-60px_rgba(72,12,3,0.8)] backdrop-blur-xl"
 						>
 							<div>
-								<p class="text-xs uppercase tracking-[0.4em] text-white/70">Currently partnering</p>
-								<h2 class="mt-3 text-2xl font-semibold leading-snug">
+								<p class="text-xs tracking-[0.4em] text-white/70 uppercase">Currently partnering</p>
+								<h2 class="mt-3 text-2xl leading-snug font-semibold">
 									Scaling digital products with design system precision and measurable outcomes.
 								</h2>
 							</div>
 							<ul class="space-y-3 text-sm leading-relaxed text-white/90">
-								<li class="flex gap-3 rounded-2xl border border-white/15 bg-white/5 p-3">
+								<li
+									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
+								>
 									<div class="rounded-lg bg-white/10 p-2">
 										<Gauge size={18} aria-hidden="true" />
 									</div>
 									<div>
-										<p class="text-xs uppercase tracking-[0.35em] text-white/60">Focus</p>
+										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Focus</p>
 										<p>High-impact migrations, design systems, and performance roadmaps.</p>
 									</div>
 								</li>
-								<li class="flex gap-3 rounded-2xl border border-white/15 bg-white/5 p-3">
+								<li
+									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
+								>
 									<div class="rounded-lg bg-white/10 p-2">
 										<Sparkles size={18} aria-hidden="true" />
 									</div>
 									<div>
-										<p class="text-xs uppercase tracking-[0.35em] text-white/60">Promise</p>
+										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Promise</p>
 										<p>Ship immersive, accessible experiences while coaching in-house teams.</p>
+									</div>
+								</li>
+								<li
+									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
+								>
+									<div class="rounded-lg bg-white/10 p-2">
+										<Users size={18} aria-hidden="true" />
+									</div>
+									<div>
+										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Fit</p>
+										<p>
+											Founder-led teams shipping complex interfaces who value async, high-trust
+											collaboration.
+										</p>
 									</div>
 								</li>
 							</ul>
@@ -584,7 +390,9 @@ const getMainSurface = () =>
 
 				<div data-hero-item class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 					{#each heroHighlights as fact}
-						<div class="rounded-2xl border border-white/15 bg-white/5 px-5 py-6 text-white shadow-[0_20px_80px_-50px_rgba(255,255,255,0.6)] backdrop-blur-xl">
+						<div
+							class="rounded-2xl border border-primary-900/20 bg-primary-900/20 px-5 py-6 text-white shadow-[0_20px_80px_-50px_rgba(72,12,3,0.6)] backdrop-blur-xl"
+						>
 							<p class="text-xl font-semibold">{fact.label}</p>
 							<p class="mt-2 text-sm text-white/75">{fact.caption}</p>
 						</div>
@@ -594,6 +402,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Partnership Section -->
 	<section
 		class="relative border-t border-surface-800/60 bg-surface-950/70"
 		use:scrollAtmosphere={{
@@ -613,7 +422,7 @@ const getMainSurface = () =>
 			>
 				<div data-pillars class="space-y-6">
 					<span
-						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary-300"
+						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 					>
 						<Sparkles size={14} aria-hidden="true" />
 						A new way to launch
@@ -622,11 +431,13 @@ const getMainSurface = () =>
 						Partner with an engineering lead who feels in-house from day one.
 					</h2>
 					<p class="max-w-2xl text-sm leading-relaxed text-surface-300">
-						I combine product intuition with technical stewardship to help teams ship ambitious experiences.
-						Whether we’re modernizing a platform or building a new surface, you get deep collaboration,
-						documentation, and measurable results.
+						I combine product intuition with technical stewardship to help teams ship ambitious
+						experiences. Whether we’re modernizing a platform or building a new surface, you get
+						deep collaboration, documentation, and measurable results.
 					</p>
-					<p class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.35em] text-primary-200">
+					<p
+						class="inline-flex items-center gap-2 text-sm font-semibold tracking-[0.35em] text-primary-200 uppercase"
+					>
 						<ArrowUpRight size={16} aria-hidden="true" />
 						Remote-first · async friendly · outcome driven
 					</p>
@@ -652,6 +463,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Automation Section -->
 	<section
 		class="relative"
 		use:scrollAtmosphere={{
@@ -665,22 +477,23 @@ const getMainSurface = () =>
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
 		>
-			<div class="space-y-4" use:reveal={{ childSelector: '[data-automation-headline]', stagger: 0.1 }}>
+			<div
+				class="space-y-4"
+				use:reveal={{ childSelector: '[data-automation-headline]', stagger: 0.1 }}
+			>
 				<span
 					data-automation-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary-300"
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
 					Automation-ready delivery
 				</span>
-				<h2
-					data-automation-headline
-					class="text-3xl font-bold text-surface-50 md:text-4xl"
-				>
+				<h2 data-automation-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
 					Automate the routine, focus on the work that moves the needle.
 				</h2>
 				<p data-automation-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
-					From migration playbooks to experiment frameworks, I build the systems that keep your teams confident
-					and your releases predictable. Pick the tracks you need and we’ll modularize the rest.
+					From migration playbooks to experiment frameworks, I build the systems that keep your
+					teams confident and your releases predictable. Pick the tracks you need and we’ll
+					modularize the rest.
 				</p>
 			</div>
 
@@ -702,6 +515,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Integrations Section -->
 	<section
 		class="relative"
 		use:scrollAtmosphere={{
@@ -719,15 +533,20 @@ const getMainSurface = () =>
 				class="overflow-hidden rounded-3xl border border-surface-700/70 bg-gradient-to-br from-surface-900 via-surface-900/80 to-surface-900/60 p-10"
 				use:reveal={{ childSelector: '[data-integrations]', stagger: 0.12 }}
 			>
-				<div data-integrations class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+				<div
+					data-integrations
+					class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+				>
 					<div>
-						<p class="text-xs font-semibold uppercase tracking-[0.35em] text-primary-300">Stack alignment</p>
+						<p class="text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase">
+							Stack alignment
+						</p>
 						<h2 class="mt-2 text-2xl font-semibold text-surface-50">
 							Connects with your existing systems—no matter how bespoke.
 						</h2>
 					</div>
 					<span
-						class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.35em] text-white/70"
+						class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-[0.35em] text-white/70 uppercase"
 					>
 						<Layers size={16} aria-hidden="true" />
 						Design ↔ Engineering
@@ -735,7 +554,9 @@ const getMainSurface = () =>
 				</div>
 				<ul data-integrations class="mt-8 grid gap-4 md:grid-cols-2">
 					{#each integrationPoints as point}
-						<li class="flex items-start gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-4 text-sm leading-relaxed text-surface-300">
+						<li
+							class="flex items-start gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-4 text-sm leading-relaxed text-surface-300"
+						>
 							<span class="mt-1 h-2 w-2 rounded-full bg-primary-400"></span>
 							{point}
 						</li>
@@ -745,6 +566,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Proof Section -->
 	<section
 		class="relative border-t border-surface-800/60 bg-surface-950/70"
 		use:scrollAtmosphere={{
@@ -761,7 +583,7 @@ const getMainSurface = () =>
 			<div class="space-y-4" use:reveal={{ childSelector: '[data-proof-headline]', stagger: 0.1 }}>
 				<span
 					data-proof-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary-300"
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
 					Why teams choose Hessam
 				</span>
@@ -794,6 +616,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Metrics Section -->
 	<section
 		class="relative"
 		use:scrollAtmosphere={{
@@ -807,7 +630,10 @@ const getMainSurface = () =>
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 88%', end: 'bottom 58%', scrub: 0.45 }}
 		>
-			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" use:reveal={{ childSelector: '[data-metric]', stagger: 0.08 }}>
+			<div
+				class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+				use:reveal={{ childSelector: '[data-metric]', stagger: 0.08 }}
+			>
 				{#each metrics as metric, i}
 					<div
 						data-metric
@@ -820,13 +646,14 @@ const getMainSurface = () =>
 						}}
 					>
 						<p class="text-4xl font-bold text-primary-200">{metric.value}</p>
-						<p class="mt-3 text-sm uppercase tracking-[0.3em] text-surface-400">{metric.label}</p>
+						<p class="mt-3 text-sm tracking-[0.3em] text-surface-400 uppercase">{metric.label}</p>
 					</div>
 				{/each}
 			</div>
 		</div>
 	</section>
 
+	<!-- Process Section -->
 	<section
 		class="relative border-t border-surface-800/60 bg-surface-950/70"
 		use:scrollAtmosphere={{
@@ -840,10 +667,13 @@ const getMainSurface = () =>
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
 		>
-			<div class="space-y-4" use:reveal={{ childSelector: '[data-process-headline]', stagger: 0.1 }}>
+			<div
+				class="space-y-4"
+				use:reveal={{ childSelector: '[data-process-headline]', stagger: 0.1 }}
+			>
 				<span
 					data-process-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary-300"
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
 					Process
 				</span>
@@ -866,11 +696,15 @@ const getMainSurface = () =>
 							scrub: 0.6
 						}}
 					>
-						<span class="text-sm font-semibold uppercase tracking-[0.4em] text-primary-200">{step.step}</span>
+						<span class="text-sm font-semibold tracking-[0.4em] text-primary-200 uppercase"
+							>{step.step}</span
+						>
 						<h3 class="text-xl font-semibold text-surface-50">{step.title}</h3>
 						<p class="text-sm leading-relaxed text-surface-300">{step.description}</p>
-						<div class="mt-auto rounded-2xl border border-primary-500/20 bg-primary-500/10 px-4 py-3 text-xs text-primary-100">
-							<strong class="block text-[0.68rem] uppercase tracking-[0.35em] text-primary-200"
+						<div
+							class="mt-auto rounded-2xl border border-primary-500/20 bg-primary-500/10 px-4 py-3 text-xs text-primary-100"
+						>
+							<strong class="block text-[0.68rem] tracking-[0.35em] text-primary-200 uppercase"
 								>Outcome</strong
 							>
 							<span>{step.outcome}</span>
@@ -881,6 +715,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Outcome Section -->
 	<section
 		class="relative"
 		use:scrollAtmosphere={{
@@ -894,10 +729,13 @@ const getMainSurface = () =>
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 86%', end: 'bottom 58%', scrub: 0.45 }}
 		>
-			<div class="space-y-4" use:reveal={{ childSelector: '[data-outcome-headline]', stagger: 0.1 }}>
+			<div
+				class="space-y-4"
+				use:reveal={{ childSelector: '[data-outcome-headline]', stagger: 0.1 }}
+			>
 				<span
 					data-outcome-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary-300"
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
 					Outcome snapshots
 				</span>
@@ -920,10 +758,12 @@ const getMainSurface = () =>
 							scrub: 0.55
 						}}
 					>
-						<p class="text-xs uppercase tracking-[0.35em] text-primary-200">{snapshot.company}</p>
+						<p class="text-xs tracking-[0.35em] text-primary-200 uppercase">{snapshot.company}</p>
 						<h3 class="text-lg font-semibold text-surface-50">{snapshot.headline}</h3>
 						<p class="text-sm leading-relaxed text-surface-300">{snapshot.description}</p>
-						<div class="mt-auto rounded-xl border border-primary-500/20 bg-primary-500/10 px-4 py-2 text-sm font-semibold text-primary-100">
+						<div
+							class="mt-auto rounded-xl border border-primary-500/20 bg-primary-500/10 px-4 py-2 text-sm font-semibold text-primary-100"
+						>
 							{snapshot.result}
 						</div>
 					</div>
@@ -932,6 +772,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- FAQ Section -->
 	<section
 		class="relative border-t border-surface-800/60 bg-surface-950/70"
 		use:scrollAtmosphere={{
@@ -948,7 +789,7 @@ const getMainSurface = () =>
 			<div class="space-y-4" use:reveal={{ childSelector: '[data-faq-headline]', stagger: 0.1 }}>
 				<span
 					data-faq-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary-300"
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
 					FAQs
 				</span>
@@ -959,7 +800,9 @@ const getMainSurface = () =>
 			<div class="space-y-4" use:reveal={{ childSelector: 'details', stagger: 0.08 }}>
 				{#each faqs as item}
 					<details class="group rounded-2xl border border-surface-700 bg-surface-900/70 p-5">
-						<summary class="flex cursor-pointer items-center justify-between text-left text-sm font-semibold uppercase tracking-[0.3em] text-surface-200 transition group-open:text-primary-200">
+						<summary
+							class="flex cursor-pointer items-center justify-between text-left text-sm font-semibold tracking-[0.3em] text-surface-200 uppercase transition group-open:text-primary-200"
+						>
 							<span class="flex-1">{item.question}</span>
 							<ArrowUpRight
 								size={16}
@@ -974,6 +817,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Contact Section -->
 	<section
 		class="relative"
 		use:scrollAtmosphere={{
@@ -995,7 +839,7 @@ const getMainSurface = () =>
 					use:parallax={{ axis: 'x', from: -18, to: 18, scrub: 0.6 }}
 				>
 					<span
-						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold uppercase tracking-[0.35em] text-primary-300"
+						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 					>
 						Let’s build together
 					</span>
@@ -1003,8 +847,8 @@ const getMainSurface = () =>
 						Ready to ship something bold, fast, and on-brand?
 					</h2>
 					<p class="text-sm leading-relaxed text-surface-300">
-						Reach out for full-time leadership, high-impact project sprints, or audits that unlock your next
-						wave of growth. I respond within one business day.
+						Reach out for full-time leadership, high-impact project sprints, or audits that unlock
+						your next wave of growth. I respond within one business day.
 					</p>
 					<div class="grid gap-4">
 						{#each contactChannels as channel}
@@ -1018,19 +862,21 @@ const getMainSurface = () =>
 										<Icon size={18} class="text-primary-300" aria-hidden="true" />
 									</div>
 									<div>
-										<p class="text-xs uppercase tracking-[0.35em] text-primary-300">
+										<p class="text-xs tracking-[0.35em] text-primary-300 uppercase">
 											{channel.label}
 										</p>
 										<p class="text-sm font-semibold">{channel.value}</p>
 									</div>
 								</a>
 							{:else}
-								<div class="flex items-center gap-4 rounded-2xl border border-surface-700 bg-surface-900/65 px-5 py-4 text-sm text-surface-200">
+								<div
+									class="flex items-center gap-4 rounded-2xl border border-surface-700 bg-surface-900/65 px-5 py-4 text-sm text-surface-200"
+								>
 									<div class="rounded-xl bg-primary-500/10 p-3">
 										<Icon size={18} class="text-primary-300" aria-hidden="true" />
 									</div>
 									<div>
-										<p class="text-xs uppercase tracking-[0.35em] text-primary-300">
+										<p class="text-xs tracking-[0.35em] text-primary-300 uppercase">
 											{channel.label}
 										</p>
 										<p class="text-sm font-semibold">{channel.value}</p>
@@ -1046,7 +892,7 @@ const getMainSurface = () =>
 								href={social.href}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="inline-flex items-center gap-2 rounded-full border border-surface-700/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-surface-200 transition hover:border-primary-500/40 hover:text-primary-200"
+								class="inline-flex items-center gap-2 rounded-full border border-surface-700/60 px-4 py-2 text-xs font-semibold tracking-[0.35em] text-surface-200 uppercase transition hover:border-primary-500/40 hover:text-primary-200"
 							>
 								<Icon size={16} aria-hidden="true" />
 								{social.label}
@@ -1082,7 +928,9 @@ const getMainSurface = () =>
 							title="Email Hessam Khoobkar"
 							class="w-full"
 						>
-							<span class="flex items-center justify-center gap-2 text-sm font-semibold uppercase tracking-wide">
+							<span
+								class="flex items-center justify-center gap-2 text-sm font-semibold tracking-wide uppercase"
+							>
 								<Mail size={18} aria-hidden="true" />
 								Send an email
 							</span>
@@ -1093,6 +941,7 @@ const getMainSurface = () =>
 		</div>
 	</section>
 
+	<!-- Footer -->
 	<Footer />
 </main>
 
@@ -1128,55 +977,6 @@ const getMainSurface = () =>
 		background-repeat: no-repeat, no-repeat;
 	}
 
-	.hero-gradient__overlay {
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-	}
-
-	.hero-gradient__ripple {
-		background: radial-gradient(
-			circle at bottom left,
-			rgba(255, 255, 255, 0.4) 0%,
-			rgba(255, 255, 255, 0.18) 32%,
-			transparent 70%
-		);
-		filter: blur(42px);
-		mix-blend-mode: screen;
-	}
-
-	.hero-gradient__intensity {
-		background: radial-gradient(
-			circle at top right,
-			rgba(255, 76, 32, 0.58) 0%,
-			rgba(246, 46, 4, 0.42) 26%,
-			rgba(168, 20, 12, 0.24) 56%,
-			rgba(104, 8, 6, 0.12) 72%,
-			transparent 85%
-		);
-		mix-blend-mode: screen;
-		filter: blur(26px);
-	}
-
-	.hero-gradient__texture {
-		background-image:
-			radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.06) 0%, transparent 55%),
-			radial-gradient(circle at 70% 42%, rgba(239, 94, 3, 0.08) 0%, transparent 60%),
-			radial-gradient(circle at 32% 78%, rgba(255, 157, 43, 0.05) 0%, transparent 58%);
-		background-size:
-			30% 30%,
-			36% 36%,
-			42% 42%;
-		mix-blend-mode: color-dodge;
-		opacity: 0.12;
-	}
-
-	.hero-gradient__sheen {
-		background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.3), transparent 65%);
-		mix-blend-mode: screen;
-		opacity: var(--sheen-opacity);
-	}
-
 	main {
 		position: relative;
 		min-height: 100vh;
@@ -1193,4 +993,3 @@ const getMainSurface = () =>
 		transition: background-color 0.8s ease;
 	}
 </style>
-
