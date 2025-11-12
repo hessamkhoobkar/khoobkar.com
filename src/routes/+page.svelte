@@ -3,6 +3,8 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { parallax, scrollAtmosphere, depthFade } from '$lib/actions/motion';
 	import Footer from '$lib/components/layout/Footer.svelte';
+	import ogImageAsset from '$lib/assets/logo.png';
+	import { normalizeImageUrl, siteConfig } from '$lib/utils/structured-data';
 	import {
 		Sparkles,
 		ArrowUpRight,
@@ -265,21 +267,112 @@
 		{ icon: Dribbble, label: 'Dribbble', href: 'https://dribbble.com/hessam_khoobkar' }
 	];
 
+	const canonicalUrl = `${siteConfig.url}/`;
+	const metaTitle = 'Hessam Khoobkar | Artful Front-End Systems';
+	const metaDescription =
+		'Hessam Khoobkar crafts immersive, high-performance front-end systems for ambitious teams. Explore services, outcomes, process, and ways to collaborate on one dark, gradient-rich landing page.';
+	const metaKeywords = [
+		'Hessam Khoobkar',
+		'Svelte consultant',
+		'front-end systems',
+		'design systems',
+		'performance engineering',
+		'web accessibility',
+		'product leadership',
+		'UI engineering',
+		'async collaboration'
+	].join(', ');
+	const socialProfiles = ['https://twitter.com/khoobkar', ...socialLinks.map((link) => link.href)];
+	const ogImageUrl = normalizeImageUrl(ogImageAsset);
+	const structuredData = {
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'WebSite',
+				'@id': `${canonicalUrl}#website`,
+				url: canonicalUrl,
+				name: metaTitle,
+				description: metaDescription,
+				inLanguage: 'en-US',
+				publisher: {
+					'@id': `${canonicalUrl}#organization`
+				}
+			},
+			{
+				'@type': 'Organization',
+				'@id': `${canonicalUrl}#organization`,
+				name: siteConfig.name,
+				url: canonicalUrl,
+				logo: {
+					'@type': 'ImageObject',
+					url: ogImageUrl
+				},
+				founder: {
+					'@id': `${canonicalUrl}#person`
+				},
+				sameAs: socialProfiles
+			},
+			{
+				'@type': 'Person',
+				'@id': `${canonicalUrl}#person`,
+				name: 'Hessam Khoobkar',
+				url: canonicalUrl,
+				image: ogImageUrl,
+				jobTitle: 'Senior Front-End Lead',
+				worksFor: {
+					'@id': `${canonicalUrl}#organization`
+				},
+				sameAs: socialProfiles,
+				knowsAbout: [
+					'Front-end architecture',
+					'Design systems',
+					'Svelte',
+					'Web performance',
+					'Accessibility'
+				]
+			}
+		]
+	};
+
 	const getMainSurface = () =>
 		typeof document === 'undefined' ? null : (document.querySelector('main') as HTMLElement | null);
 </script>
 
 <svelte:head>
-	<title>Hessam Khoobkar | Artful Front-End Systems</title>
-	<meta
-		name="description"
-		content="Hessam Khoobkar crafts immersive, high-performance front-end systems for ambitious teams. Explore services, outcomes, process, and ways to collaborate on one dark, gradient-rich landing page."
-	/>
-	<meta property="og:title" content="Hessam Khoobkar | Artful Front-End Systems" />
+	<title>{metaTitle}</title>
+	<link rel="canonical" href={canonicalUrl} />
+	<meta name="description" content={metaDescription} />
+	<meta name="keywords" content={metaKeywords} />
+	<meta name="author" content="Hessam Khoobkar" />
+	<meta name="robots" content="index, follow" />
+	<meta name="theme-color" content="#0f172a" />
+	<meta property="og:title" content={metaTitle} />
 	<meta
 		property="og:description"
 		content="Partner with Hessam Khoobkar to design, build, and scale front-end experiences that blend craft, performance, and measurable outcomes."
 	/>
+	<meta property="og:url" content={canonicalUrl} />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content={siteConfig.name} />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:image" content={ogImageUrl} />
+	<meta
+		property="og:image:alt"
+		content="Portrait of Hessam Khoobkar, senior front-end lead and systems engineer"
+	/>
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={metaTitle} />
+	<meta name="twitter:description" content={metaDescription} />
+	<meta name="twitter:image" content={ogImageUrl} />
+	<meta
+		name="twitter:image:alt"
+		content="Portrait of Hessam Khoobkar, senior front-end lead and systems engineer"
+	/>
+	<meta name="twitter:site" content="@khoobkar" />
+	<meta name="twitter:creator" content="@khoobkar" />
+	<script type="application/ld+json">
+		{JSON.stringify(structuredData)}
+	</script>
 </svelte:head>
 
 <main class="relative overflow-hidden">
