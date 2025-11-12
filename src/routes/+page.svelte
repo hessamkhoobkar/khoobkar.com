@@ -32,7 +32,7 @@
 	const heroHighlights = [
 		{
 			label: '7+ years',
-			caption: 'Leading front-end programs across Svelte, Vue, React, and design systems.'
+			caption: 'Leading front-end programs across React, Svelte, Vue, and design systems.'
 		},
 		{
 			label: '35% avg uplift',
@@ -105,7 +105,7 @@
 	];
 
 	const integrationPoints = [
-		'SvelteKit, Vue/Nuxt, React/Next.js, and bespoke component-library ecosystems.',
+		'React/Next.js, Svelte/SvelteKit, Vue/Nuxt, and bespoke component-library ecosystems.',
 		'TypeScript-first workflows with Storybook, Vitest, Playwright, and Cypress.',
 		'CI/CD across GitHub Actions, GitLab, CircleCI, Vercel, and containerized deployments.',
 		'Design collaboration in Figma with design tokens, theming, and WCAG 2.2 accessibility baked in.'
