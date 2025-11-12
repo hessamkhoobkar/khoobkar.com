@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onDestroy, onMount } from 'svelte';
-	import { gsap } from 'gsap';
 	import GradientButton from '$lib/components/ui/GradientButton.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { parallax, scrollAtmosphere, depthFade } from '$lib/actions/motion';
@@ -28,7 +26,6 @@
 		Instagram,
 		Dribbble
 	} from '@lucide/svelte';
-	import logo from '$lib/assets/logo.png';
 
 	const heroHighlights = [
 		{
@@ -268,7 +265,6 @@
 		{ icon: Dribbble, label: 'Dribbble', href: 'https://dribbble.com/hessam_khoobkar' }
 	];
 
-	let heroSection: HTMLElement;
 	const getMainSurface = () =>
 		typeof document === 'undefined' ? null : (document.querySelector('main') as HTMLElement | null);
 </script>
@@ -288,7 +284,7 @@
 
 <main class="relative overflow-hidden">
 	<!-- Hero Section -->
-	<section id="hero" bind:this={heroSection} class="hero-gradient relative min-h-screen w-screen">
+	<section id="hero" class="hero-gradient relative min-h-screen w-screen">
 		<div class="relative z-10 flex h-full items-center">
 			<div
 				class="mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-24 md:py-32"
