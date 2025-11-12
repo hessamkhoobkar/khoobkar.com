@@ -117,7 +117,7 @@
 		smoothTouch={0.2}
 		contentClass={showNavigation ? 'lg:ps-90' : 'lg:px-0'}
 	>
-		<div class="pb-8">
+		<div class="pb-8" data-scroll-atmosphere-root>
 			{@render children?.()}
 		</div>
 	</ScrollSmoother>

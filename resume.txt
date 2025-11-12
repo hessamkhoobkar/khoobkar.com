@@ -1,0 +1,55 @@
+
+
+Hessam Khoobkar
+Senior Front-End Developer
+Tallinn, Estonia
+Available Globally (Remote)
+Full-Time & Freelance
+
+
++98 919 623 0597 | amirhessam.dev@gmail.com | https://khoobkar.com
+LinkedIn: linkedin.com/in/hessam-khoobkar | GitHub: github.com/hessamkhoobkar
+
+Executive Summary
+Innovative and results-oriented Senior Frontend Engineer with 7+ years of expertise crafting high-performance, user-centric web applications for international organizations. Expert in architecting and delivering complex, scalable solutions across modern JavaScript frameworks, including React.js, Vue.js, Svelte, Next.js, and TypeScript, with a deep commitment to performance, accessibility, and cutting-edge industry standards.
+
+Recognized for leading cross-functional teams, mentoring engineers, and establishing development best practices that elevate code quality and accelerate delivery timelines. Proven ability to reduce load times, enhance user engagement, and streamline workflows through strategic technical leadership. Passionate about translating business goals into elegant, intuitive digital experiences and continuously driving innovation in the frontend ecosystem.
+Technical Proficiencies
+Languages: JavaScript (ES6+), TypeScript, HTML5, CSS3
+Frameworks & Libraries: React.js, Next.js, Vue.js, Nuxt.js, Svelte, SvelteKit
+Styling & UI: TailwindCSS, SCSS/SASS, CSS Modules, Responsive Web Design
+State Management: Zustand, Redux, Context API, Vuex, Pinia
+APIs & Data Handling: REST APIs, GraphQL, WebSocket Integration
+Build Tools & Platforms: Vite, Webpack, Git, Docker, CI/CD pipelines
+Methodologies & Practices: Agile/Scrum, Code Review Leadership, Performance Optimization, Cross-Browser Compatibility, UX Optimization
+Professional Experience
+Senior Front-End Developer
+POMECHAIN, Dubai, United Arab Emirates - Remote
+July 2024 – Present
+Architected and delivered a high-performance, reusable Vue.js/Nuxt.js component library with TypeScript, significantly improving code maintainability and accelerating new feature deployment timelines.
+Led frontend development for core platform features, collaborating cross-functionally with Product and Design teams to achieve a 30% increase in key user engagement metrics post-launch.
+Championed and executed the adoption of TailwindCSS for streamlined styling, resulting in an estimated 20% reduction in UI development time and improved design consistency.
+
+
+
+Lead Front-End Developer
+Coinhaven, Berlin, Germany - Remote
+December 2021 – January 2024 
+Spearheaded the strategic migration of the core trading platform from React to SvelteKit, achieving a 30% improvement in overall application performance and a 25% reduction in development cycle time.
+Defined, documented, and enforced frontend architectural standards and best practices, enhancing application scalability to accommodate significant user growth and ensuring platform-wide UX consistency.
+Engineered a real-time data synchronization system using WebSocket, dramatically improving platform responsiveness and enabling critical low-latency updates essential for trading functionalities.
+Mentored and coached a team of 7 developers, elevating team coding standards through rigorous code reviews and targeted guidance, fostering significant individual skill progression.
+Senior Front-End Developer
+Piller Iddaa, Istanbul, Turkey - Remote
+November 2019 - December 2021 
+Developed and optimized complex, interactive UIs using Vue.js and SCSS for a high-traffic online betting platform, successfully handling thousands of concurrent users.
+Implemented advanced performance optimization techniques, including client-side caching, code splitting, and lazy loading, achieving a 35% reduction in average page load times across key user journeys.
+Translated intricate UI/UX prototypes into pixel-perfect, responsive web applications, directly contributing to enhanced visual appeal and measurable improvements in user retention.
+Front-end Developer & UI Designer
+Shabakeh Gostar Kayer, Tehran, Iran
+August 2017 - September 2019 
+Developed modular and maintainable frontend components using HTML, SCSS, and JavaScript for enterprise software, ensuring robust integration with backend APIs.
+Designed and implemented responsive, cross-browser compatible user interfaces, establishing a foundation for consistent user experiences across diverse client deployments.
+Education
+Bachelor of Science in Software Engineering
+Payame Noor University, Tehran, Iran

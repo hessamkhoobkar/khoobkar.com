@@ -22,7 +22,7 @@
 
 	<!-- Main content with enhanced styling -->
 	<div
-		class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-white mix-blend-difference"
+		class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-white mix-blend-difference px-6 text-center"
 	>
 		<svelte:component this={icon} size={40} class="relative" />
 
@@ -35,5 +35,7 @@
 		<p class="max-w-2xl text-center text-base leading-relaxed">
 			{subtitle}
 		</p>
+
+		<slot />
 	</div>
 </header>

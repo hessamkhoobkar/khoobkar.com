@@ -16,6 +16,7 @@
 		normalizeScroll = true,
 		ignoreMobileResize = true,
 		autoResize = true,
+		contentClass = 'lg:ps-90',
 		children,
 		...rest
 	} = $props();
@@ -57,7 +58,7 @@
 </script>
 
 <div bind:this={scrollContainer}>
-	<main bind:this={scrollContent} class="min-h-screen bg-surface-950 px-4 lg:ps-90">
+	<main bind:this={scrollContent} class={'min-h-screen bg-surface-950 px-4 ' + contentClass}>
 		{@render children?.()}
 	</main>
 </div>
