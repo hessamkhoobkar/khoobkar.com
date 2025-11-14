@@ -3,7 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type ScrubValue = boolean | number | gsap.TweenVars;
+type ScrubValue = boolean | number;
 
 export interface ParallaxOptions {
 	speed?: number;
@@ -231,12 +231,12 @@ export function depthFade(node: HTMLElement, options: DepthFadeOptions = {}) {
 		};
 	}
 
-	let config = {
+	let config: typeof defaultDepthFade & DepthFadeOptions = {
 		...defaultDepthFade,
 		...options,
-		from: { ...defaultDepthFade.from, ...(options.from || {}) }
+		from: { ...defaultDepthFade.from, ...(options.from || {}) },
+		to: { ...defaultDepthFade.to, ...(options.to || {}) }
 	};
-	config = { ...config, to: { ...defaultDepthFade.to, ...(options.to || {}) } };
 	let animation: gsap.core.Tween | null = null;
 
 	function init() {
@@ -259,7 +259,7 @@ export function depthFade(node: HTMLElement, options: DepthFadeOptions = {}) {
 	return {
 		update(newOptions: DepthFadeOptions = {}) {
 			config = {
-				...config,
+				...defaultDepthFade,
 				...newOptions,
 				from: { ...defaultDepthFade.from, ...(newOptions.from || {}) },
 				to: { ...defaultDepthFade.to, ...(newOptions.to || {}) }

@@ -47,27 +47,31 @@
 	const solutionPillars = [
 		{
 			icon: Users,
-			title: 'Support your squads',
+			badge: 'Integrated support',
+			title: 'Embed with your team',
 			description:
-				'Embed as a senior front-end lead who unblocks product, design, and engineering with calm, structured delivery.'
-		},
-		{
-			icon: Gauge,
-			title: 'Maximize product growth',
-			description:
-				'Instrument performance, accessibility, and conversion so every release moves the metrics that matter.'
+				'Plug into rituals, facilitate alignment, and keep product, design, and engineering moving with calm delivery.'
 		},
 		{
 			icon: Workflow,
-			title: 'Automate delivery',
+			badge: 'Coaching & clarity',
+			title: 'Coach in-house talent',
 			description:
-				'Codify design tokens, CI/CD, and code standards so your team ships faster without sacrificing craft.'
+				'Pair with engineers, document decisions, and raise the bar on code reviews so best practices become habits.'
+		},
+		{
+			icon: Gauge,
+			badge: 'Quality & metrics',
+			title: 'Make progress visible',
+			description:
+				'Map product goals to measurable outcomes, surface risks early, and report momentum stakeholders can trust.'
 		},
 		{
 			icon: Heart,
-			title: 'Delight customers',
+			badge: 'Product polish',
+			title: 'Ship experiences users feel',
 			description:
-				'Craft immersive surfaces that feel inclusive, polished, and unmistakably on brand across devices.'
+				'Build design systems, accessibility guardrails, and thoughtful interactions that strengthen your brand.'
 		}
 	];
 
@@ -555,15 +559,7 @@
 	</section>
 
 	<!-- Partnership Section -->
-	<section
-		class="relative border-t border-surface-800/60 bg-surface-950/70"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(18, 12, 26, 0.98)',
-			to: 'rgba(12, 16, 26, 0.97)',
-			scrub: 0.8
-		}}
-	>
+	<section class="relative border-t border-surface-800/60 bg-surface-950/70 py-24">
 		<div
 			class="mx-auto max-w-6xl space-y-16 px-6 py-24"
 			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.5 }}
@@ -577,21 +573,21 @@
 						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 					>
 						<Sparkles size={14} aria-hidden="true" />
-						A new way to launch
+						Embedded partnership
 					</span>
 					<h2 class="text-3xl font-bold text-surface-50 md:text-4xl">
-						Partner with an engineering lead who feels in-house from day one.
+						Work with a front-end lead who lifts your team’s pace and quality.
 					</h2>
 					<p class="max-w-2xl text-sm leading-relaxed text-surface-300">
-						I combine product intuition with technical stewardship to help teams ship ambitious
-						experiences. Whether we’re modernizing a platform or building a new surface, you get
-						deep collaboration, documentation, and measurable results.
+						For the last 7+ years I’ve embedded inside founder-led squads to align product, design,
+						and engineering. Expect structured delivery, transparent communication, and mentorship
+						that helps every function ship with confidence.
 					</p>
 					<p
 						class="inline-flex items-center gap-2 text-sm font-semibold tracking-[0.35em] text-primary-200 uppercase"
 					>
-						<ArrowUpRight size={16} aria-hidden="true" />
-						Remote-first · async friendly · outcome driven
+						<Users size={16} aria-hidden="true" />
+						Shared ownership · async clarity · measurable progress
 					</p>
 				</div>
 				<div data-pillars class="grid gap-4 sm:grid-cols-2">
@@ -600,11 +596,15 @@
 						<div
 							class="rounded-2xl border border-surface-700 bg-surface-900/70 p-6 transition hover:-translate-y-1 hover:border-primary-500/40 hover:bg-surface-900/80"
 						>
-							<div class="flex items-center justify-between">
+							<div class="flex items-center gap-3">
 								<div class="rounded-xl bg-primary-500/15 p-3">
 									<Icon size={18} class="text-primary-300" aria-hidden="true" />
 								</div>
-								<ArrowUpRight size={16} class="text-primary-400/70" aria-hidden="true" />
+								{#if pillar.badge}
+									<span class="text-xs font-semibold tracking-[0.3em] text-primary-200 uppercase">
+										{pillar.badge}
+									</span>
+								{/if}
 							</div>
 							<h3 class="mt-4 text-lg font-semibold text-surface-50">{pillar.title}</h3>
 							<p class="mt-3 text-sm leading-relaxed text-surface-300">{pillar.description}</p>
