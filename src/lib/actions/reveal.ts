@@ -1,5 +1,7 @@
 import { gsap } from 'gsap';
-import type { StaggerVars, TweenVars } from 'gsap';
+
+type StaggerVars = gsap.StaggerVars;
+type TweenVars = gsap.TweenVars;
 
 export interface RevealOptions {
 	once?: boolean;
@@ -28,12 +30,15 @@ const defaultTo: TweenVars = {
 	ease: 'power3.out'
 };
 
-const defaultConfig: Required<Omit<RevealOptions, 'from' | 'to'>> & { from: TweenVars; to: TweenVars } = {
+const defaultConfig: Required<Omit<RevealOptions, 'from' | 'to'>> & {
+	from: TweenVars;
+	to: TweenVars;
+} = {
 	once: true,
-	threshold: 0.15,
+	threshold: 0.5,
 	rootMargin: '0px 0px -10% 0px',
 	childSelector: '',
-	stagger: 0.12,
+	stagger: 0.1,
 	delay: 0,
 	from: defaultFrom,
 	to: defaultTo
@@ -158,5 +163,3 @@ export function reveal(node: HTMLElement, options: RevealOptions = {}) {
 		}
 	};
 }
-
-
