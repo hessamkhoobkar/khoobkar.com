@@ -32,252 +32,163 @@
 	const heroHighlights = [
 		{
 			label: '7+ years',
-			caption: 'Leading front-end programs across React, Svelte, Vue, and design systems.'
+			caption: 'Shipping high-performance front-end systems across React, Svelte, Vue, and Next.js.'
 		},
 		{
 			label: '35% avg uplift',
-			caption: 'Performance gains measured across fintech, health, and SaaS platforms.'
+			caption: 'Measured performance gains delivered across fintech, trading, and SaaS platforms.'
 		},
 		{
-			label: '13 product teams',
-			caption: 'Partnered with founders from Dubai, Berlin, Istanbul, Tallinn, and beyond.'
+			label: 'Available now',
+			caption: 'Remote · Full-time & Freelance · Open to new opportunities worldwide.'
 		}
 	];
 
-	const solutionPillars = [
+	const valuePropositions = [
 		{
-			icon: Users,
-			badge: 'Integrated support',
-			title: 'Embed with your team',
+			icon: Rocket,
+			title: 'Proven Performance Results',
 			description:
-				'Plug into rituals, facilitate alignment, and keep product, design, and engineering moving with calm delivery.'
+				"Average 35% performance improvements across projects. I don't just build—I optimize for measurable business impact.",
+			metrics: '35% avg performance uplift'
 		},
 		{
-			icon: Workflow,
-			badge: 'Coaching & clarity',
-			title: 'Coach in-house talent',
+			icon: ShieldCheck,
+			title: 'Production-Ready from Day One',
 			description:
-				'Pair with engineers, document decisions, and raise the bar on code reviews so best practices become habits.'
+				"Code that's maintainable, scalable, and tested. I build systems that your team can own and extend long after I'm gone.",
+			metrics: 'Zero technical debt'
+		},
+		{
+			icon: Users,
+			title: 'Team Multiplier',
+			description:
+				"I don't just code—I mentor, document, and elevate your team's capabilities. 8 developers mentored into senior roles.",
+			metrics: '8 developers mentored'
 		},
 		{
 			icon: Gauge,
-			badge: 'Quality & metrics',
-			title: 'Make progress visible',
+			title: 'Fast Time-to-Value',
 			description:
-				'Map product goals to measurable outcomes, surface risks early, and report momentum stakeholders can trust.'
+				'Ramp up in 5–10 days. I ship meaningful features in the first sprint, not after months of onboarding.',
+			metrics: 'First sprint delivery'
 		},
 		{
-			icon: Heart,
-			badge: 'Product polish',
-			title: 'Ship experiences users feel',
+			icon: Globe,
+			title: 'Remote-Native Excellence',
 			description:
-				'Build design systems, accessibility guardrails, and thoughtful interactions that strengthen your brand.'
+				'Built for async collaboration across time zones. Proactive communication, clear documentation, transparent progress.',
+			metrics: '100% remote success'
+		},
+		{
+			icon: LineChart,
+			title: 'Business-Minded Engineering',
+			description:
+				'I connect technical decisions to business outcomes. Every feature is built with metrics, accessibility, and user experience in mind.',
+			metrics: '30% engagement lift'
 		}
 	];
 
-	const automationTracks = [
-		{
-			title: 'Design systems & tokens',
-			description:
-				'Translate brand foundations into scalable component libraries backed by Storybook, Tailwind, and TypeScript.'
-		},
-		{
-			title: 'Performance & accessibility audits',
-			description:
-				'Baseline Core Web Vitals and WCAG compliance, prioritize fixes, and bake guardrails into your pipeline.'
-		},
-		{
-			title: 'Migration & modernization sprints',
-			description:
-				'Move safely to SvelteKit, Nuxt, or Next.js while maintaining roadmap momentum and stakeholder confidence.'
-		},
-		{
-			title: 'Experimentation & analytics',
-			description:
-				'Wire up measurement, A/B testing, and product analytics so insights land where your teams make decisions.'
-		},
-		{
-			title: 'Onboarding & documentation',
-			description:
-				'Ship contribution guides, ADRs, and architecture playbooks that make onboarding new engineers effortless.'
-		},
-		{
-			title: 'Mentorship & coaching',
-			description:
-				'Level up in-house developers through pair-programming, code reviews, and architecture clinics.'
-		}
+	const metrics = [
+		{ value: '7+', label: 'Years of experience', sublabel: 'Building scalable systems' },
+		{ value: '35%', label: 'Avg performance uplift', sublabel: 'Across all projects' },
+		{ value: '30%', label: 'Engagement increase', sublabel: 'User metrics improvement' },
+		{ value: '8', label: 'Developers mentored', sublabel: 'Into senior roles' },
+		{ value: '13', label: 'Teams partnered', sublabel: 'International experience' },
+		{ value: '100%', label: 'Remote success rate', sublabel: 'Across time zones' }
 	];
 
-	const integrationPoints = [
-		'React/Next.js, Svelte/SvelteKit, Vue/Nuxt, and bespoke component-library ecosystems.',
-		'TypeScript-first workflows with Storybook, Vitest, Playwright, and Cypress.',
-		'CI/CD across GitHub Actions, GitLab, CircleCI, Vercel, and containerized deployments.',
-		'Design collaboration in Figma with design tokens, theming, and WCAG 2.2 accessibility baked in.'
-	];
-
-	const capabilityGroups = [
+	const techStack = [
 		{
-			label: 'Languages',
-			items: ['JavaScript (ES6+)', 'TypeScript', 'HTML5', 'CSS3']
+			label: 'Core Technologies',
+			items: ['JavaScript (ES6+)', 'TypeScript', 'HTML5', 'CSS3', 'TailwindCSS', 'SCSS/SASS']
 		},
 		{
 			label: 'Frameworks & Libraries',
 			items: ['SvelteKit', 'React/Next.js', 'Vue/Nuxt.js', 'Storybook']
 		},
 		{
-			label: 'State & Data',
-			items: ['Zustand', 'Redux', 'Vuex/Pinia', 'GraphQL & REST']
+			label: 'State & APIs',
+			items: ['Zustand', 'Redux', 'Vuex/Pinia', 'GraphQL', 'REST APIs', 'WebSocket']
 		},
 		{
-			label: 'Tooling & Ops',
-			items: ['Vite & Webpack', 'Docker', 'GitHub Actions', 'CI/CD pipelines']
+			label: 'Tools & Infrastructure',
+			items: ['Vite', 'Webpack', 'Docker', 'GitHub Actions', 'CI/CD', 'Git']
 		},
 		{
-			label: 'Performance & UX',
+			label: 'Performance & Quality',
 			items: [
-				'Web Vitals Optimization',
-				'Accessibility (WCAG 2.2)',
-				'Experimentation & Analytics',
-				'WebSocket integrations'
-			]
-		},
-		{
-			label: 'Collaboration',
-			items: [
-				'Agile leadership',
-				'Mentorship & code review',
-				'Async-first documentation',
-				'Cross-functional alignment'
+				'Core Web Vitals',
+				'WCAG 2.2 Accessibility',
+				'Performance Optimization',
+				'Testing & QA'
 			]
 		}
 	];
 
-	const educationDetails = {
-		degree: 'Bachelor of Science in Software Engineering',
-		institution: 'Payame Noor University · Tehran, Iran',
-		outcome:
-			'Grounded in software fundamentals that inform scalable, user-centric product delivery.'
-	};
-
-	const proofPoints = [
-		{
-			icon: ShieldCheck,
-			title: 'Production-grade delivery',
-			description:
-				'Every engagement lands with hardened pipelines, testing, and observability built for scale.'
-		},
-		{
-			icon: Sparkles,
-			title: 'Brand-aligned storytelling',
-			description:
-				'Translate your brand voice into motion, microcopy, and states that feel bespoke—not templated.'
-		},
-		{
-			icon: Rocket,
-			title: 'Momentum from day one',
-			description:
-				'Plug into your rituals, unblock designers and PMs, and ship meaningful increments in the first sprint.'
-		},
-		{
-			icon: Globe,
-			title: 'Remote-native partnership',
-			description:
-				'Operate async across time zones with proactive updates, Loom walkthroughs, and living documentation.'
-		},
-		{
-			icon: LineChart,
-			title: 'Outcome-obsessed metrics',
-			description:
-				'Tie front-end decisions to KPIs—conversion, retention, satisfaction—and report back with clarity.'
-		},
-		{
-			icon: Code2,
-			title: 'Technical stewardship',
-			description:
-				'Coach teams on architecture patterns, debt management, and accessibility so wins stick post hand-off.'
-		}
-	];
-
-	const metrics = [
-		{ value: '7+', label: 'Years shipping front-end systems' },
-		{ value: '35%', label: 'Average performance uplift delivered' },
-		{ value: '13', label: 'Product teams partnered worldwide' },
-		{ value: '8', label: 'Developers mentored into senior roles' }
-	];
-
-	const processSteps = [
-		{
-			step: '01',
-			title: 'Discover & align',
-			description:
-				'Clarify success metrics, user journeys, and constraints with founders, product, and design leads.',
-			outcome: 'Shared vision, prioritized roadmap, and a playbook for measurable impact.'
-		},
-		{
-			step: '02',
-			title: 'Design systems-first',
-			description:
-				'Translate strategy into interactive prototypes, tokens, and component specs ready for engineering.',
-			outcome: 'Cohesive visual direction, reusable primitives, and confident teams.'
-		},
-		{
-			step: '03',
-			title: 'Build, measure, refine',
-			description:
-				'Ship production-quality code, observe performance, and iterate collaboratively with stakeholders.',
-			outcome: 'Launch-ready experiences tracked against KPIs and built to adapt.'
-		}
-	];
-
-	const outcomeSnapshots = [
+	const experiences = [
 		{
 			company: 'POMECHAIN · Dubai (Remote)',
-			headline: 'Reusable Vue/Nuxt library accelerated shipping',
-			result: '30% engagement lift',
-			description:
-				'Architected a TypeScript component system with Tailwind tokens, reducing UI build time by 20% while unlocking measurable engagement growth.'
+			role: 'Senior Front-End Developer',
+			period: 'July 2024 – Present',
+			highlights: [
+				'Architected reusable Vue.js/Nuxt.js component library with TypeScript, improving maintainability',
+				'Led frontend development achieving 30% increase in user engagement metrics',
+				'Introduced TailwindCSS, reducing UI development time by 20%'
+			]
 		},
 		{
 			company: 'Coinhaven · Berlin (Remote)',
-			headline: 'SvelteKit migration modernized trading surfaces',
-			result: '35% faster platform',
-			description:
-				'Led the migration from React, introduced real-time data layers, and cut release cycles by 25% with automated testing and CI.'
+			role: 'Lead Front-End Developer',
+			period: 'December 2021 – January 2024',
+			highlights: [
+				'Led migration from React to SvelteKit, achieving 35% performance improvement',
+				'Built real-time WebSocket data synchronization system',
+				'Mentored team of 7 developers, elevating coding standards through code reviews'
+			]
 		},
 		{
 			company: 'Piller Iddaa · Istanbul (Remote)',
-			headline: 'High-traffic sportsbook kept latency low',
-			result: 'Sub-2s median loads',
-			description:
-				'Implemented caching, code-splitting, and accessibility improvements across Vue interfaces serving thousands of parallel bettors.'
+			role: 'Senior Front-End Developer',
+			period: 'November 2019 – December 2021',
+			highlights: [
+				'Optimized Vue.js interfaces for high-traffic betting platform handling thousands of concurrent users',
+				'Achieved 35% reduction in page load times through caching and code-splitting',
+				'Improved accessibility and user retention across complex interactive UIs'
+			]
 		}
 	];
 
 	const faqs = [
 		{
-			question: 'How quickly can you ramp onto a new roadmap?',
+			question: 'Are you available for full-time and freelance roles?',
 			answer:
-				'Most collaborations kick off in 5–10 days. I audit your stack, align on metrics, and define a 30-60-90 plan so we start shipping in the first sprint.'
+				"Yes. I'm open to both full-time remote positions and freelance/contract work. I'm based in Tallinn (UTC+2) and work effectively across time zones with async-first communication."
 		},
 		{
-			question: 'Can you work within our existing design system or help build one?',
+			question: 'What makes you different from other developers?',
 			answer:
-				'Yes. I often evolve incomplete systems into token-driven libraries, or build them from scratch alongside design partners using Storybook and automation.'
+				"I don't just code—I deliver measurable business outcomes. Every project includes performance optimization (35% avg improvement), team mentorship (8 developers mentored), and scalable architecture that your team can own long after I'm gone."
 		},
 		{
-			question: 'Do you offer short engagements or only long-term roles?',
+			question: 'What technologies do you work with?',
 			answer:
-				'Both. I support focused outcome sprints (4–8 weeks) and longer-term leadership engagements embedded with your team.'
+				"I specialize in React, Svelte, Vue.js, and their meta-frameworks (Next.js, SvelteKit, Nuxt.js). I'm TypeScript-first, work with modern build tools, and focus on performance, accessibility, and maintainable code."
 		},
 		{
-			question: 'What time zones do you support?',
+			question: 'How quickly can you start and deliver value?',
 			answer:
-				'I am based in Tallinn (UTC+2) and collaborate across EMEA, North America, and APAC with async-first communication and overlap where needed.'
+				'I can typically ramp up in 5–10 days and ship meaningful features in the first sprint. I quickly audit your codebase, align on goals, and start delivering measurable results immediately.'
 		},
 		{
-			question: 'What does success look like when we work together?',
+			question: 'Can you work with our existing team and codebase?',
 			answer:
-				'Success is measurable: faster load times, higher conversion, happier teams. We set the KPIs together and report progress every sprint.'
+				'Absolutely. I excel at embedding with teams, mentoring developers, and working with existing codebases. I document decisions, elevate code quality through reviews, and build systems that integrate seamlessly with your stack.'
+		},
+		{
+			question: "What's your approach to remote collaboration?",
+			answer:
+				'Built for async-first collaboration across time zones. I provide proactive updates, clear documentation, transparent progress tracking, and overlap meetings when needed. 100% remote success rate across 13 international teams.'
 		}
 	];
 
@@ -316,19 +227,19 @@
 	];
 
 	const canonicalUrl = `${siteConfig.url}/`;
-	const metaTitle = 'Hessam Khoobkar | Artful Front-End Systems';
+	const metaTitle = 'Hessam Khoobkar | Senior Front-End Developer';
 	const metaDescription =
-		'Hessam Khoobkar crafts immersive, high-performance front-end systems for ambitious teams. Explore services, outcomes, process, and ways to collaborate on one dark, gradient-rich landing page.';
+		'Senior Front-End Developer available for full-time and freelance opportunities. 7+ years building high-performance web applications with React, Svelte, Vue.js, and TypeScript. Remote worldwide.';
 	const metaKeywords = [
 		'Hessam Khoobkar',
-		'Svelte consultant',
-		'front-end systems',
-		'design systems',
-		'performance engineering',
-		'web accessibility',
-		'product leadership',
-		'UI engineering',
-		'async collaboration'
+		'Senior Front-End Developer',
+		'React developer',
+		'Svelte developer',
+		'Vue.js developer',
+		'TypeScript developer',
+		'remote developer',
+		'freelance developer',
+		'front-end engineer'
 	].join(', ');
 	const socialProfiles = ['https://twitter.com/khoobkar', ...socialLinks.map((link) => link.href)];
 	const ogImageUrl = normalizeImageUrl(ogImageAsset);
@@ -397,7 +308,7 @@
 	<meta property="og:title" content={metaTitle} />
 	<meta
 		property="og:description"
-		content="Partner with Hessam Khoobkar to design, build, and scale front-end experiences that blend craft, performance, and measurable outcomes."
+		content="Senior Front-End Developer available for full-time and freelance work. 7+ years building high-performance applications with React, Svelte, Vue.js, and TypeScript."
 	/>
 	<meta property="og:url" content={canonicalUrl} />
 	<meta property="og:type" content="website" />
@@ -457,17 +368,15 @@
 								}
 							}}
 						>
-							Remote Front-End Leadership That Delivers
-							<span class="inline-block"> Performance, </span>
-							<span class="inline-block">Polish,</span>
-							<span class="inline-block">and</span>
-							<span class="inline-block">Measurable Momentum.</span>
+							Senior Front-End Developer
+							<span class="inline-block"> Available for </span>
+							<span class="inline-block">Full-Time & Freelance</span>
 						</h1>
 						<p class="mt-7 max-w-2xl text-base leading-relaxed text-white/80">
-							I’m Hessam Khoobkar, a senior front-end developer blending design sensibility with
-							type-safe engineering. I partner with founders and product leaders to build and refine
-							their vision, whether that means architecting a project from the ground up or stepping
-							in to accelerate and polish an existing one.
+							I'm Hessam Khoobkar, a senior front-end developer with 7+ years of experience building
+							high-performance web applications. I specialize in React, Svelte, Vue.js, and modern
+							JavaScript frameworks, delivering measurable results through performance optimization,
+							accessible code, and scalable architecture.
 						</p>
 						<div class="mt-7 flex flex-wrap items-center gap-3">
 							<a
@@ -497,9 +406,9 @@
 							class="flex h-full flex-col gap-6 rounded-3xl border border-primary-900/20 bg-primary-900/20 p-6 text-white shadow-[0_30px_120px_-60px_rgba(72,12,3,0.8)] backdrop-blur-xl"
 						>
 							<div>
-								<p class="text-xs tracking-[0.4em] text-white/70 uppercase">Currently partnering</p>
+								<p class="text-xs tracking-[0.4em] text-white/70 uppercase">What I do</p>
 								<h2 class="mt-3 text-2xl leading-snug font-semibold">
-									Scaling digital products with design system precision and measurable outcomes.
+									Build high-performance front-end systems that scale.
 								</h2>
 							</div>
 							<ul class="space-y-3 text-sm leading-relaxed text-white/90">
@@ -507,36 +416,33 @@
 									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
 								>
 									<div class="rounded-lg bg-white/10 p-2">
-										<Gauge size={18} aria-hidden="true" />
+										<Code2 size={18} aria-hidden="true" />
 									</div>
 									<div>
-										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Focus</p>
-										<p>High-impact migrations, design systems, and performance roadmaps.</p>
+										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Expertise</p>
+										<p>React, Svelte, Vue.js, TypeScript, and modern build tools.</p>
 									</div>
 								</li>
 								<li
 									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
 								>
 									<div class="rounded-lg bg-white/10 p-2">
-										<Sparkles size={18} aria-hidden="true" />
+										<Rocket size={18} aria-hidden="true" />
 									</div>
 									<div>
-										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Promise</p>
-										<p>Ship immersive, accessible experiences while coaching in-house teams.</p>
+										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Results</p>
+										<p>35% average performance improvements and scalable architecture.</p>
 									</div>
 								</li>
 								<li
 									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
 								>
 									<div class="rounded-lg bg-white/10 p-2">
-										<Users size={18} aria-hidden="true" />
+										<Globe size={18} aria-hidden="true" />
 									</div>
 									<div>
-										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Fit</p>
-										<p>
-											Founder-led teams shipping complex interfaces who value async, high-trust
-											collaboration.
-										</p>
+										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Availability</p>
+										<p>Remote worldwide, open to full-time and freelance opportunities.</p>
 									</div>
 								</li>
 							</ul>
@@ -558,66 +464,9 @@
 		</div>
 	</section>
 
-	<!-- Partnership Section -->
-	<section class="relative border-t border-surface-800/60 bg-surface-950/70 py-24">
-		<div
-			class="mx-auto max-w-6xl space-y-16 px-6 py-24"
-			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.5 }}
-		>
-			<div
-				class="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
-				use:reveal={{ childSelector: '[data-pillars]', stagger: 0.16 }}
-			>
-				<div data-pillars class="space-y-6">
-					<span
-						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
-					>
-						<Sparkles size={14} aria-hidden="true" />
-						Embedded partnership
-					</span>
-					<h2 class="text-3xl font-bold text-surface-50 md:text-4xl">
-						Work with a front-end lead who lifts your team’s pace and quality.
-					</h2>
-					<p class="max-w-2xl text-sm leading-relaxed text-surface-300">
-						For the last 7+ years I’ve embedded inside founder-led squads to align product, design,
-						and engineering. Expect structured delivery, transparent communication, and mentorship
-						that helps every function ship with confidence.
-					</p>
-					<p
-						class="inline-flex items-center gap-2 text-sm font-semibold tracking-[0.35em] text-primary-200 uppercase"
-					>
-						<Users size={16} aria-hidden="true" />
-						Shared ownership · async clarity · measurable progress
-					</p>
-				</div>
-				<div data-pillars class="grid gap-4 sm:grid-cols-2">
-					{#each solutionPillars as pillar}
-						{@const Icon = pillar.icon}
-						<div
-							class="rounded-2xl border border-surface-700 bg-surface-900/70 p-6 transition hover:-translate-y-1 hover:border-primary-500/40 hover:bg-surface-900/80"
-						>
-							<div class="flex items-center gap-3">
-								<div class="rounded-xl bg-primary-500/15 p-3">
-									<Icon size={18} class="text-primary-300" aria-hidden="true" />
-								</div>
-								{#if pillar.badge}
-									<span class="text-xs font-semibold tracking-[0.3em] text-primary-200 uppercase">
-										{pillar.badge}
-									</span>
-								{/if}
-							</div>
-							<h3 class="mt-4 text-lg font-semibold text-surface-50">{pillar.title}</h3>
-							<p class="mt-3 text-sm leading-relaxed text-surface-300">{pillar.description}</p>
-						</div>
-					{/each}
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Automation Section -->
+	<!-- Value Proposition Section -->
 	<section
-		class="relative"
+		class="relative border-t border-surface-800/60 bg-surface-950/70"
 		use:scrollAtmosphere={{
 			target: getMainSurface,
 			from: 'rgba(12, 16, 26, 0.97)',
@@ -629,45 +478,52 @@
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
 		>
-			<div
-				class="space-y-4"
-				use:reveal={{ childSelector: '[data-automation-headline]', stagger: 0.1 }}
-			>
+			<div class="space-y-4" use:reveal={{ childSelector: '[data-value-headline]', stagger: 0.1 }}>
 				<span
-					data-automation-headline
+					data-value-headline
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
-					Automation-ready delivery
+					Why invest in me
 				</span>
-				<h2 data-automation-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Automate the routine, focus on the work that moves the needle.
+				<h2 data-value-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
+					Proven value that delivers measurable results.
 				</h2>
-				<p data-automation-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
-					From migration playbooks to experiment frameworks, I build the systems that keep your
-					teams confident and your releases predictable. Pick the tracks you need and we’ll
-					modularize the rest.
+				<p data-value-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
+					I don't just write code—I deliver solutions that impact your bottom line. Performance
+					gains, team growth, and business outcomes are what I measure success by.
 				</p>
 			</div>
-
 			<div
-				class="grid gap-6 md:grid-cols-2"
-				use:reveal={{ childSelector: '[data-automation-card]', stagger: 0.06 }}
+				class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+				use:reveal={{ childSelector: '[data-value-card]', stagger: 0.08 }}
 			>
-				{#each automationTracks as item}
+				{#each valuePropositions as value}
+					{@const Icon = value.icon}
 					<div
-						data-automation-card
-						class="flex h-full flex-col gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-5 transition hover:border-primary-500/40 hover:bg-surface-900/80"
-						use:parallax={{ axis: 'x', from: -14, to: 14, scrub: 0.6 }}
+						data-value-card
+						class="flex h-full flex-col gap-4 rounded-2xl border border-surface-700 bg-surface-900/70 p-6 transition hover:border-primary-500/40 hover:bg-surface-900/80"
+						use:parallax={{ axis: 'x', from: -12, to: 12, scrub: 0.55 }}
 					>
-						<h3 class="text-lg font-semibold text-surface-50">{item.title}</h3>
-						<p class="text-sm leading-relaxed text-surface-300">{item.description}</p>
+						<div class="flex items-center justify-between">
+							<div class="rounded-xl bg-primary-500/15 p-3">
+								<Icon size={18} class="text-primary-300" aria-hidden="true" />
+							</div>
+							<ArrowUpRight size={16} class="text-primary-400/70" aria-hidden="true" />
+						</div>
+						<h3 class="text-lg font-semibold text-surface-50">{value.title}</h3>
+						<p class="text-sm leading-relaxed text-surface-300">{value.description}</p>
+						<div
+							class="mt-auto rounded-xl border border-primary-500/20 bg-primary-500/10 px-3 py-2 text-xs font-semibold text-primary-100"
+						>
+							{value.metrics}
+						</div>
 					</div>
 				{/each}
 			</div>
 		</div>
 	</section>
 
-	<!-- Integrations Section -->
+	<!-- Metrics Section -->
 	<section
 		class="relative"
 		use:scrollAtmosphere={{
@@ -678,47 +534,54 @@
 		}}
 	>
 		<div
-			class="mx-auto max-w-6xl px-6 pb-24"
-			use:depthFade={{ start: 'top 90%', end: 'bottom 65%', scrub: 0.45 }}
+			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
+			use:depthFade={{ start: 'top 88%', end: 'bottom 58%', scrub: 0.45 }}
 		>
 			<div
-				class="overflow-hidden rounded-3xl border border-surface-700/70 bg-gradient-to-br from-surface-900 via-surface-900/80 to-surface-900/60 p-10"
-				use:reveal={{ childSelector: '[data-integrations]', stagger: 0.12 }}
+				class="space-y-4"
+				use:reveal={{ childSelector: '[data-metrics-headline]', stagger: 0.1 }}
 			>
-				<div
-					data-integrations
-					class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+				<span
+					data-metrics-headline
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
-					<div>
-						<p class="text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase">
-							Stack alignment
-						</p>
-						<h2 class="mt-2 text-2xl font-semibold text-surface-50">
-							Connects with your existing systems—no matter how bespoke.
-						</h2>
-					</div>
-					<span
-						class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-[0.35em] text-white/70 uppercase"
+					Measurable impact
+				</span>
+				<h2 data-metrics-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
+					Numbers that speak for themselves.
+				</h2>
+				<p data-metrics-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
+					Track record of delivering measurable improvements across performance, engagement, and
+					team capabilities.
+				</p>
+			</div>
+			<div
+				class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+				use:reveal={{ childSelector: '[data-metric]', stagger: 0.08 }}
+			>
+				{#each metrics as metric, i}
+					<div
+						data-metric
+						class="rounded-2xl border border-surface-700 bg-surface-900/70 px-6 py-8 text-center text-surface-200"
+						use:parallax={{
+							axis: 'x',
+							from: i % 2 === 0 ? -10 : 10,
+							to: i % 2 === 0 ? 12 : -12,
+							scrub: 0.6
+						}}
 					>
-						<Layers size={16} aria-hidden="true" />
-						Design ↔ Engineering
-					</span>
-				</div>
-				<ul data-integrations class="mt-8 grid gap-4 md:grid-cols-2">
-					{#each integrationPoints as point}
-						<li
-							class="flex items-start gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-4 text-sm leading-relaxed text-surface-300"
-						>
-							<span class="mt-1 h-2 w-2 rounded-full bg-primary-400"></span>
-							{point}
-						</li>
-					{/each}
-				</ul>
+						<p class="text-4xl font-bold text-primary-200">{metric.value}</p>
+						<p class="mt-3 text-sm font-semibold tracking-[0.3em] text-surface-400 uppercase">
+							{metric.label}
+						</p>
+						<p class="mt-2 text-xs text-surface-500">{metric.sublabel}</p>
+					</div>
+				{/each}
 			</div>
 		</div>
 	</section>
 
-	<!-- Capabilities Section -->
+	<!-- Skills Section -->
 	<section
 		class="relative border-t border-surface-800/60 bg-surface-950/70"
 		use:scrollAtmosphere={{
@@ -729,35 +592,31 @@
 		}}
 	>
 		<div
-			class="mx-auto max-w-6xl space-y-14 px-6 py-24"
+			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
 		>
-			<div
-				class="space-y-4"
-				use:reveal={{ childSelector: '[data-capabilities-headline]', stagger: 0.1 }}
-			>
+			<div class="space-y-4" use:reveal={{ childSelector: '[data-skills-headline]', stagger: 0.1 }}>
 				<span
-					data-capabilities-headline
+					data-skills-headline
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
-					Capabilities & stack
+					Technical expertise
 				</span>
-				<h2 data-capabilities-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Tooling depth that keeps multi-team roadmaps moving.
+				<h2 data-skills-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
+					Modern technologies for high-performance applications.
 				</h2>
-				<p data-capabilities-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
-					I bring a pragmatic blend of languages, frameworks, state management, and delivery tooling
-					so your squads can focus on outcomes. From Dockerized CI/CD pipelines to real-time
-					WebSocket layers, the foundations stay future-ready.
+				<p data-skills-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
+					Expert in modern JavaScript frameworks, TypeScript, and the tools that power scalable,
+					maintainable front-end systems. I work with the latest technologies and best practices.
 				</p>
 			</div>
 			<div
-				class="grid gap-6 md:grid-cols-2"
-				use:reveal={{ childSelector: '[data-capability-card]', stagger: 0.06 }}
+				class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+				use:reveal={{ childSelector: '[data-skill-card]', stagger: 0.06 }}
 			>
-				{#each capabilityGroups as group}
+				{#each techStack as group}
 					<div
-						data-capability-card
+						data-skill-card
 						class="flex h-full flex-col gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-6 text-surface-200 transition hover:border-primary-500/35 hover:bg-surface-900/80"
 						use:parallax={{ axis: 'x', from: -12, to: 12, scrub: 0.55 }}
 					>
@@ -775,122 +634,17 @@
 					</div>
 				{/each}
 			</div>
-			<div
-				class="rounded-3xl border border-primary-500/20 bg-primary-500/10 p-6 text-primary-100"
-				use:reveal={{ childSelector: '[data-education]', stagger: 0.1 }}
-			>
-				<div
-					data-education
-					class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between"
-				>
-					<div>
-						<p class="text-xs tracking-[0.35em] text-primary-200 uppercase">Education</p>
-						<h3 class="text-lg font-semibold text-white">{educationDetails.degree}</h3>
-						<p class="text-sm text-primary-100/80">{educationDetails.institution}</p>
-					</div>
-					<p class="max-w-xl text-sm leading-relaxed text-primary-100/85">
-						{educationDetails.outcome}
-					</p>
-				</div>
-			</div>
 		</div>
 	</section>
 
-	<!-- Proof Section -->
-	<section
-		class="relative border-t border-surface-800/60 bg-surface-950/70"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(8, 11, 18, 0.97)',
-			to: 'rgba(7, 10, 16, 0.98)',
-			scrub: 0.75
-		}}
-	>
-		<div
-			class="mx-auto max-w-6xl space-y-16 px-6 py-24"
-			use:depthFade={{ start: 'top 90%', end: 'bottom 60%', scrub: 0.5 }}
-		>
-			<div class="space-y-4" use:reveal={{ childSelector: '[data-proof-headline]', stagger: 0.1 }}>
-				<span
-					data-proof-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
-				>
-					Why teams choose Hessam
-				</span>
-				<h2 data-proof-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Front-end leadership that delivers trust, speed, and polish.
-				</h2>
-			</div>
-			<div
-				class="grid gap-6 md:grid-cols-3"
-				use:reveal={{ childSelector: '[data-proof-card]', stagger: 0.08 }}
-			>
-				{#each proofPoints as proof}
-					{@const Icon = proof.icon}
-					<div
-						data-proof-card
-						class="flex h-full flex-col gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-6"
-						use:parallax={{ axis: 'x', from: -12, to: 12, scrub: 0.55 }}
-					>
-						<div class="flex items-center justify-between">
-							<div class="rounded-xl bg-primary-500/15 p-3">
-								<Icon size={18} class="text-primary-300" aria-hidden="true" />
-							</div>
-							<ArrowUpRight size={16} class="text-primary-400/70" aria-hidden="true" />
-						</div>
-						<h3 class="text-lg font-semibold text-surface-50">{proof.title}</h3>
-						<p class="text-sm leading-relaxed text-surface-300">{proof.description}</p>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</section>
-
-	<!-- Metrics Section -->
+	<!-- Experience Section -->
 	<section
 		class="relative"
 		use:scrollAtmosphere={{
 			target: getMainSurface,
-			from: 'rgba(7, 10, 16, 0.98)',
-			to: 'rgba(6, 9, 14, 0.98)',
+			from: 'rgba(9, 12, 22, 0.97)',
+			to: 'rgba(7, 10, 16, 0.98)',
 			scrub: 0.7
-		}}
-	>
-		<div
-			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
-			use:depthFade={{ start: 'top 88%', end: 'bottom 58%', scrub: 0.45 }}
-		>
-			<div
-				class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-				use:reveal={{ childSelector: '[data-metric]', stagger: 0.08 }}
-			>
-				{#each metrics as metric, i}
-					<div
-						data-metric
-						class="rounded-2xl border border-surface-700 bg-surface-900/70 px-6 py-8 text-center text-surface-200"
-						use:parallax={{
-							axis: 'x',
-							from: i % 2 === 0 ? -10 : 10,
-							to: i % 2 === 0 ? 12 : -12,
-							scrub: 0.6
-						}}
-					>
-						<p class="text-4xl font-bold text-primary-200">{metric.value}</p>
-						<p class="mt-3 text-sm tracking-[0.3em] text-surface-400 uppercase">{metric.label}</p>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</section>
-
-	<!-- Process Section -->
-	<section
-		class="relative border-t border-surface-800/60 bg-surface-950/70"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(6, 9, 14, 0.98)',
-			to: 'rgba(7, 9, 13, 0.98)',
-			scrub: 0.65
 		}}
 	>
 		<div
@@ -899,87 +653,30 @@
 		>
 			<div
 				class="space-y-4"
-				use:reveal={{ childSelector: '[data-process-headline]', stagger: 0.1 }}
+				use:reveal={{ childSelector: '[data-experience-headline]', stagger: 0.1 }}
 			>
 				<span
-					data-process-headline
+					data-experience-headline
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
-					Process
+					Professional experience
 				</span>
-				<h2 data-process-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Go live in weeks, not months, with a playbook built for outcomes.
+				<h2 data-experience-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
+					Real projects, real results, real impact.
 				</h2>
+				<p data-experience-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
+					Track record of delivering measurable business outcomes across fintech, trading, and SaaS
+					platforms. Every project includes performance gains, team growth, and scalable
+					architecture.
+				</p>
 			</div>
 			<div
-				class="grid gap-6 md:grid-cols-3"
-				use:reveal={{ childSelector: '[data-process-card]', stagger: 0.08 }}
+				class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+				use:reveal={{ childSelector: '[data-experience-card]', stagger: 0.08 }}
 			>
-				{#each processSteps as step, i}
+				{#each experiences as experience, i}
 					<div
-						data-process-card
-						class="flex h-full flex-col gap-4 rounded-3xl border border-surface-700 bg-gradient-to-br from-surface-900/80 via-surface-900/70 to-surface-900/60 p-6"
-						use:parallax={{
-							axis: 'x',
-							from: i === 1 ? -10 : i === 2 ? 8 : -16,
-							to: i === 1 ? 12 : i === 2 ? -10 : 14,
-							scrub: 0.6
-						}}
-					>
-						<span class="text-sm font-semibold tracking-[0.4em] text-primary-200 uppercase"
-							>{step.step}</span
-						>
-						<h3 class="text-xl font-semibold text-surface-50">{step.title}</h3>
-						<p class="text-sm leading-relaxed text-surface-300">{step.description}</p>
-						<div
-							class="mt-auto rounded-2xl border border-primary-500/20 bg-primary-500/10 px-4 py-3 text-xs text-primary-100"
-						>
-							<strong class="block text-[0.68rem] tracking-[0.35em] text-primary-200 uppercase"
-								>Outcome</strong
-							>
-							<span>{step.outcome}</span>
-						</div>
-					</div>
-				{/each}
-			</div>
-		</div>
-	</section>
-
-	<!-- Outcome Section -->
-	<section
-		class="relative"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(7, 9, 13, 0.98)',
-			to: 'rgba(9, 8, 12, 0.98)',
-			scrub: 0.65
-		}}
-	>
-		<div
-			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
-			use:depthFade={{ start: 'top 86%', end: 'bottom 58%', scrub: 0.45 }}
-		>
-			<div
-				class="space-y-4"
-				use:reveal={{ childSelector: '[data-outcome-headline]', stagger: 0.1 }}
-			>
-				<span
-					data-outcome-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
-				>
-					Outcome snapshots
-				</span>
-				<h2 data-outcome-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Proof of impact across industries and stages.
-				</h2>
-			</div>
-			<div
-				class="grid gap-6 md:grid-cols-3"
-				use:reveal={{ childSelector: '[data-outcome-card]', stagger: 0.08 }}
-			>
-				{#each outcomeSnapshots as snapshot, i}
-					<div
-						data-outcome-card
+						data-experience-card
 						class="flex h-full flex-col gap-4 rounded-2xl border border-surface-700 bg-surface-900/70 p-6"
 						use:parallax={{
 							axis: 'x',
@@ -988,14 +685,21 @@
 							scrub: 0.55
 						}}
 					>
-						<p class="text-xs tracking-[0.35em] text-primary-200 uppercase">{snapshot.company}</p>
-						<h3 class="text-lg font-semibold text-surface-50">{snapshot.headline}</h3>
-						<p class="text-sm leading-relaxed text-surface-300">{snapshot.description}</p>
-						<div
-							class="mt-auto rounded-xl border border-primary-500/20 bg-primary-500/10 px-4 py-2 text-sm font-semibold text-primary-100"
-						>
-							{snapshot.result}
+						<div>
+							<p class="text-xs tracking-[0.35em] text-primary-200 uppercase">
+								{experience.company}
+							</p>
+							<h3 class="mt-2 text-lg font-semibold text-surface-50">{experience.role}</h3>
+							<p class="mt-1 text-sm text-surface-400">{experience.period}</p>
 						</div>
+						<ul class="space-y-2 text-sm leading-relaxed text-surface-300">
+							{#each experience.highlights as highlight}
+								<li class="flex items-start gap-2">
+									<span class="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-400"></span>
+									<span>{highlight}</span>
+								</li>
+							{/each}
+						</ul>
 					</div>
 				{/each}
 			</div>
@@ -1021,11 +725,15 @@
 					data-faq-headline
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
-					FAQs
+					Frequently asked
 				</span>
 				<h2 data-faq-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Your questions, answered before we start.
+					Answers to common questions about working together.
 				</h2>
+				<p data-faq-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
+					Everything you need to know about my approach, availability, and how I deliver value to
+					your team.
+				</p>
 			</div>
 			<div class="space-y-4" use:reveal={{ childSelector: 'details', stagger: 0.08 }}>
 				{#each faqs as item}
@@ -1071,14 +779,13 @@
 					<span
 						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 					>
-						Let’s build together
+						Let's work together
 					</span>
 					<h2 class="text-3xl font-bold text-surface-50 md:text-4xl">
-						Ready to ship something bold, fast, and on-brand?
+						Available for full-time and freelance opportunities.
 					</h2>
 					<p class="text-sm leading-relaxed text-surface-300">
-						Reach out for full-time leadership, high-impact project sprints, or audits that unlock
-						your next wave of growth. I respond within one business day.
+						Open to new remote positions and project-based work. I respond within one business day.
 					</p>
 					<div class="grid gap-4">
 						{#each contactChannels as channel}
@@ -1136,19 +843,19 @@
 					use:parallax={{ axis: 'x', from: 16, to: -16, scrub: 0.6 }}
 				>
 					<div>
-						<h3 class="text-2xl font-semibold text-white">What partnering feels like</h3>
+						<h3 class="text-2xl font-semibold text-white">Why work with me</h3>
 						<ul class="mt-5 space-y-3 text-sm leading-relaxed text-white/85">
 							<li class="relative border-b border-white/25 pb-3 pl-5">
 								<span class="absolute top-2 left-0 h-2 w-2 rounded-full bg-white/80"></span>
-								Discovery sprints that map goals, risks, and velocity from week one.
+								7+ years building scalable front-end systems with proven results.
 							</li>
 							<li class="relative border-b border-white/25 pb-3 pl-5">
 								<span class="absolute top-2 left-0 h-2 w-2 rounded-full bg-white/80"></span>
-								Design system-led delivery translating brand nuance into reusable components.
+								Expert in React, Svelte, Vue.js, TypeScript, and modern tooling.
 							</li>
 							<li class="relative pl-5">
 								<span class="absolute top-2 left-0 h-2 w-2 rounded-full bg-white/80"></span>
-								Type-safe, accessible code reviewed with your team and monitored after launch.
+								Remote-native with async-first communication across time zones.
 							</li>
 						</ul>
 					</div>
