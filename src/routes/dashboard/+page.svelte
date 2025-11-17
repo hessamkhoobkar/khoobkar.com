@@ -869,5 +869,3 @@
 		</section>
 	</div>
 </div>
-
-

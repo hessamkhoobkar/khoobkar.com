@@ -22,7 +22,7 @@
 
 	<!-- Main content with enhanced styling -->
 	<div
-		class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 text-white mix-blend-difference px-6 text-center"
+		class="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 px-6 text-center text-white mix-blend-difference"
 	>
 		<svelte:component this={icon} size={40} class="relative" />
 

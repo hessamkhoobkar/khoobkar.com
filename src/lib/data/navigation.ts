@@ -50,10 +50,10 @@ export const socialLinks: NavigationItem[] = [
 ];
 
 export const navigationIconMap = {
-  home: House,
-  briefcase: Briefcase,
-  rocket: Rocket,
-  lightbulb: Lightbulb,
-  user: User,
-  mail: Mail
+	home: House,
+	briefcase: Briefcase,
+	rocket: Rocket,
+	lightbulb: Lightbulb,
+	user: User,
+	mail: Mail
 };

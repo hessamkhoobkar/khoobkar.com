@@ -368,15 +368,17 @@
 								}
 							}}
 						>
-							Senior Front-End Developer
-							<span class="inline-block"> Available for </span>
-							<span class="inline-block">Full-Time & Freelance</span>
+							Remote Front-End Leadership That Delivers
+							<span class="inline-block"> Performance, </span>
+							<span class="inline-block">Polish,</span>
+							<span class="inline-block">and</span>
+							<span class="inline-block">Measurable Momentum.</span>
 						</h1>
 						<p class="mt-7 max-w-2xl text-base leading-relaxed text-white/80">
-							I'm Hessam Khoobkar, a senior front-end developer with 7+ years of experience building
-							high-performance web applications. I specialize in React, Svelte, Vue.js, and modern
-							JavaScript frameworks, delivering measurable results through performance optimization,
-							accessible code, and scalable architecture.
+							I’m Hessam Khoobkar, a senior front-end developer blending design sensibility with
+							type-safe engineering. I partner with founders and product leaders to build and refine
+							their vision, whether that means architecting a project from the ground up or stepping
+							in to accelerate and polish an existing one.
 						</p>
 						<div class="mt-7 flex flex-wrap items-center gap-3">
 							<a
@@ -465,18 +467,10 @@
 	</section>
 
 	<!-- Value Proposition Section -->
-	<section
-		class="relative border-t border-surface-800/60 bg-surface-950/70"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(12, 16, 26, 0.97)',
-			to: 'rgba(9, 12, 22, 0.97)',
-			scrub: 0.7
-		}}
-	>
+	<section class="relative border-t border-surface-800/60 bg-surface-950/70 py-24">
 		<div
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
-			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
+			use:depthFade={{ start: 'top 90%', end: 'top 60%', scrub: 0.45 }}
 		>
 			<div class="space-y-4" use:reveal={{ childSelector: '[data-value-headline]', stagger: 0.1 }}>
 				<span
