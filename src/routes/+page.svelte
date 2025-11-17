@@ -1,10 +1,15 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import GradientButton from '$lib/components/ui/GradientButton.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { parallax, scrollAtmosphere, depthFade } from '$lib/actions/motion';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import ogImageAsset from '$lib/assets/logo.png';
 	import { normalizeImageUrl, siteConfig } from '$lib/utils/structured-data';
+
+	gsap.registerPlugin(ScrollTrigger);
 	import {
 		Sparkles,
 		ArrowUpRight,
@@ -14,14 +19,11 @@
 		MapPin,
 		Globe,
 		Users,
-		Workflow,
 		Gauge,
 		Rocket,
 		ShieldCheck,
 		LineChart,
-		Layers,
 		Code2,
-		Heart,
 		Briefcase,
 		Github,
 		Linkedin,
@@ -295,6 +297,69 @@
 
 	const getMainSurface = () =>
 		typeof document === 'undefined' ? null : (document.querySelector('main') as HTMLElement | null);
+
+	// Custom reveal with two-phase animation (slow fade/blur, then quick jump)
+	let valueCardsContainer: HTMLElement;
+	onMount(() => {
+		if (typeof window === 'undefined' || !valueCardsContainer) return;
+
+		const cards = valueCardsContainer.querySelectorAll<HTMLElement>('[data-value-card]');
+
+		// Set initial state
+		gsap.set(cards, {
+			opacity: 0,
+			y: 25,
+			filter: 'blur(6px)'
+		});
+
+		// Create intersection observer for reveal
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						const card = entry.target as HTMLElement;
+						const cardIndex = parseInt(card.dataset.cardIndex || '0');
+
+						// Two-phase animation: slow fade/blur, then quick jump
+						const tl = gsap.timeline({
+							delay: cardIndex * 0.1
+						});
+
+						// Phase 1: Slow fade and blur removal (1.2s)
+						tl.to(card, {
+							opacity: 1,
+							filter: 'blur(0px)',
+							duration: 0.7,
+							ease: 'power1.out'
+						});
+
+						// Phase 2: Quick jump to final position (0.3s)
+						tl.to(
+							card,
+							{
+								y: 0,
+								duration: 0.3,
+								ease: 'power2.out'
+							},
+							'-=0.1'
+						); // Start slightly before phase 1 ends
+
+						observer.unobserve(card);
+					}
+				});
+			},
+			{
+				threshold: 0.1,
+				rootMargin: '0px 0px -10% 0px'
+			}
+		);
+
+		cards.forEach((card) => observer.observe(card));
+
+		return () => {
+			observer.disconnect();
+		};
+	});
 </script>
 
 <svelte:head>
@@ -487,22 +552,18 @@
 					gains, team growth, and business outcomes are what I measure success by.
 				</p>
 			</div>
-			<div
-				class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-				use:reveal={{ childSelector: '[data-value-card]', stagger: 0.08 }}
-			>
-				{#each valuePropositions as value}
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" bind:this={valueCardsContainer}>
+				{#each valuePropositions as value, index}
 					{@const Icon = value.icon}
 					<div
 						data-value-card
+						data-card-index={index}
 						class="flex h-full flex-col gap-4 rounded-2xl border border-surface-700 bg-surface-900/70 p-6 transition hover:border-primary-500/40 hover:bg-surface-900/80"
-						use:parallax={{ axis: 'x', from: -12, to: 12, scrub: 0.55 }}
 					>
 						<div class="flex items-center justify-between">
 							<div class="rounded-xl bg-primary-500/15 p-3">
 								<Icon size={18} class="text-primary-300" aria-hidden="true" />
 							</div>
-							<ArrowUpRight size={16} class="text-primary-400/70" aria-hidden="true" />
 						</div>
 						<h3 class="text-lg font-semibold text-surface-50">{value.title}</h3>
 						<p class="text-sm leading-relaxed text-surface-300">{value.description}</p>
