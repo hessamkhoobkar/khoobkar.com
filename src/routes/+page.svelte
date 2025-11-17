@@ -6,6 +6,7 @@
 	import { reveal } from '$lib/actions/reveal';
 	import { parallax, scrollAtmosphere, depthFade } from '$lib/actions/motion';
 	import Footer from '$lib/components/layout/Footer.svelte';
+	import Silk from '$lib/components/layout/hero/Silk.svelte';
 	import ogImageAsset from '$lib/assets/logo.png';
 	import { normalizeImageUrl, siteConfig } from '$lib/utils/structured-data';
 
@@ -28,7 +29,10 @@
 		Github,
 		Linkedin,
 		Instagram,
-		Dribbble
+		Dribbble,
+		MessageSquare,
+		GitBranch,
+		CheckCircle2
 	} from '@lucide/svelte';
 
 	const heroHighlights = [
@@ -91,41 +95,47 @@
 		}
 	];
 
-	const metrics = [
-		{ value: '7+', label: 'Years of experience', sublabel: 'Building scalable systems' },
-		{ value: '35%', label: 'Avg performance uplift', sublabel: 'Across all projects' },
-		{ value: '30%', label: 'Engagement increase', sublabel: 'User metrics improvement' },
-		{ value: '8', label: 'Developers mentored', sublabel: 'Into senior roles' },
-		{ value: '13', label: 'Teams partnered', sublabel: 'International experience' },
-		{ value: '100%', label: 'Remote success rate', sublabel: 'Across time zones' }
+	const workProcess = [
+		{
+			icon: MessageSquare,
+			step: '01',
+			title: 'Discovery & Alignment',
+			description:
+				'Deep dive into your goals, constraints, and vision. I ask the right questions to understand not just what you want, but why—ensuring we build the right solution from day one.'
+		},
+		{
+			icon: GitBranch,
+			step: '02',
+			title: 'Rapid Prototyping',
+			description:
+				'Quick iterations with working code, not just mockups. I ship functional prototypes early so we can validate assumptions, gather feedback, and course-correct before investing in polish.'
+		},
+		{
+			icon: Code2,
+			step: '03',
+			title: 'Production Development',
+			description:
+				'Build with performance, accessibility, and maintainability baked in. Every line of code is written for your team to own, extend, and scale long after I move on.'
+		},
+		{
+			icon: CheckCircle2,
+			step: '04',
+			title: 'Quality & Handoff',
+			description:
+				'Comprehensive testing, documentation, and knowledge transfer. I ensure your team is equipped with everything needed to maintain and evolve the system independently.'
+		}
 	];
 
-	const techStack = [
-		{
-			label: 'Core Technologies',
-			items: ['JavaScript (ES6+)', 'TypeScript', 'HTML5', 'CSS3', 'TailwindCSS', 'SCSS/SASS']
-		},
-		{
-			label: 'Frameworks & Libraries',
-			items: ['SvelteKit', 'React/Next.js', 'Vue/Nuxt.js', 'Storybook']
-		},
-		{
-			label: 'State & APIs',
-			items: ['Zustand', 'Redux', 'Vuex/Pinia', 'GraphQL', 'REST APIs', 'WebSocket']
-		},
-		{
-			label: 'Tools & Infrastructure',
-			items: ['Vite', 'Webpack', 'Docker', 'GitHub Actions', 'CI/CD', 'Git']
-		},
-		{
-			label: 'Performance & Quality',
-			items: [
-				'Core Web Vitals',
-				'WCAG 2.2 Accessibility',
-				'Performance Optimization',
-				'Testing & QA'
-			]
-		}
+	const technologies = [
+		'TypeScript',
+		'React / Next.js',
+		'Svelte / SvelteKit',
+		'Vue.js / Nuxt.js',
+		'TailwindCSS',
+		'GraphQL',
+		'WebSocket',
+		'Docker',
+		'CI/CD'
 	];
 
 	const experiences = [
@@ -300,6 +310,8 @@
 
 	// Custom reveal with two-phase animation (slow fade/blur, then quick jump)
 	let valueCardsContainer: HTMLElement;
+	let silkBackgroundContainer: HTMLElement;
+	let technologiesSection: HTMLElement;
 	onMount(() => {
 		if (typeof window === 'undefined' || !valueCardsContainer) return;
 
@@ -360,6 +372,45 @@
 			observer.disconnect();
 		};
 	});
+
+	// Smooth fade-in/out for Silk background animation
+	onMount(() => {
+		if (typeof window === 'undefined' || !silkBackgroundContainer || !technologiesSection) return;
+
+		// Set initial opacity
+		gsap.set(silkBackgroundContainer, { opacity: 0 });
+
+		// Create ScrollTrigger animation for smooth fade
+		const fadeAnimation = gsap.to(silkBackgroundContainer, {
+			opacity: 1,
+			ease: 'power2.inOut',
+			scrollTrigger: {
+				trigger: technologiesSection,
+				start: 'top 80%',
+				end: 'top 40%',
+				scrub: 0.8,
+				invalidateOnRefresh: true
+			}
+		});
+
+		// Fade out at the bottom
+		const fadeOutAnimation = gsap.to(silkBackgroundContainer, {
+			opacity: 0,
+			ease: 'power2.inOut',
+			scrollTrigger: {
+				trigger: technologiesSection,
+				start: 'bottom 60%',
+				end: 'bottom top',
+				scrub: 0.8,
+				invalidateOnRefresh: true
+			}
+		});
+
+		return () => {
+			fadeAnimation?.kill();
+			fadeOutAnimation?.kill();
+		};
+	});
 </script>
 
 <svelte:head>
@@ -399,7 +450,7 @@
 	</script>
 </svelte:head>
 
-<main class="relative overflow-hidden">
+<main class="relative min-h-screen overflow-hidden">
 	<!-- Hero Section -->
 	<section id="hero" class="hero-gradient relative min-h-screen w-screen">
 		<div class="relative z-10 flex h-full items-center">
@@ -532,7 +583,7 @@
 	</section>
 
 	<!-- Value Proposition Section -->
-	<section class="relative border-t border-surface-800/60 bg-surface-950/70 py-24">
+	<section class="relative bg-surface-950 py-24">
 		<div
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 90%', end: 'top 60%', scrub: 0.45 }}
@@ -578,114 +629,143 @@
 		</div>
 	</section>
 
-	<!-- Metrics Section -->
-	<section
-		class="relative"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(9, 12, 22, 0.97)',
-			to: 'rgba(8, 11, 18, 0.97)',
-			scrub: 0.7
-		}}
-	>
+	<!-- How I Work Section -->
+	<section class="relative bg-surface-900 py-12">
 		<div
-			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
-			use:depthFade={{ start: 'top 88%', end: 'bottom 58%', scrub: 0.45 }}
+			class="mx-auto max-w-6xl space-y-6 px-6 py-24"
+			use:depthFade={{ start: 'top 90%', end: 'top 60%', scrub: 0.45 }}
 		>
 			<div
 				class="space-y-4"
-				use:reveal={{ childSelector: '[data-metrics-headline]', stagger: 0.1 }}
+				use:reveal={{ childSelector: '[data-process-headline]', stagger: 0.1 }}
 			>
 				<span
-					data-metrics-headline
+					data-process-headline
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
-					Measurable impact
+					My approach
 				</span>
-				<h2 data-metrics-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Numbers that speak for themselves.
+				<h2 data-process-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
+					How I work with teams.
 				</h2>
-				<p data-metrics-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
-					Track record of delivering measurable improvements across performance, engagement, and
-					team capabilities.
+				<p data-process-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
+					A proven process that balances speed with quality, ensuring we deliver value quickly while
+					building systems that stand the test of time.
 				</p>
 			</div>
 			<div
-				class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-				use:reveal={{ childSelector: '[data-metric]', stagger: 0.08 }}
+				class="mt-6 grid gap-6 md:grid-cols-2"
+				use:reveal={{ childSelector: '[data-process-step]', stagger: 0.1 }}
 			>
-				{#each metrics as metric, i}
+				{#each workProcess as process, index}
+					{@const Icon = process.icon}
 					<div
-						data-metric
-						class="rounded-2xl border border-surface-700 bg-surface-900/70 px-6 py-8 text-center text-surface-200"
-						use:parallax={{
-							axis: 'x',
-							from: i % 2 === 0 ? -10 : 10,
-							to: i % 2 === 0 ? 12 : -12,
-							scrub: 0.6
-						}}
+						data-process-step
+						class="group relative flex flex-col gap-4 rounded-2xl border border-surface-700 bg-surface-800/70 p-6 transition hover:border-primary-500/40 hover:bg-surface-800/90"
 					>
-						<p class="text-4xl font-bold text-primary-200">{metric.value}</p>
-						<p class="mt-3 text-sm font-semibold tracking-[0.3em] text-surface-400 uppercase">
-							{metric.label}
-						</p>
-						<p class="mt-2 text-xs text-surface-500">{metric.sublabel}</p>
+						<div class="flex items-start justify-between gap-4">
+							<div class="rounded-xl bg-primary-500/15 p-3">
+								<Icon size={20} class="text-primary-300" aria-hidden="true" />
+							</div>
+							<span
+								class="text-4xl leading-none font-bold text-surface-600 transition-colors group-hover:text-primary-500/30"
+								aria-hidden="true"
+							>
+								{process.step}
+							</span>
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-surface-50">{process.title}</h3>
+							<p class="mt-2 text-sm leading-relaxed text-surface-300">
+								{process.description}
+							</p>
+						</div>
 					</div>
 				{/each}
+			</div>
+			<div
+				class="rounded-2xl border border-primary-500/20 bg-gradient-to-br from-primary-500/10 via-primary-500/5 to-transparent p-8"
+				use:reveal={{
+					from: { opacity: 0, y: 48, rotateX: -8, filter: 'blur(6px)' },
+					to: {
+						opacity: 1,
+						y: 0,
+						rotateX: 0,
+						filter: 'blur(0px)',
+						duration: 1.1,
+						ease: 'power3.out'
+					},
+					delay: 0.4
+				}}
+			>
+				<div class="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+					<div>
+						<h3 class="text-xl font-semibold text-surface-50">Ready to collaborate?</h3>
+						<p class="mt-2 text-sm leading-relaxed text-surface-300">
+							Let's discuss how I can help accelerate your project and deliver measurable results
+							from day one.
+						</p>
+					</div>
+					<div class="flex justify-end">
+						<a
+							href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
+							class="group inline-flex items-center gap-2 rounded-full border border-primary-500/40 bg-primary-500/10 px-6 py-3 text-sm font-semibold tracking-[0.3em] text-primary-300 uppercase transition hover:border-primary-500 hover:bg-primary-500/20 hover:text-primary-200"
+						>
+							Start a conversation
+							<ArrowUpRight
+								size={16}
+								class="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+								aria-hidden="true"
+							/>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- Skills Section -->
-	<section
-		class="relative border-t border-surface-800/60 bg-surface-950/70"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(8, 11, 18, 0.97)',
-			to: 'rgba(7, 9, 15, 0.98)',
-			scrub: 0.7
-		}}
-	>
+	<!-- Technologies Section -->
+	<section class="relative overflow-hidden bg-surface-900/50 py-24" bind:this={technologiesSection}>
+		<!-- Silk Background Animation -->
+		<div class="absolute inset-x-0 inset-y-1" bind:this={silkBackgroundContainer}>
+			<Silk speed={3} scale={1} color="#ef5e03" noiseIntensity={1.2} rotation={0.3} />
+		</div>
+		<!-- Gradient overlays for smooth transitions -->
 		<div
-			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
-			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
+			class="pointer-events-none absolute inset-0 z-[5] bg-gradient-to-b from-surface-900 via-transparent to-surface-900"
+		></div>
+		<div
+			class="relative z-10 mx-auto max-w-4xl space-y-16 px-6 py-32"
+			use:depthFade={{ start: 'top 90%', end: 'top 60%', scrub: 0.45 }}
 		>
-			<div class="space-y-4" use:reveal={{ childSelector: '[data-skills-headline]', stagger: 0.1 }}>
+			<div
+				class="space-y-4 text-center"
+				use:reveal={{ childSelector: '[data-tech-headline]', stagger: 0.1 }}
+			>
 				<span
-					data-skills-headline
-					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
+					data-tech-headline
+					class="inline-flex w-fit items-center gap-2 rounded-full border border-primary-400/30 bg-gradient-to-r from-primary-500/20 via-primary-400/25 to-primary-500/20 px-4 py-1.5 text-xs font-semibold tracking-[0.35em] text-primary-50 uppercase shadow-[0_0_20px_rgba(239,94,3,0.15),0_0_40px_rgba(239,94,3,0.1),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-md transition-all duration-300 hover:border-primary-400/50 hover:shadow-[0_0_30px_rgba(239,94,3,0.25),0_0_60px_rgba(239,94,3,0.15),inset_0_1px_0_rgba(255,255,255,0.15)]"
 				>
-					Technical expertise
+					<Code2 class="h-4 w-4 text-primary-300" />
+					Technologies
 				</span>
-				<h2 data-skills-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
-					Modern technologies for high-performance applications.
+				<h2 data-tech-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
+					Modern stack, proven results.
 				</h2>
-				<p data-skills-headline class="max-w-3xl text-sm leading-relaxed text-surface-300">
-					Expert in modern JavaScript frameworks, TypeScript, and the tools that power scalable,
-					maintainable front-end systems. I work with the latest technologies and best practices.
-				</p>
 			</div>
 			<div
-				class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-				use:reveal={{ childSelector: '[data-skill-card]', stagger: 0.06 }}
+				class="flex flex-wrap items-center justify-center gap-4"
+				use:reveal={{ childSelector: '[data-tech-item]', stagger: 0.05 }}
 			>
-				{#each techStack as group}
+				{#each technologies as tech}
 					<div
-						data-skill-card
-						class="flex h-full flex-col gap-3 rounded-2xl border border-surface-700 bg-surface-900/70 p-6 text-surface-200 transition hover:border-primary-500/35 hover:bg-surface-900/80"
-						use:parallax={{ axis: 'x', from: -12, to: 12, scrub: 0.55 }}
+						data-tech-item
+						class="group relative rounded-full border border-surface-50/20 bg-surface-50/10 px-6 py-3 text-sm font-medium text-surface-50 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:border-surface-50/40 hover:bg-surface-50/20 hover:shadow-[0_0_30px_rgba(239,94,3,0.25),0_0_60px_rgba(239,94,3,0.15),inset_0_1px_0_rgba(255,255,255,0.1)]"
 					>
-						<p class="text-xs font-semibold tracking-[0.35em] text-primary-200 uppercase">
-							{group.label}
-						</p>
-						<ul class="space-y-2 text-sm leading-relaxed text-surface-300">
-							{#each group.items as item}
-								<li class="flex items-start gap-2">
-									<span class="mt-1 h-1.5 w-1.5 rounded-full bg-primary-400"></span>
-									{item}
-								</li>
-							{/each}
-						</ul>
+						<span class="relative z-10 cursor-default">{tech}</span>
+						<div
+							class="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500/0 via-primary-500/10 to-primary-500/0 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"
+						></div>
 					</div>
 				{/each}
 			</div>
@@ -693,15 +773,7 @@
 	</section>
 
 	<!-- Experience Section -->
-	<section
-		class="relative"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(9, 12, 22, 0.97)',
-			to: 'rgba(7, 10, 16, 0.98)',
-			scrub: 0.7
-		}}
-	>
+	<section class="relative bg-surface-900 py-12">
 		<div
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
@@ -967,21 +1039,5 @@
 			148% 148%,
 			var(--gradient-size) var(--gradient-size);
 		background-repeat: no-repeat, no-repeat;
-	}
-
-	main {
-		position: relative;
-		min-height: 100vh;
-		background-color: rgba(10, 6, 18, 0.96);
-		background-image:
-			radial-gradient(circle at 18% -12%, rgba(239, 94, 3, 0.12), transparent 58%),
-			radial-gradient(circle at 78% 6%, rgba(84, 138, 255, 0.08), transparent 62%),
-			radial-gradient(circle at top, rgba(15, 15, 18, 0.95), rgba(8, 8, 10, 0.98));
-		background-repeat: no-repeat;
-		background-size:
-			140% 120%,
-			160% 140%,
-			100% 100%;
-		transition: background-color 0.8s ease;
 	}
 </style>
