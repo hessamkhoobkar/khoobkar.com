@@ -35,7 +35,8 @@
 		CheckCircle2,
 		TrendingUp,
 		Zap,
-		Award
+		Award,
+		HelpCircle
 	} from '@lucide/svelte';
 
 	const heroHighlights = [
@@ -313,6 +314,18 @@
 					'Web performance',
 					'Accessibility'
 				]
+			},
+			{
+				'@type': 'FAQPage',
+				'@id': `${canonicalUrl}#faq`,
+				mainEntity: faqs.map((faq) => ({
+					'@type': 'Question',
+					name: faq.question,
+					acceptedAnswer: {
+						'@type': 'Answer',
+						text: faq.answer
+					}
+				}))
 			}
 		]
 	};
@@ -324,6 +337,7 @@
 	let valueCardsContainer: HTMLElement;
 	let silkBackgroundContainer: HTMLElement;
 	let technologiesSection: HTMLElement;
+	let faqCardsContainer: HTMLElement;
 	onMount(() => {
 		if (typeof window === 'undefined' || !valueCardsContainer) return;
 
@@ -350,6 +364,68 @@
 						});
 
 						// Phase 1: Slow fade and blur removal (1.2s)
+						tl.to(card, {
+							opacity: 1,
+							filter: 'blur(0px)',
+							duration: 0.7,
+							ease: 'power1.out'
+						});
+
+						// Phase 2: Quick jump to final position (0.3s)
+						tl.to(
+							card,
+							{
+								y: 0,
+								duration: 0.3,
+								ease: 'power2.out'
+							},
+							'-=0.1'
+						); // Start slightly before phase 1 ends
+
+						observer.unobserve(card);
+					}
+				});
+			},
+			{
+				threshold: 0.1,
+				rootMargin: '0px 0px -10% 0px'
+			}
+		);
+
+		cards.forEach((card) => observer.observe(card));
+
+		return () => {
+			observer.disconnect();
+		};
+	});
+
+	// Custom reveal animation for FAQ cards (same pattern as value cards)
+	onMount(() => {
+		if (typeof window === 'undefined' || !faqCardsContainer) return;
+
+		const cards = faqCardsContainer.querySelectorAll<HTMLElement>('[data-faq-card]');
+
+		// Set initial state
+		gsap.set(cards, {
+			opacity: 0,
+			y: 25,
+			filter: 'blur(6px)'
+		});
+
+		// Create intersection observer for reveal
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						const card = entry.target as HTMLElement;
+						const cardIndex = parseInt(card.dataset.cardIndex || '0');
+
+						// Two-phase animation: slow fade/blur, then quick jump
+						const tl = gsap.timeline({
+							delay: cardIndex * 0.1
+						});
+
+						// Phase 1: Slow fade and blur removal (0.7s)
 						tl.to(card, {
 							opacity: 1,
 							filter: 'blur(0px)',
@@ -914,9 +990,13 @@
 	</section>
 
 	<!-- FAQ Section -->
-	<section class="relative bg-surface-950 py-12">
+	<section class="relative overflow-hidden bg-surface-950 py-12">
+		<!-- Subtle background gradient -->
 		<div
-			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
+			class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary-900/5 to-transparent"
+		></div>
+		<div
+			class="relative mx-auto max-w-6xl space-y-12 px-6 py-24"
 			use:depthFade={{ start: 'top 90%', end: 'top 60%', scrub: 0.45 }}
 		>
 			<div class="space-y-4" use:reveal={{ childSelector: '[data-faq-headline]', stagger: 0.1 }}>
@@ -924,6 +1004,7 @@
 					data-faq-headline
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
+					<HelpCircle size={14} aria-hidden="true" />
 					Frequently asked
 				</span>
 				<h2 data-faq-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
@@ -934,21 +1015,78 @@
 					your team.
 				</p>
 			</div>
-			<div class="space-y-4" use:reveal={{ childSelector: 'details', stagger: 0.08 }}>
-				{#each faqs as item}
-					<details class="group rounded-2xl border border-surface-700 bg-surface-900/70 p-5">
-						<summary
-							class="flex cursor-pointer items-center justify-between text-left text-sm font-semibold tracking-[0.3em] text-surface-200 uppercase transition group-open:text-primary-200"
-						>
-							<span class="flex-1">{item.question}</span>
-							<ArrowUpRight
-								size={16}
-								class="ml-4 transition-transform group-open:rotate-45"
-								aria-hidden="true"
-							/>
-						</summary>
-						<p class="mt-4 text-sm leading-relaxed text-surface-300">{item.answer}</p>
-					</details>
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" bind:this={faqCardsContainer}>
+				{#each faqs as faq, index}
+					<div
+						data-faq-card
+						data-card-index={index}
+						class="group relative flex h-full flex-col gap-5 rounded-2xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary-500/50 hover:shadow-[0_8px_32px_rgba(239,94,3,0.15)]"
+					>
+						<!-- Animated gradient background on hover -->
+						<div
+							class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/0 via-primary-500/0 to-primary-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-10"
+						></div>
+
+						<!-- Outer glow effect -->
+						<div
+							class="absolute -inset-1 rounded-2xl bg-primary-500/0 opacity-0 blur-2xl transition-all duration-500 group-hover:opacity-20"
+						></div>
+
+						<!-- Content wrapper -->
+						<div class="relative z-10 flex h-full flex-col gap-5">
+							<!-- Question header with icon -->
+							<div class="flex items-start gap-4">
+								<div
+									class="relative mt-0.5 shrink-0 overflow-hidden rounded-xl border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-3 shadow-[0_4px_12px_rgba(239,94,3,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:border-primary-400/50 group-hover:shadow-[0_8px_32px_rgba(239,94,3,0.4),0_0_60px_rgba(239,94,3,0.2)]"
+								>
+									<!-- Animated gradient background -->
+									<div
+										class="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-400/20 via-primary-500/30 to-primary-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+									></div>
+
+									<!-- Outer glow effect -->
+									<div
+										class="absolute -inset-1 rounded-xl bg-primary-500/40 opacity-0 blur-2xl transition-all duration-500 group-hover:scale-110 group-hover:opacity-60"
+									></div>
+
+									<!-- Inner glow pulse -->
+									<div
+										class="absolute inset-0 rounded-xl bg-primary-400/30 opacity-0 blur-md transition-all duration-500 group-hover:animate-pulse group-hover:opacity-70"
+									></div>
+
+									<!-- Shimmer effect -->
+									<div
+										class="absolute inset-0 -translate-x-full rounded-xl bg-gradient-to-r from-transparent via-primary-300/30 to-transparent opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100"
+									></div>
+
+									<!-- Icon -->
+									<HelpCircle
+										size={20}
+										class="relative z-10 text-primary-200 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(239,94,3,0.8)]"
+										aria-hidden="true"
+									/>
+								</div>
+								<h3
+									class="flex-1 text-base leading-snug font-semibold text-surface-50 transition-colors group-hover:text-primary-100"
+								>
+									{faq.question}
+								</h3>
+							</div>
+
+							<!-- Answer -->
+							<div class="relative mt-auto">
+								<!-- Decorative line -->
+								<div
+									class="absolute top-0 left-0 h-full w-0.5 rounded-full bg-gradient-to-b from-primary-500/50 via-primary-500/30 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+								></div>
+								<p
+									class="pl-6 text-sm leading-relaxed text-surface-300 transition-colors group-hover:text-surface-200"
+								>
+									{faq.answer}
+								</p>
+							</div>
+						</div>
+					</div>
 				{/each}
 			</div>
 		</div>
