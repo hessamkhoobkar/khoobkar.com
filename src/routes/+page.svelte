@@ -34,7 +34,9 @@
 		Zap,
 		Award,
 		HelpCircle,
-		ExternalLink
+		ExternalLink,
+		Clock,
+		Circle
 	} from '@lucide/svelte';
 
 	const heroHighlights = [
@@ -551,129 +553,214 @@
 
 <div class="relative min-h-screen overflow-hidden">
 	<!-- Hero Section -->
-	<section id="hero" class="hero-gradient relative min-h-screen w-screen">
+	<section id="hero" class="hero-gradient relative min-h-screen w-screen overflow-hidden">
+		<!-- Subtle overlay for depth -->
+		<div
+			class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-transparent via-primary-900/5 to-primary-900/10"
+		></div>
+		<!-- Ambient glow effect -->
+		<div
+			class="pointer-events-none absolute -top-1/4 -right-1/4 z-0 h-[800px] w-[800px] rounded-full bg-primary-400/10 blur-[120px]"
+		></div>
 		<div class="relative z-10 flex h-full items-center">
 			<div
-				class="mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 py-24 md:py-32"
-				use:reveal={{ childSelector: '[data-hero-item]', stagger: 0.2, delay: 0.1 }}
+				class="mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 py-24 md:py-32"
+				use:reveal={{ childSelector: '[data-hero-item]', stagger: 0.15, delay: 0.1 }}
 			>
-				<div class="grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-					<div data-hero-item>
-						<div class="flex items-center gap-3">
-							<span
-								class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1 text-xs font-semibold tracking-[0.3em] text-white/70 uppercase"
+				<!-- Main Content Row -->
+				<div class="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:items-center lg:gap-16">
+					<!-- Left: Main Content -->
+					<div data-hero-item class="space-y-8">
+						<div class="space-y-6">
+							<div class="flex items-center gap-3">
+								<span
+									class="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-semibold tracking-[0.35em] text-white/90 uppercase shadow-[0_4px_20px_rgba(0,0,0,0.15),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/15 hover:shadow-[0_6px_30px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.15)]"
+								>
+									<Sparkles
+										size={15}
+										class="text-primary-200 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"
+										aria-hidden="true"
+									/>
+									Senior front-end lead
+								</span>
+							</div>
+							<h1
+								class="text-4xl leading-[1.15] font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)] sm:text-5xl lg:text-6xl"
+								use:reveal={{
+									childSelector: 'span',
+									delay: 0.05,
+									stagger: 0.15,
+									from: { opacity: 0, yPercent: 120, filter: 'blur(6px)' },
+									to: {
+										opacity: 1,
+										yPercent: 0,
+										filter: 'blur(0px)',
+										duration: 1,
+										ease: 'power3.out'
+									}
+								}}
 							>
-								<Sparkles size={14} aria-hidden="true" />
-								Senior front-end lead
-							</span>
+								Remote Front-End Leadership That Delivers Performance, Polish, and Measurable
+								Momentum.
+							</h1>
+							<p
+								class="max-w-2xl text-lg leading-relaxed text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]"
+							>
+								I'm Hessam Khoobkar, a senior front-end developer blending design sensibility with
+								type-safe engineering. I partner with founders and product leaders to build and
+								refine their vision, whether that means architecting a project from the ground up or
+								stepping in to accelerate and polish an existing one.
+							</p>
 						</div>
-						<h1
-							class="mt-5 max-w-3xl text-4xl font-bold text-white sm:text-5xl lg:text-5xl"
-							use:reveal={{
-								childSelector: 'span',
-								delay: 0.05,
-								stagger: 0.22,
-								from: { opacity: 0, yPercent: 120, filter: 'blur(6px)' },
-								to: {
-									opacity: 1,
-									yPercent: 0,
-									filter: 'blur(0px)',
-									duration: 1,
-									ease: 'power3.out'
-								}
-							}}
-						>
-							Remote Front-End Leadership That Delivers
-							<span class="inline-block"> Performance, </span>
-							<span class="inline-block">Polish,</span>
-							<span class="inline-block">and</span>
-							<span class="inline-block">Measurable Momentum.</span>
-						</h1>
-						<p class="mt-7 max-w-2xl text-base leading-relaxed text-white/80">
-							I’m Hessam Khoobkar, a senior front-end developer blending design sensibility with
-							type-safe engineering. I partner with founders and product leaders to build and refine
-							their vision, whether that means architecting a project from the ground up or stepping
-							in to accelerate and polish an existing one.
-						</p>
-						<div class="mt-7 flex flex-wrap items-center gap-3">
+
+						<!-- Action Buttons -->
+						<div class="flex flex-wrap items-center gap-4">
 							<a
 								href="/hessam_khoobkar_resume.pdf"
-								class="group inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-2 text-sm font-semibold tracking-[0.28em] text-white uppercase transition hover:border-white hover:bg-white hover:text-surface-900"
+								class="group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full border border-white/30 bg-white/15 px-8 py-3.5 text-sm font-semibold tracking-[0.3em] text-white uppercase shadow-[0_4px_20px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-md transition-all duration-300 hover:border-white hover:bg-white hover:text-primary-900 hover:shadow-[0_8px_40px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]"
 							>
-								<Download size={18} aria-hidden="true" />
-								Resume
+								<div
+									class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+								></div>
+								<Download
+									size={18}
+									class="relative z-10 transition-transform duration-300 group-hover:scale-110"
+									aria-hidden="true"
+								/>
+								<span class="relative z-10">Resume</span>
+							</a>
+							<a
+								href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
+								class="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-8 py-3.5 text-sm font-semibold tracking-[0.3em] text-white/90 uppercase backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white"
+							>
+								<Mail
+									size={18}
+									class="transition-transform duration-300 group-hover:scale-110"
+									aria-hidden="true"
+								/>
+								<span>Get in touch</span>
 							</a>
 						</div>
-						<div
-							class="mt-7 flex flex-wrap items-center gap-3 text-xs font-semibold tracking-[0.3em] text-white/60 uppercase"
-						>
-							<div class="inline-flex items-center gap-2">
-								<Globe size={16} aria-hidden="true" />
-								Tallinn, Estonia
-							</div>
-							<div>·</div>
-							<div class="inline-flex items-center gap-2">
-								<Briefcase size={16} aria-hidden="true" />
-								Remote worldwide
-							</div>
-						</div>
 					</div>
-					<div data-hero-item>
+
+					<!-- Right: Key Info Card -->
+					<div data-hero-item class="lg:sticky lg:top-24">
 						<div
-							class="flex h-full flex-col gap-6 rounded-3xl border border-primary-900/20 bg-primary-900/20 p-6 text-white shadow-[0_30px_120px_-60px_rgba(72,12,3,0.8)] backdrop-blur-xl"
+							class="group relative flex flex-col gap-6 rounded-3xl border border-white/20 bg-white/10 p-8 text-white shadow-[0_30px_120px_-60px_rgba(72,12,3,0.9),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all duration-500 hover:border-white/30 hover:bg-white/15 hover:shadow-[0_40px_160px_-60px_rgba(72,12,3,1),inset_0_1px_0_rgba(255,255,255,0.15)]"
 						>
-							<div>
-								<p class="text-xs tracking-[0.4em] text-white/70 uppercase">What I do</p>
-								<h2 class="mt-3 text-2xl leading-snug font-semibold">
-									Build high-performance front-end systems that scale.
-								</h2>
+							<!-- Subtle inner glow -->
+							<div
+								class="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+							></div>
+
+							<div class="relative z-10 space-y-6">
+								<div>
+									<p class="text-xs tracking-[0.4em] text-white/70 uppercase">What I do</p>
+									<h2
+										class="mt-2.5 text-xl leading-snug font-semibold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]"
+									>
+										Build high-performance front-end systems that scale.
+									</h2>
+								</div>
+
+								<div class="space-y-4">
+									<div
+										class="group/item flex gap-3 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/25 hover:bg-white/15 hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+									>
+										<div
+											class="flex shrink-0 items-center justify-center rounded-xl bg-white/15 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-white/20"
+										>
+											<Code2
+												size={18}
+												class="text-primary-200 transition-transform duration-300 group-hover/item:rotate-6"
+												aria-hidden="true"
+											/>
+										</div>
+										<div class="min-w-0 flex-1">
+											<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Expertise</p>
+											<p class="mt-1.5 text-sm leading-relaxed text-white/95">
+												React, Svelte, Vue.js, TypeScript, and modern build tools.
+											</p>
+										</div>
+									</div>
+									<div
+										class="group/item flex gap-3 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/25 hover:bg-white/15 hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+									>
+										<div
+											class="flex shrink-0 items-center justify-center rounded-xl bg-white/15 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-white/20"
+										>
+											<Rocket
+												size={18}
+												class="text-primary-200 transition-transform duration-300 group-hover/item:rotate-6"
+												aria-hidden="true"
+											/>
+										</div>
+										<div class="min-w-0 flex-1">
+											<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Results</p>
+											<p class="mt-1.5 text-sm leading-relaxed text-white/95">
+												35% average performance improvements and scalable architecture.
+											</p>
+										</div>
+									</div>
+									<div
+										class="group/item flex gap-3 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm transition-all duration-300 hover:border-white/25 hover:bg-white/15 hover:shadow-[0_4px_20px_rgba(0,0,0,0.15)]"
+									>
+										<div
+											class="flex shrink-0 items-center justify-center rounded-xl bg-white/15 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)] transition-all duration-300 group-hover/item:scale-110 group-hover/item:bg-white/20"
+										>
+											<Globe
+												size={18}
+												class="text-primary-200 transition-transform duration-300 group-hover/item:rotate-6"
+												aria-hidden="true"
+											/>
+										</div>
+										<div class="min-w-0 flex-1">
+											<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Availability</p>
+											<p class="mt-1.5 text-sm leading-relaxed text-white/95">
+												Remote worldwide, open to full-time and freelance opportunities.
+											</p>
+										</div>
+									</div>
+								</div>
+
+								<!-- Location Tags -->
+								<div class="flex flex-wrap gap-2.5 pt-2">
+									<div
+										class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs backdrop-blur-sm"
+									>
+										<MapPin size={14} class="text-primary-200" aria-hidden="true" />
+										<span class="text-white/80">Tallinn, Estonia</span>
+									</div>
+									<div
+										class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs backdrop-blur-sm"
+									>
+										<Briefcase size={14} class="text-primary-200" aria-hidden="true" />
+										<span class="text-white/80">Remote worldwide</span>
+									</div>
+								</div>
 							</div>
-							<ul class="space-y-3 text-sm leading-relaxed text-white/90">
-								<li
-									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
-								>
-									<div class="rounded-lg bg-white/10 p-2">
-										<Code2 size={18} aria-hidden="true" />
-									</div>
-									<div>
-										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Expertise</p>
-										<p>React, Svelte, Vue.js, TypeScript, and modern build tools.</p>
-									</div>
-								</li>
-								<li
-									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
-								>
-									<div class="rounded-lg bg-white/10 p-2">
-										<Rocket size={18} aria-hidden="true" />
-									</div>
-									<div>
-										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Results</p>
-										<p>35% average performance improvements and scalable architecture.</p>
-									</div>
-								</li>
-								<li
-									class="flex gap-3 rounded-2xl border border-primary-900/20 bg-primary-900/20 p-3"
-								>
-									<div class="rounded-lg bg-white/10 p-2">
-										<Globe size={18} aria-hidden="true" />
-									</div>
-									<div>
-										<p class="text-xs tracking-[0.35em] text-white/60 uppercase">Availability</p>
-										<p>Remote worldwide, open to full-time and freelance opportunities.</p>
-									</div>
-								</li>
-							</ul>
 						</div>
 					</div>
 				</div>
 
-				<div data-hero-item class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				<!-- Highlight Cards Row -->
+				<div data-hero-item class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 					{#each heroHighlights as fact}
 						<div
-							class="rounded-2xl border border-primary-900/20 bg-primary-900/20 px-5 py-6 text-white shadow-[0_20px_80px_-50px_rgba(72,12,3,0.6)] backdrop-blur-xl"
+							class="group relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 px-6 py-6 text-white shadow-[0_20px_80px_-50px_rgba(72,12,3,0.7),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-white/30 hover:bg-white/15 hover:shadow-[0_30px_120px_-50px_rgba(72,12,3,0.9),inset_0_1px_0_rgba(255,255,255,0.15)]"
 						>
-							<p class="text-xl font-semibold">{fact.label}</p>
-							<p class="mt-2 text-sm text-white/75">{fact.caption}</p>
+							<!-- Hover glow effect -->
+							<div
+								class="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+							></div>
+							<p
+								class="relative z-10 text-2xl font-bold text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]"
+							>
+								{fact.label}
+							</p>
+							<p class="relative z-10 mt-3 text-sm leading-relaxed text-white/85">
+								{fact.caption}
+							</p>
 						</div>
 					{/each}
 				</div>
