@@ -1208,7 +1208,7 @@
 	</section>
 
 	<!-- Footer -->
-	<Footer />
+	<!-- <Footer /> -->
 </div>
 
 <style>
