@@ -518,8 +518,15 @@
 	<meta name="description" content={metaDescription} />
 	<meta name="keywords" content={metaKeywords} />
 	<meta name="author" content="Hessam Khoobkar" />
-	<meta name="robots" content="index, follow" />
+	<meta
+		name="robots"
+		content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+	/>
 	<meta name="theme-color" content="#0f172a" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 	<meta property="og:title" content={metaTitle} />
 	<meta
 		property="og:description"
@@ -544,6 +551,9 @@
 	/>
 	<meta name="twitter:site" content="@khoobkar" />
 	<meta name="twitter:creator" content="@khoobkar" />
+	<!-- Preload critical resources -->
+	<link rel="preload" href={ogImageUrl} as="image" type="image/png" />
+	<!-- Structured Data -->
 	<script type="application/ld+json">
 		{JSON.stringify(structuredData)}
 	</script>
@@ -618,6 +628,7 @@
 						<div class="flex flex-wrap items-center gap-4">
 							<a
 								href="/hessam_khoobkar_resume.pdf"
+								aria-label="Download Hessam Khoobkar's resume (PDF)"
 								class="group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full border border-white/30 bg-white/15 px-8 py-3.5 text-sm font-semibold tracking-[0.3em] text-white uppercase shadow-[0_4px_20px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-md transition-all duration-300 hover:border-white hover:bg-white hover:text-primary-900 hover:shadow-[0_8px_40px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.2)]"
 							>
 								<div
@@ -632,6 +643,7 @@
 							</a>
 							<a
 								href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
+								aria-label="Contact Hessam Khoobkar via email"
 								class="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-8 py-3.5 text-sm font-semibold tracking-[0.3em] text-white/90 uppercase backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/10 hover:text-white"
 							>
 								<Mail
@@ -896,6 +908,7 @@
 					<div class="flex justify-end">
 						<a
 							href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
+							aria-label="Start a conversation with Hessam Khoobkar"
 							class="group inline-flex items-center gap-2 rounded-full border border-primary-500/40 bg-primary-500/10 px-6 py-3 text-sm font-semibold tracking-[0.3em] text-primary-300 uppercase transition hover:border-primary-500 hover:bg-primary-500/20 hover:text-primary-200"
 						>
 							Start a conversation
@@ -1218,6 +1231,7 @@
 				<!-- Email Contact -->
 				<a
 					href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
+					aria-label="Contact via email: amirhessam.dev@gmail.com"
 					class="group relative flex flex-col gap-3 rounded-xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-500/50 hover:shadow-[0_8px_32px_rgba(239,94,3,0.15)]"
 				>
 					<div class="flex items-center gap-3">
@@ -1241,6 +1255,7 @@
 				<!-- Resume Download -->
 				<a
 					href="/hessam_khoobkar_resume.pdf"
+					aria-label="Download resume PDF"
 					class="group relative flex flex-col gap-3 rounded-xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-500/50 hover:shadow-[0_8px_32px_rgba(239,94,3,0.15)]"
 				>
 					<div class="flex items-center gap-3">
@@ -1338,21 +1353,25 @@
 							© {new Date().getFullYear()} Hessam Khoobkar. All rights reserved.
 						</p>
 					</div>
-					<div class="flex items-center gap-4">
-						<a
-							href="mailto:amirhessam.dev@gmail.com?subject=Privacy Policy Inquiry"
-							class="text-xs text-surface-400 transition-colors hover:text-primary-300"
-						>
-							Privacy
-						</a>
-						<span class="text-surface-600">·</span>
-						<a
-							href="mailto:amirhessam.dev@gmail.com?subject=Terms of Service Inquiry"
-							class="text-xs text-surface-400 transition-colors hover:text-primary-300"
-						>
-							Terms
-						</a>
-					</div>
+					<nav aria-label="Legal links">
+						<div class="flex items-center gap-4">
+							<a
+								href="mailto:amirhessam.dev@gmail.com?subject=Privacy Policy Inquiry"
+								aria-label="Contact about privacy policy"
+								class="text-xs text-surface-400 transition-colors hover:text-primary-300"
+							>
+								Privacy
+							</a>
+							<span class="text-surface-600" aria-hidden="true">·</span>
+							<a
+								href="mailto:amirhessam.dev@gmail.com?subject=Terms of Service Inquiry"
+								aria-label="Contact about terms of service"
+								class="text-xs text-surface-400 transition-colors hover:text-primary-300"
+							>
+								Terms
+							</a>
+						</div>
+					</nav>
 				</div>
 			</div>
 		</div>

@@ -1,3 +1,14 @@
-# allow crawling everything by default
+# Production robots.txt for khoobkar.com
+# Only the homepage is available in production
+
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /about
+Disallow: /contact
+Disallow: /dashboard
+Disallow: /insights
+Disallow: /projects
+Disallow: /work
+
+# Sitemap location
+Sitemap: https://khoobkar.com/sitemap.xml
