@@ -506,35 +506,38 @@
 		// Set initial opacity
 		gsap.set(silkBackgroundContainer, { opacity: 0 });
 
-		// Create ScrollTrigger animation for smooth fade
-		const fadeAnimation = gsap.to(silkBackgroundContainer, {
-			opacity: 1,
-			ease: 'power2.inOut',
+		// Create unified timeline animation for complete fade lifecycle
+		// Spans from when section enters viewport to when it exits
+		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: technologiesSection,
 				start: 'top 80%',
-				end: 'top 40%',
+				end: 'bottom 20%',
 				scrub: 0.8,
 				invalidateOnRefresh: true
 			}
 		});
 
-		// Fade out at the bottom
-		const fadeOutAnimation = gsap.to(silkBackgroundContainer, {
-			opacity: 0,
-			ease: 'power2.inOut',
-			scrollTrigger: {
-				trigger: technologiesSection,
-				start: 'bottom 60%',
-				end: 'bottom top',
-				scrub: 0.8,
-				invalidateOnRefresh: true
-			}
-		});
+		// Fade in: 0 → 1 (first portion as section enters)
+		tl.to(silkBackgroundContainer, {
+			opacity: 1,
+			ease: 'power2.out',
+			duration: 0.3
+		})
+			// Maintain opacity at 1 (middle portion while section is in view)
+			.to(silkBackgroundContainer, {
+				opacity: 1,
+				duration: 0.4
+			})
+			// Fade out: 1 → 0 (last portion as section exits)
+			.to(silkBackgroundContainer, {
+				opacity: 0,
+				ease: 'power2.in',
+				duration: 0.3
+			});
 
 		return () => {
-			fadeAnimation?.kill();
-			fadeOutAnimation?.kill();
+			tl?.kill();
 		};
 	});
 </script>
