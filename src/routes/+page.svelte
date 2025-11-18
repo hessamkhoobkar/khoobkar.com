@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import GradientButton from '$lib/components/ui/GradientButton.svelte';
 	import { reveal } from '$lib/actions/reveal';
 	import { depthFade } from '$lib/actions/motion';
 	import Silk from '$lib/components/layout/hero/Silk.svelte';
@@ -213,35 +212,6 @@
 			question: "What's your approach to remote collaboration?",
 			answer:
 				'Built for async-first collaboration across time zones. I provide proactive updates, clear documentation, transparent progress tracking, and overlap meetings when needed. 100% remote success rate across 13 international teams.'
-		}
-	];
-
-	const contactMethods = [
-		{
-			icon: Mail,
-			title: 'Email Me',
-			subtitle: 'Direct communication',
-			description:
-				'Send me an email for detailed inquiries and project discussions. I typically respond within one business day.',
-			href: "mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project",
-			label: 'Send Email'
-		},
-		{
-			icon: MessageSquare,
-			title: "Let's Connect",
-			subtitle: 'Start a conversation',
-			description:
-				"Ready to discuss your project? Reach out and let's explore how we can work together.",
-			href: 'mailto:amirhessam.dev@gmail.com?subject=Project Inquiry',
-			label: 'Get in Touch'
-		},
-		{
-			icon: MapPin,
-			title: 'Location',
-			subtitle: 'Based in',
-			description: 'Tallinn, Estonia · Available for remote work worldwide',
-			href: null,
-			label: null
 		}
 	];
 
@@ -1134,149 +1104,166 @@
 	</section>
 
 	<!-- Contact Section -->
-	<section class="relative overflow-hidden bg-surface-900 py-24" bind:this={contactSection}>
+	<section class="relative overflow-hidden bg-surface-900 py-16" bind:this={contactSection}>
 		<!-- Subtle background gradient -->
 		<div
 			class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary-900/5 to-transparent"
 		></div>
-		<div class="relative mx-auto max-w-6xl space-y-12 px-6">
+		<div class="relative mx-auto max-w-6xl space-y-8 px-6">
 			<!-- Header -->
-			<div class="space-y-4 text-center">
+			<div class="space-y-3 text-center">
 				<span
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
 					<MessageSquare size={14} aria-hidden="true" />
 					Let's work together
 				</span>
-				<h2 class="text-3xl font-bold text-surface-50 md:text-4xl">Ready to start your project?</h2>
+				<h2 class="text-2xl font-bold text-surface-50 md:text-3xl">Ready to start your project?</h2>
 				<p class="mx-auto max-w-2xl text-sm leading-relaxed text-surface-300">
 					I'm available for full-time and freelance opportunities. Let's discuss how I can help
 					bring your vision to life.
 				</p>
 			</div>
 
-			<!-- Contact Methods Grid -->
-			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each contactMethods as method}
-					{@const Icon = method.icon}
-					{#if method.href}
-						<a
-							href={method.href}
-							class="group relative flex h-full flex-col gap-4 rounded-2xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary-500/50 hover:shadow-[0_8px_32px_rgba(239,94,3,0.15)]"
-						>
-							<!-- Animated gradient background on hover -->
-							<div
-								class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/0 via-primary-500/0 to-primary-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-10"
-							></div>
-
-							<!-- Content wrapper -->
-							<div class="relative z-10 flex h-full flex-col gap-4">
-								<div class="flex items-start gap-4">
-									<div
-										class="relative overflow-hidden rounded-xl border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-3 shadow-[0_4px_12px_rgba(239,94,3,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:border-primary-400/50 group-hover:shadow-[0_8px_32px_rgba(239,94,3,0.4),0_0_60px_rgba(239,94,3,0.2)]"
-									>
-										<Icon
-											size={20}
-											class="relative z-10 text-primary-200 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(239,94,3,0.8)]"
-											aria-hidden="true"
-										/>
-									</div>
-									<div class="flex-1">
-										<h3
-											class="text-lg font-semibold text-surface-50 transition-colors group-hover:text-primary-100"
-										>
-											{method.title}
-										</h3>
-										<p class="mt-1 text-xs tracking-[0.35em] text-primary-300/70 uppercase">
-											{method.subtitle}
-										</p>
-									</div>
-								</div>
-								<p class="flex-1 text-sm leading-relaxed text-surface-300">
-									{method.description}
-								</p>
-								<div
-									class="mt-auto flex items-center gap-2 text-sm font-medium text-primary-300 transition-colors group-hover:text-primary-200"
-								>
-									<span>{method.label}</span>
-									<ArrowUpRight
-										size={16}
-										class="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-										aria-hidden="true"
-									/>
-								</div>
-							</div>
-						</a>
-					{:else}
+			<!-- Compact Contact Grid -->
+			<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+				<!-- Email Contact -->
+				<a
+					href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
+					class="group relative flex flex-col gap-3 rounded-xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-500/50 hover:shadow-[0_8px_32px_rgba(239,94,3,0.15)]"
+				>
+					<div class="flex items-center gap-3">
 						<div
-							class="flex h-full flex-col gap-4 rounded-2xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-6"
+							class="rounded-lg border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-2.5 shadow-[0_4px_12px_rgba(239,94,3,0.2)] transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
 						>
-							<div class="flex items-start gap-4">
-								<div
-									class="rounded-xl border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-3 shadow-[0_4px_12px_rgba(239,94,3,0.2)]"
-								>
-									<Icon size={20} class="text-primary-200" aria-hidden="true" />
-								</div>
-								<div class="flex-1">
-									<h3 class="text-lg font-semibold text-surface-50">{method.title}</h3>
-									<p class="mt-1 text-xs tracking-[0.35em] text-primary-300/70 uppercase">
-										{method.subtitle}
-									</p>
-								</div>
-							</div>
-							<p class="flex-1 text-sm leading-relaxed text-surface-300">
-								{method.description}
-							</p>
+							<Mail size={18} class="text-primary-200" aria-hidden="true" />
 						</div>
-					{/if}
-				{/each}
+						<div class="flex-1">
+							<h3 class="text-sm font-semibold text-surface-50">Email</h3>
+							<p class="text-xs text-surface-400">amirhessam.dev@gmail.com</p>
+						</div>
+						<ArrowUpRight
+							size={14}
+							class="text-surface-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary-300"
+							aria-hidden="true"
+						/>
+					</div>
+				</a>
+
+				<!-- Resume Download -->
+				<a
+					href="/hessam_khoobkar_resume.pdf"
+					class="group relative flex flex-col gap-3 rounded-xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary-500/50 hover:shadow-[0_8px_32px_rgba(239,94,3,0.15)]"
+				>
+					<div class="flex items-center gap-3">
+						<div
+							class="rounded-lg border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-2.5 shadow-[0_4px_12px_rgba(239,94,3,0.2)] transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+						>
+							<Download size={18} class="text-primary-200" aria-hidden="true" />
+						</div>
+						<div class="flex-1">
+							<h3 class="text-sm font-semibold text-surface-50">Resume</h3>
+							<p class="text-xs text-surface-400">Download PDF</p>
+						</div>
+						<ArrowUpRight
+							size={14}
+							class="text-surface-400 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary-300"
+							aria-hidden="true"
+						/>
+					</div>
+				</a>
+
+				<!-- Location -->
+				<div
+					class="flex flex-col gap-3 rounded-xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-5"
+				>
+					<div class="flex items-center gap-3">
+						<div
+							class="rounded-lg border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-2.5 shadow-[0_4px_12px_rgba(239,94,3,0.2)]"
+						>
+							<MapPin size={18} class="text-primary-200" aria-hidden="true" />
+						</div>
+						<div class="flex-1">
+							<h3 class="text-sm font-semibold text-surface-50">Location</h3>
+							<p class="text-xs text-surface-400">Tallinn, Estonia</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Timezone -->
+				<div
+					class="flex flex-col gap-3 rounded-xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-5"
+				>
+					<div class="flex items-center gap-3">
+						<div
+							class="rounded-lg border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-2.5 shadow-[0_4px_12px_rgba(239,94,3,0.2)]"
+						>
+							<Globe size={18} class="text-primary-200" aria-hidden="true" />
+						</div>
+						<div class="flex-1">
+							<h3 class="text-sm font-semibold text-surface-50">Timezone</h3>
+							<p class="text-xs text-surface-400">UTC+2 (EET)</p>
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<!-- Social Links & CTA -->
+			<!-- Social Links -->
 			<div
-				class="rounded-2xl border border-primary-500/20 bg-gradient-to-br from-primary-500/10 via-primary-500/5 to-transparent p-8"
+				class="rounded-xl border border-primary-500/20 bg-gradient-to-br from-primary-500/10 via-primary-500/5 to-transparent p-6"
 			>
-				<div class="space-y-6">
-					<div class="space-y-4">
-						<h3 class="text-xl font-semibold text-surface-50">Connect with me</h3>
-						<p class="text-sm leading-relaxed text-surface-300">
-							Follow my work and connect on social platforms. I share insights, projects, and
-							thoughts on front-end development.
+				<div class="space-y-4">
+					<div class="text-center">
+						<h3 class="text-lg font-semibold text-surface-50">Connect with me</h3>
+						<p class="mt-1 text-xs text-surface-400">
+							Follow my work and connect on social platforms
 						</p>
 					</div>
-					<div class="flex flex-wrap gap-3">
+					<div class="flex flex-wrap items-center justify-center gap-3">
 						{#each socialLinks as social}
 							{@const Icon = social.icon}
 							<a
 								href={social.href}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="group inline-flex items-center gap-2 rounded-full border border-surface-700/60 bg-surface-800/50 px-4 py-2 text-xs font-semibold tracking-[0.35em] text-surface-200 uppercase transition-all hover:border-primary-500/40 hover:bg-primary-500/10 hover:text-primary-200"
+								class="group inline-flex items-center gap-2 rounded-full border border-surface-700/60 bg-surface-800/50 px-4 py-2 text-xs font-semibold tracking-[0.3em] text-surface-200 uppercase transition-all hover:border-primary-500/40 hover:bg-primary-500/10 hover:text-primary-200"
 								aria-label={`Visit ${social.label} profile (opens in new tab)`}
 							>
-								<Icon size={16} aria-hidden="true" />
+								<Icon size={14} aria-hidden="true" />
 								{social.label}
 								<ExternalLink
-									size={12}
+									size={11}
 									class="opacity-0 transition-opacity group-hover:opacity-100"
 									aria-hidden="true"
 								/>
 							</a>
 						{/each}
 					</div>
-					<div class="pt-4">
-						<GradientButton
-							href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
-							title="Send an email"
-							class="w-full"
+				</div>
+			</div>
+
+			<!-- Footer: Legal & Copyright -->
+			<div class="border-t border-surface-700/50 pt-6">
+				<div class="flex flex-col items-center justify-between gap-4 md:flex-row">
+					<div class="text-center md:text-left">
+						<p class="text-xs text-surface-400">
+							© {new Date().getFullYear()} Hessam Khoobkar. All rights reserved.
+						</p>
+					</div>
+					<div class="flex items-center gap-4">
+						<a
+							href="mailto:amirhessam.dev@gmail.com?subject=Privacy Policy Inquiry"
+							class="text-xs text-surface-400 transition-colors hover:text-primary-300"
 						>
-							<span
-								class="flex items-center justify-center gap-2 text-sm font-semibold tracking-wide uppercase"
-							>
-								<Mail size={18} aria-hidden="true" />
-								Send an email
-							</span>
-						</GradientButton>
+							Privacy
+						</a>
+						<span class="text-surface-600">·</span>
+						<a
+							href="mailto:amirhessam.dev@gmail.com?subject=Terms of Service Inquiry"
+							class="text-xs text-surface-400 transition-colors hover:text-primary-300"
+						>
+							Terms
+						</a>
 					</div>
 				</div>
 			</div>
