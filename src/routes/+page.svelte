@@ -4,7 +4,7 @@
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import GradientButton from '$lib/components/ui/GradientButton.svelte';
 	import { reveal } from '$lib/actions/reveal';
-	import { parallax, scrollAtmosphere, depthFade } from '$lib/actions/motion';
+	import { parallax, depthFade } from '$lib/actions/motion';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import Silk from '$lib/components/layout/hero/Silk.svelte';
 	import ogImageAsset from '$lib/assets/logo.png';
@@ -32,7 +32,10 @@
 		Dribbble,
 		MessageSquare,
 		GitBranch,
-		CheckCircle2
+		CheckCircle2,
+		TrendingUp,
+		Zap,
+		Award
 	} from '@lucide/svelte';
 
 	const heroHighlights = [
@@ -143,9 +146,12 @@
 			company: 'POMECHAIN · Dubai (Remote)',
 			role: 'Senior Front-End Developer',
 			period: 'July 2024 – Present',
+			icon: Rocket,
+			metric: '56% faster',
+			metricLabel: 'Load time reduction',
 			highlights: [
 				'Architected reusable Vue.js/Nuxt.js component library with TypeScript, improving maintainability',
-				'Led frontend development achieving 30% increase in user engagement metrics',
+				'Reduced load time from 16s to 7s through performance optimization and code-splitting',
 				'Introduced TailwindCSS, reducing UI development time by 20%'
 			]
 		},
@@ -153,8 +159,11 @@
 			company: 'Coinhaven · Berlin (Remote)',
 			role: 'Lead Front-End Developer',
 			period: 'December 2021 – January 2024',
+			icon: TrendingUp,
+			metric: '33% faster',
+			metricLabel: 'Performance improvement',
 			highlights: [
-				'Led migration from React to SvelteKit, achieving 35% performance improvement',
+				'Led migration from React to SvelteKit, achieving 33% performance improvement',
 				'Built real-time WebSocket data synchronization system',
 				'Mentored team of 7 developers, elevating coding standards through code reviews'
 			]
@@ -163,10 +172,13 @@
 			company: 'Piller Iddaa · Istanbul (Remote)',
 			role: 'Senior Front-End Developer',
 			period: 'November 2019 – December 2021',
+			icon: Zap,
+			metric: '42% retention',
+			metricLabel: 'User retention increase',
 			highlights: [
 				'Optimized Vue.js interfaces for high-traffic betting platform handling thousands of concurrent users',
-				'Achieved 35% reduction in page load times through caching and code-splitting',
-				'Improved accessibility and user retention across complex interactive UIs'
+				'Improved user retention by 42% through enhanced UX and performance optimizations',
+				'Reduced error rates and improved accessibility across complex interactive UIs'
 			]
 		}
 	];
@@ -450,7 +462,7 @@
 	</script>
 </svelte:head>
 
-<main class="relative min-h-screen overflow-hidden">
+<div class="relative min-h-screen overflow-hidden">
 	<!-- Hero Section -->
 	<section id="hero" class="hero-gradient relative min-h-screen w-screen">
 		<div class="relative z-10 flex h-full items-center">
@@ -773,10 +785,14 @@
 	</section>
 
 	<!-- Experience Section -->
-	<section class="relative bg-surface-900 py-12">
+	<section class="relative overflow-hidden bg-surface-900 py-12">
+		<!-- Subtle background gradient -->
 		<div
-			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
-			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
+			class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary-900/5 to-transparent"
+		></div>
+		<div
+			class="relative mx-auto max-w-6xl space-y-12 px-6 py-24"
+			use:depthFade={{ start: 'top 90%', end: 'top 60%', scrub: 0.45 }}
 		>
 			<div
 				class="space-y-4"
@@ -786,6 +802,7 @@
 					data-experience-headline
 					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
+					<Award size={14} aria-hidden="true" />
 					Professional experience
 				</span>
 				<h2 data-experience-headline class="text-3xl font-bold text-surface-50 md:text-4xl">
@@ -799,34 +816,97 @@
 			</div>
 			<div
 				class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-				use:reveal={{ childSelector: '[data-experience-card]', stagger: 0.08 }}
+				use:reveal={{ childSelector: '[data-experience-card]', stagger: 0.1 }}
 			>
 				{#each experiences as experience, i}
+					{@const Icon = experience.icon}
 					<div
 						data-experience-card
-						class="flex h-full flex-col gap-4 rounded-2xl border border-surface-700 bg-surface-900/70 p-6"
-						use:parallax={{
-							axis: 'x',
-							from: i === 0 ? -14 : i === 1 ? 10 : -8,
-							to: i === 0 ? 12 : i === 1 ? -12 : 10,
-							scrub: 0.55
-						}}
+						class="group relative flex h-full flex-col gap-5 rounded-2xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary-500/50"
 					>
-						<div>
-							<p class="text-xs tracking-[0.35em] text-primary-200 uppercase">
-								{experience.company}
-							</p>
-							<h3 class="mt-2 text-lg font-semibold text-surface-50">{experience.role}</h3>
-							<p class="mt-1 text-sm text-surface-400">{experience.period}</p>
+						<!-- Content wrapper -->
+						<div class="relative z-10 flex h-full flex-col gap-5">
+							<!-- Header with icon and company -->
+							<div class="flex items-start justify-between gap-4">
+								<div class="flex-1">
+									<div class="mb-3 flex items-center gap-3">
+										<div
+											class="relative overflow-hidden rounded-xl border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-3 shadow-[0_4px_12px_rgba(239,94,3,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:border-primary-400/50 group-hover:shadow-[0_8px_32px_rgba(239,94,3,0.4),0_0_60px_rgba(239,94,3,0.2)]"
+										>
+											<!-- Animated gradient background -->
+											<div
+												class="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-400/20 via-primary-500/30 to-primary-600/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+											></div>
+
+											<!-- Outer glow effect -->
+											<div
+												class="absolute -inset-1 rounded-xl bg-primary-500/40 opacity-0 blur-2xl transition-all duration-500 group-hover:scale-110 group-hover:opacity-60"
+											></div>
+
+											<!-- Inner glow pulse -->
+											<div
+												class="absolute inset-0 rounded-xl bg-primary-400/30 opacity-0 blur-md transition-all duration-500 group-hover:animate-pulse group-hover:opacity-70"
+											></div>
+
+											<!-- Shimmer effect -->
+											<div
+												class="absolute inset-0 -translate-x-full rounded-xl bg-gradient-to-r from-transparent via-primary-300/30 to-transparent opacity-0 transition-all duration-700 group-hover:translate-x-full group-hover:opacity-100"
+											></div>
+
+											<!-- Icon with complex animations -->
+											<Icon
+												size={20}
+												class="relative z-10 text-primary-200 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(239,94,3,0.8)]"
+												aria-hidden="true"
+											/>
+										</div>
+									</div>
+									<p class="text-xs tracking-[0.35em] text-primary-200/90 uppercase">
+										{experience.company}
+									</p>
+									<h3
+										class="mt-2 text-lg font-semibold text-surface-50 transition-colors group-hover:text-primary-100"
+									>
+										{experience.role}
+									</h3>
+									<p class="mt-1 text-sm text-surface-400">{experience.period}</p>
+								</div>
+							</div>
+
+							<!-- Metric badge -->
+							<div
+								class="inline-flex w-fit items-center gap-2 rounded-xl border border-primary-500/30 bg-gradient-to-r from-primary-500/15 via-primary-500/10 to-primary-500/15 px-4 py-2.5 shadow-[0_0_20px_rgba(239,94,3,0.1),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-sm transition-all duration-300 group-hover:border-primary-500/50 group-hover:shadow-[0_0_30px_rgba(239,94,3,0.2),inset_0_1px_0_rgba(255,255,255,0.1)]"
+							>
+								<TrendingUp size={14} class="text-primary-300" aria-hidden="true" />
+								<div class="flex flex-col">
+									<span class="text-xs font-bold text-primary-200">{experience.metric}</span>
+									<span class="text-[10px] tracking-[0.2em] text-primary-300/70 uppercase">
+										{experience.metricLabel}
+									</span>
+								</div>
+							</div>
+
+							<!-- Highlights list -->
+							<ul class="mt-auto space-y-3 text-sm leading-relaxed text-surface-300">
+								{#each experience.highlights as highlight, j}
+									<li
+										class="flex items-start gap-3 transition-all duration-300 group-hover:text-surface-200"
+										style="animation-delay: {j * 50}ms"
+									>
+										<div
+											class="mt-1.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary-500/20 transition-all duration-300 group-hover:scale-110 group-hover:bg-primary-500/30"
+										>
+											<CheckCircle2
+												size={12}
+												class="text-primary-300 transition-colors group-hover:text-primary-200"
+												aria-hidden="true"
+											/>
+										</div>
+										<span class="flex-1">{highlight}</span>
+									</li>
+								{/each}
+							</ul>
 						</div>
-						<ul class="space-y-2 text-sm leading-relaxed text-surface-300">
-							{#each experience.highlights as highlight}
-								<li class="flex items-start gap-2">
-									<span class="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary-400"></span>
-									<span>{highlight}</span>
-								</li>
-							{/each}
-						</ul>
 					</div>
 				{/each}
 			</div>
@@ -834,18 +914,10 @@
 	</section>
 
 	<!-- FAQ Section -->
-	<section
-		class="relative border-t border-surface-800/60 bg-surface-950/70"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(9, 8, 12, 0.98)',
-			to: 'rgba(12, 9, 14, 0.98)',
-			scrub: 0.7
-		}}
-	>
+	<section class="relative bg-surface-950 py-12">
 		<div
 			class="mx-auto max-w-6xl space-y-12 px-6 py-24"
-			use:depthFade={{ start: 'top 88%', end: 'bottom 60%', scrub: 0.45 }}
+			use:depthFade={{ start: 'top 90%', end: 'top 60%', scrub: 0.45 }}
 		>
 			<div class="space-y-4" use:reveal={{ childSelector: '[data-faq-headline]', stagger: 0.1 }}>
 				<span
@@ -883,15 +955,7 @@
 	</section>
 
 	<!-- Contact Section -->
-	<section
-		class="relative"
-		use:scrollAtmosphere={{
-			target: getMainSurface,
-			from: 'rgba(12, 9, 14, 0.98)',
-			to: 'rgba(16, 11, 18, 0.98)',
-			scrub: 0.75
-		}}
-	>
+	<section class="relative overflow-hidden bg-surface-900 py-12">
 		<div
 			class="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-surface-700/70 bg-gradient-to-br from-surface-900/85 via-surface-900/70 to-surface-900/50 px-6 py-20 shadow-[0_40px_140px_-60px_rgba(0,0,0,0.75)]"
 			use:reveal={{ childSelector: '[data-contact]', stagger: 0.12 }}
@@ -1007,7 +1071,7 @@
 
 	<!-- Footer -->
 	<Footer />
-</main>
+</div>
 
 <style>
 	.hero-gradient {
