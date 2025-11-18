@@ -4,8 +4,7 @@
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	import GradientButton from '$lib/components/ui/GradientButton.svelte';
 	import { reveal } from '$lib/actions/reveal';
-	import { parallax, depthFade } from '$lib/actions/motion';
-	import Footer from '$lib/components/layout/Footer.svelte';
+	import { depthFade } from '$lib/actions/motion';
 	import Silk from '$lib/components/layout/hero/Silk.svelte';
 	import ogImageAsset from '$lib/assets/logo.png';
 	import { normalizeImageUrl, siteConfig } from '$lib/utils/structured-data';
@@ -16,7 +15,6 @@
 		ArrowUpRight,
 		Download,
 		Mail,
-		Phone,
 		MapPin,
 		Globe,
 		Users,
@@ -36,7 +34,8 @@
 		TrendingUp,
 		Zap,
 		Award,
-		HelpCircle
+		HelpCircle,
+		ExternalLink
 	} from '@lucide/svelte';
 
 	const heroHighlights = [
@@ -217,30 +216,32 @@
 		}
 	];
 
-	const contactChannels = [
+	const contactMethods = [
 		{
 			icon: Mail,
-			label: 'Email',
-			value: 'amirhessam.dev@gmail.com',
-			href: 'mailto:amirhessam.dev@gmail.com'
+			title: 'Email Me',
+			subtitle: 'Direct communication',
+			description:
+				'Send me an email for detailed inquiries and project discussions. I typically respond within one business day.',
+			href: "mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project",
+			label: 'Send Email'
 		},
 		{
-			icon: Phone,
-			label: 'Phone',
-			value: '+98 919 623 0597',
-			href: 'tel:+989196230597'
+			icon: MessageSquare,
+			title: "Let's Connect",
+			subtitle: 'Start a conversation',
+			description:
+				"Ready to discuss your project? Reach out and let's explore how we can work together.",
+			href: 'mailto:amirhessam.dev@gmail.com?subject=Project Inquiry',
+			label: 'Get in Touch'
 		},
 		{
 			icon: MapPin,
-			label: 'Base',
-			value: 'Tallinn, Estonia',
-			href: null
-		},
-		{
-			icon: Globe,
-			label: 'Availability',
-			value: 'Remote · Full-time & freelance',
-			href: null
+			title: 'Location',
+			subtitle: 'Based in',
+			description: 'Tallinn, Estonia · Available for remote work worldwide',
+			href: null,
+			label: null
 		}
 	];
 
@@ -329,9 +330,6 @@
 			}
 		]
 	};
-
-	const getMainSurface = () =>
-		typeof document === 'undefined' ? null : (document.querySelector('main') as HTMLElement | null);
 
 	// Custom reveal with two-phase animation (slow fade/blur, then quick jump)
 	let valueCardsContainer: HTMLElement;
@@ -455,6 +453,46 @@
 		);
 
 		cards.forEach((card) => observer.observe(card));
+
+		return () => {
+			observer.disconnect();
+		};
+	});
+
+	// Simple fade-in animation for contact section (works better for last section)
+	let contactSection: HTMLElement;
+	onMount(() => {
+		if (typeof window === 'undefined' || !contactSection) return;
+
+		// Set initial state
+		gsap.set(contactSection, {
+			opacity: 0,
+			y: 40
+		});
+
+		// Use intersection observer with very low threshold for last section
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						// Simple fade-in animation
+						gsap.to(contactSection, {
+							opacity: 1,
+							y: 0,
+							duration: 1.2,
+							ease: 'power2.out'
+						});
+						observer.unobserve(contactSection);
+					}
+				});
+			},
+			{
+				threshold: 0.05, // Trigger when just 5% is visible
+				rootMargin: '0px 0px 100px 0px' // Trigger slightly before it's fully visible
+			}
+		);
+
+		observer.observe(contactSection);
 
 		return () => {
 			observer.disconnect();
@@ -815,7 +853,7 @@
 	<!-- Technologies Section -->
 	<section class="relative overflow-hidden bg-surface-900/50 py-24" bind:this={technologiesSection}>
 		<!-- Silk Background Animation -->
-		<div class="absolute inset-x-0 inset-y-1" bind:this={silkBackgroundContainer}>
+		<div class="absolute inset-x-0 inset-y-1.5" bind:this={silkBackgroundContainer}>
 			<Silk speed={3} scale={1} color="#ef5e03" noiseIntensity={1.2} rotation={0.3} />
 		</div>
 		<!-- Gradient overlays for smooth transitions -->
@@ -894,7 +932,7 @@
 				class="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
 				use:reveal={{ childSelector: '[data-experience-card]', stagger: 0.1 }}
 			>
-				{#each experiences as experience, i}
+				{#each experiences as experience}
 					{@const Icon = experience.icon}
 					<div
 						data-experience-card
@@ -1093,105 +1131,140 @@
 	</section>
 
 	<!-- Contact Section -->
-	<section class="relative overflow-hidden bg-surface-900 py-12">
+	<section class="relative overflow-hidden bg-surface-900 py-24" bind:this={contactSection}>
+		<!-- Subtle background gradient -->
 		<div
-			class="mx-auto max-w-6xl overflow-hidden rounded-3xl border border-surface-700/70 bg-gradient-to-br from-surface-900/85 via-surface-900/70 to-surface-900/50 px-6 py-20 shadow-[0_40px_140px_-60px_rgba(0,0,0,0.75)]"
-			use:reveal={{ childSelector: '[data-contact]', stagger: 0.12 }}
-			use:depthFade={{ start: 'top 86%', end: 'bottom 58%', scrub: 0.5 }}
-		>
-			<div class="grid gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-				<div
-					data-contact
-					class="space-y-6"
-					use:parallax={{ axis: 'x', from: -18, to: 18, scrub: 0.6 }}
+			class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-primary-900/5 to-transparent"
+		></div>
+		<div class="relative mx-auto max-w-6xl space-y-12 px-6">
+			<!-- Header -->
+			<div class="space-y-4 text-center">
+				<span
+					class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
 				>
-					<span
-						class="inline-flex w-fit items-center gap-2 rounded-full bg-primary-500/15 px-4 py-1 text-xs font-semibold tracking-[0.35em] text-primary-300 uppercase"
-					>
-						Let's work together
-					</span>
-					<h2 class="text-3xl font-bold text-surface-50 md:text-4xl">
-						Available for full-time and freelance opportunities.
-					</h2>
-					<p class="text-sm leading-relaxed text-surface-300">
-						Open to new remote positions and project-based work. I respond within one business day.
-					</p>
-					<div class="grid gap-4">
-						{#each contactChannels as channel}
-							{@const Icon = channel.icon}
-							{#if channel.href}
-								<a
-									href={channel.href}
-									class="flex items-center gap-4 rounded-2xl border border-surface-700 bg-surface-900/65 px-5 py-4 text-sm text-surface-200 transition hover:border-primary-500/40 hover:text-primary-200"
-								>
-									<div class="rounded-xl bg-primary-500/10 p-3">
-										<Icon size={18} class="text-primary-300" aria-hidden="true" />
+					<MessageSquare size={14} aria-hidden="true" />
+					Let's work together
+				</span>
+				<h2 class="text-3xl font-bold text-surface-50 md:text-4xl">Ready to start your project?</h2>
+				<p class="mx-auto max-w-2xl text-sm leading-relaxed text-surface-300">
+					I'm available for full-time and freelance opportunities. Let's discuss how I can help
+					bring your vision to life.
+				</p>
+			</div>
+
+			<!-- Contact Methods Grid -->
+			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+				{#each contactMethods as method}
+					{@const Icon = method.icon}
+					{#if method.href}
+						<a
+							href={method.href}
+							class="group relative flex h-full flex-col gap-4 rounded-2xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-primary-500/50 hover:shadow-[0_8px_32px_rgba(239,94,3,0.15)]"
+						>
+							<!-- Animated gradient background on hover -->
+							<div
+								class="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/0 via-primary-500/0 to-primary-500/0 opacity-0 transition-opacity duration-500 group-hover:opacity-10"
+							></div>
+
+							<!-- Content wrapper -->
+							<div class="relative z-10 flex h-full flex-col gap-4">
+								<div class="flex items-start gap-4">
+									<div
+										class="relative overflow-hidden rounded-xl border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-3 shadow-[0_4px_12px_rgba(239,94,3,0.2)] transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 group-hover:border-primary-400/50 group-hover:shadow-[0_8px_32px_rgba(239,94,3,0.4),0_0_60px_rgba(239,94,3,0.2)]"
+									>
+										<Icon
+											size={20}
+											class="relative z-10 text-primary-200 transition-all duration-500 group-hover:scale-125 group-hover:rotate-12 group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(239,94,3,0.8)]"
+											aria-hidden="true"
+										/>
 									</div>
-									<div>
-										<p class="text-xs tracking-[0.35em] text-primary-300 uppercase">
-											{channel.label}
+									<div class="flex-1">
+										<h3
+											class="text-lg font-semibold text-surface-50 transition-colors group-hover:text-primary-100"
+										>
+											{method.title}
+										</h3>
+										<p class="mt-1 text-xs tracking-[0.35em] text-primary-300/70 uppercase">
+											{method.subtitle}
 										</p>
-										<p class="text-sm font-semibold">{channel.value}</p>
-									</div>
-								</a>
-							{:else}
-								<div
-									class="flex items-center gap-4 rounded-2xl border border-surface-700 bg-surface-900/65 px-5 py-4 text-sm text-surface-200"
-								>
-									<div class="rounded-xl bg-primary-500/10 p-3">
-										<Icon size={18} class="text-primary-300" aria-hidden="true" />
-									</div>
-									<div>
-										<p class="text-xs tracking-[0.35em] text-primary-300 uppercase">
-											{channel.label}
-										</p>
-										<p class="text-sm font-semibold">{channel.value}</p>
 									</div>
 								</div>
-							{/if}
-						{/each}
+								<p class="flex-1 text-sm leading-relaxed text-surface-300">
+									{method.description}
+								</p>
+								<div
+									class="mt-auto flex items-center gap-2 text-sm font-medium text-primary-300 transition-colors group-hover:text-primary-200"
+								>
+									<span>{method.label}</span>
+									<ArrowUpRight
+										size={16}
+										class="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+										aria-hidden="true"
+									/>
+								</div>
+							</div>
+						</a>
+					{:else}
+						<div
+							class="flex h-full flex-col gap-4 rounded-2xl border border-surface-700/80 bg-gradient-to-br from-surface-900/90 via-surface-900/70 to-surface-900/90 p-6"
+						>
+							<div class="flex items-start gap-4">
+								<div
+									class="rounded-xl border border-transparent bg-gradient-to-br from-primary-500/40 via-primary-500/35 to-primary-500/30 p-3 shadow-[0_4px_12px_rgba(239,94,3,0.2)]"
+								>
+									<Icon size={20} class="text-primary-200" aria-hidden="true" />
+								</div>
+								<div class="flex-1">
+									<h3 class="text-lg font-semibold text-surface-50">{method.title}</h3>
+									<p class="mt-1 text-xs tracking-[0.35em] text-primary-300/70 uppercase">
+										{method.subtitle}
+									</p>
+								</div>
+							</div>
+							<p class="flex-1 text-sm leading-relaxed text-surface-300">
+								{method.description}
+							</p>
+						</div>
+					{/if}
+				{/each}
+			</div>
+
+			<!-- Social Links & CTA -->
+			<div
+				class="rounded-2xl border border-primary-500/20 bg-gradient-to-br from-primary-500/10 via-primary-500/5 to-transparent p-8"
+			>
+				<div class="space-y-6">
+					<div class="space-y-4">
+						<h3 class="text-xl font-semibold text-surface-50">Connect with me</h3>
+						<p class="text-sm leading-relaxed text-surface-300">
+							Follow my work and connect on social platforms. I share insights, projects, and
+							thoughts on front-end development.
+						</p>
 					</div>
-					<div class="flex flex-wrap gap-3 pt-4">
+					<div class="flex flex-wrap gap-3">
 						{#each socialLinks as social}
 							{@const Icon = social.icon}
 							<a
 								href={social.href}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="inline-flex items-center gap-2 rounded-full border border-surface-700/60 px-4 py-2 text-xs font-semibold tracking-[0.35em] text-surface-200 uppercase transition hover:border-primary-500/40 hover:text-primary-200"
+								class="group inline-flex items-center gap-2 rounded-full border border-surface-700/60 bg-surface-800/50 px-4 py-2 text-xs font-semibold tracking-[0.35em] text-surface-200 uppercase transition-all hover:border-primary-500/40 hover:bg-primary-500/10 hover:text-primary-200"
+								aria-label={`Visit ${social.label} profile (opens in new tab)`}
 							>
 								<Icon size={16} aria-hidden="true" />
 								{social.label}
+								<ExternalLink
+									size={12}
+									class="opacity-0 transition-opacity group-hover:opacity-100"
+									aria-hidden="true"
+								/>
 							</a>
 						{/each}
 					</div>
-				</div>
-				<div
-					data-contact
-					class="gradient-background flex h-full flex-col justify-between rounded-2xl border border-white/15 p-6 text-white shadow-[0_30px_110px_-50px_rgba(239,94,3,0.85)]"
-					use:parallax={{ axis: 'x', from: 16, to: -16, scrub: 0.6 }}
-				>
-					<div>
-						<h3 class="text-2xl font-semibold text-white">Why work with me</h3>
-						<ul class="mt-5 space-y-3 text-sm leading-relaxed text-white/85">
-							<li class="relative border-b border-white/25 pb-3 pl-5">
-								<span class="absolute top-2 left-0 h-2 w-2 rounded-full bg-white/80"></span>
-								7+ years building scalable front-end systems with proven results.
-							</li>
-							<li class="relative border-b border-white/25 pb-3 pl-5">
-								<span class="absolute top-2 left-0 h-2 w-2 rounded-full bg-white/80"></span>
-								Expert in React, Svelte, Vue.js, TypeScript, and modern tooling.
-							</li>
-							<li class="relative pl-5">
-								<span class="absolute top-2 left-0 h-2 w-2 rounded-full bg-white/80"></span>
-								Remote-native with async-first communication across time zones.
-							</li>
-						</ul>
-					</div>
-					<div class="mt-8">
+					<div class="pt-4">
 						<GradientButton
-							href="mailto:amirhessam.dev@gmail.com?subject=Let%E2%80%99s%20build%20something%20remarkable"
-							title="Email Hessam Khoobkar"
+							href="mailto:amirhessam.dev@gmail.com?subject=Let's discuss a project"
+							title="Send an email"
 							class="w-full"
 						>
 							<span
@@ -1206,9 +1279,6 @@
 			</div>
 		</div>
 	</section>
-
-	<!-- Footer -->
-	<!-- <Footer /> -->
 </div>
 
 <style>
@@ -1216,7 +1286,6 @@
 		--gradient-pos-x: 20%;
 		--gradient-pos-y: 80%;
 		--gradient-size: 122%;
-		--sheen-opacity: 0.24;
 		position: relative;
 		overflow: hidden;
 		filter: saturate(1.12) contrast(1.05);
