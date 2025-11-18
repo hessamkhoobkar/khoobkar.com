@@ -34,9 +34,7 @@
 		Zap,
 		Award,
 		HelpCircle,
-		ExternalLink,
-		Clock,
-		Circle
+		ExternalLink
 	} from '@lucide/svelte';
 
 	const heroHighlights = [
@@ -568,9 +566,9 @@
 				use:reveal={{ childSelector: '[data-hero-item]', stagger: 0.15, delay: 0.1 }}
 			>
 				<!-- Main Content Row -->
-				<div class="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:items-center lg:gap-16">
+				<div class="grid gap-12 lg:grid-cols-5 lg:items-center lg:gap-4">
 					<!-- Left: Main Content -->
-					<div data-hero-item class="space-y-8">
+					<div data-hero-item class="space-y-8 lg:col-span-3">
 						<div class="space-y-6">
 							<div class="flex items-center gap-3">
 								<span
@@ -589,8 +587,8 @@
 								use:reveal={{
 									childSelector: 'span',
 									delay: 0.05,
-									stagger: 0.15,
-									from: { opacity: 0, yPercent: 120, filter: 'blur(6px)' },
+									stagger: 0.22,
+									from: { opacity: 0, yPercent: 50, filter: 'blur(6px)' },
 									to: {
 										opacity: 1,
 										yPercent: 0,
@@ -600,8 +598,11 @@
 									}
 								}}
 							>
-								Remote Front-End Leadership That Delivers Performance, Polish, and Measurable
-								Momentum.
+								Remote Front-End Leadership That Delivers
+								<span class="inline-block">Performance,</span>
+								<span class="inline-block">Polish,</span>
+								<span class="inline-block">and Measurable</span>
+								<span class="inline-block">Momentum.</span>
 							</h1>
 							<p
 								class="max-w-2xl text-lg leading-relaxed text-white/90 drop-shadow-[0_1px_4px_rgba(0,0,0,0.2)]"
@@ -644,7 +645,7 @@
 					</div>
 
 					<!-- Right: Key Info Card -->
-					<div data-hero-item class="lg:sticky lg:top-24">
+					<div data-hero-item class="lg:sticky lg:top-24 lg:col-span-2">
 						<div
 							class="group relative flex flex-col gap-6 rounded-3xl border border-white/20 bg-white/10 p-8 text-white shadow-[0_30px_120px_-60px_rgba(72,12,3,0.9),inset_0_1px_0_rgba(255,255,255,0.1)] backdrop-blur-2xl transition-all duration-500 hover:border-white/30 hover:bg-white/15 hover:shadow-[0_40px_160px_-60px_rgba(72,12,3,1),inset_0_1px_0_rgba(255,255,255,0.15)]"
 						>
@@ -672,7 +673,7 @@
 										>
 											<Code2
 												size={18}
-												class="text-primary-200 transition-transform duration-300 group-hover/item:rotate-6"
+												class="text-primary-200 transition-all duration-300 group-hover/item:rotate-6 group-hover/item:text-primary-600"
 												aria-hidden="true"
 											/>
 										</div>
@@ -691,7 +692,7 @@
 										>
 											<Rocket
 												size={18}
-												class="text-primary-200 transition-transform duration-300 group-hover/item:rotate-6"
+												class="text-primary-200 transition-all duration-300 group-hover/item:rotate-6 group-hover/item:text-primary-600"
 												aria-hidden="true"
 											/>
 										</div>
@@ -710,7 +711,7 @@
 										>
 											<Globe
 												size={18}
-												class="text-primary-200 transition-transform duration-300 group-hover/item:rotate-6"
+												class="text-primary-200 transition-all duration-300 group-hover/item:rotate-6 group-hover/item:text-primary-600"
 												aria-hidden="true"
 											/>
 										</div>
