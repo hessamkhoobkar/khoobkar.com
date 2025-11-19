@@ -1,5 +1,5 @@
 import { mdsvex } from 'mdsvex';
-import adapter from '@sveltejs/adapter-netlify';
+import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 import { fileURLToPath } from 'url';
@@ -27,10 +27,8 @@ const config = {
 	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
 	kit: {
 		adapter: adapter({
-			// Use edge functions for better performance and compatibility
-			edge: false,
-			// Split routes into separate functions for better caching
-			split: false
+			// Runtime options for Vercel
+			runtime: 'nodejs20.x'
 		}),
 		alias: {
 			$content: './src/content'
