@@ -2,8 +2,3 @@
   command = "pnpm build"
   publish = ".svelte-kit/netlify"
 
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/entry"
-  status = 200
-
