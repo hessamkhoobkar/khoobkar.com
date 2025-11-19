@@ -93,11 +93,15 @@ void main() {
 	let lastTime: number | null = null;
 
 	function getSize() {
+		if (!container || typeof window === 'undefined') {
+			return { width: 1, height: 1 };
+		}
 		const rect = container.getBoundingClientRect();
 		return { width: Math.max(1, rect.width), height: Math.max(1, rect.height) };
 	}
 
 	function init() {
+		if (!container || typeof window === 'undefined') return;
 		const { width, height } = getSize();
 
 		scene = new Scene();
@@ -138,7 +142,7 @@ void main() {
 	}
 
 	function resize() {
-		if (!renderer || !camera || !mesh) return;
+		if (!renderer || !camera || !mesh || !container || typeof window === 'undefined') return;
 		const { width, height } = getSize();
 		const halfW = width / 2;
 		const halfH = height / 2;

@@ -7,7 +7,8 @@
 	import faviconIco from '$lib/assets/favicon.ico';
 	import faviconSvg from '$lib/assets/favicon.svg';
 	import appleTouchIcon from '$lib/assets/apple-touch-icon.png';
-	import siteWebmanifest from '$lib/assets/site.webmanifest';
+	// Use static path for webmanifest to avoid SSR import issues
+	const siteWebmanifest = '/site.webmanifest';
 
 	// Components imports
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
