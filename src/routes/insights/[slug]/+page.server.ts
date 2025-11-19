@@ -1,8 +1,8 @@
 import { error } from '@sveltejs/kit';
 import { loadContentItem } from '$lib/utils/content';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params }) => {
 	const post = await loadContentItem('insight', params.slug);
 
 	if (!post) {
@@ -14,3 +14,4 @@ export const load: PageLoad = async ({ params }) => {
 		meta: post.meta
 	};
 };
+
