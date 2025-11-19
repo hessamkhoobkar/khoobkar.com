@@ -3,4 +3,3 @@
 	"framework": "sveltekit",
 	"installCommand": "pnpm install"
 }
-
