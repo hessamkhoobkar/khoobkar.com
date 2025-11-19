@@ -26,7 +26,12 @@ const config = {
 	// for more information about preprocessors
 	preprocess: [vitePreprocess(), mdsvex(mdsvexOptions)],
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			// Use edge functions for better performance and compatibility
+			edge: false,
+			// Split routes into separate functions for better caching
+			split: false
+		}),
 		alias: {
 			$content: './src/content'
 		}
