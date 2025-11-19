@@ -8,7 +8,10 @@
 	import ogImageAsset from '$lib/assets/logo.png';
 	import { normalizeImageUrl, siteConfig } from '$lib/utils/structured-data';
 
-	gsap.registerPlugin(ScrollTrigger);
+	// Register GSAP plugin only in browser (moved to onMount to avoid SSR issues)
+	if (typeof window !== 'undefined') {
+		gsap.registerPlugin(ScrollTrigger);
+	}
 	import {
 		Sparkles,
 		ArrowUpRight,

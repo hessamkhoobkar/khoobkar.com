@@ -24,16 +24,29 @@ interface MdsvexModule {
 
 // Cache for loaded modules to avoid re-importing in serverless environments
 let modulesCache: Record<string, MdsvexModule> | null = null;
+let modulesCacheError: Error | null = null;
 
 /**
  * Load all markdown files from a specific directory
  */
 export async function loadContent(category: string): Promise<ContentItem[]> {
 	// Load modules eagerly - this works better in serverless when cached
-	if (!modulesCache) {
-		modulesCache = import.meta.glob('../../content/**/*.md', {
-			eager: true
-		}) as Record<string, MdsvexModule>;
+	if (!modulesCache && !modulesCacheError) {
+		try {
+			modulesCache = import.meta.glob('../../content/**/*.md', {
+				eager: true
+			}) as Record<string, MdsvexModule>;
+		} catch (error) {
+			modulesCacheError = error instanceof Error ? error : new Error(String(error));
+			console.error('Error loading content modules:', modulesCacheError);
+			// Return empty array instead of throwing to prevent 500 errors
+			return [];
+		}
+	}
+
+	// If there was an error loading modules, return empty array
+	if (modulesCacheError || !modulesCache) {
+		return [];
 	}
 
 	const modules = modulesCache;

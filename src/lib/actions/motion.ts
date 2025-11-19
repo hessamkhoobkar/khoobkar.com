@@ -1,7 +1,10 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+// Register plugin only in browser to avoid SSR issues
+if (typeof window !== 'undefined') {
+	gsap.registerPlugin(ScrollTrigger);
+}
 
 type ScrubValue = boolean | number;
 

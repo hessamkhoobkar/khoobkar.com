@@ -4,8 +4,6 @@
 	import { ScrollSmoother } from 'gsap/ScrollSmoother';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-	gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-
 	let scrollContainer: HTMLElement;
 	let scrollContent: HTMLElement;
 
@@ -25,10 +23,15 @@
 	let isMobile = $state(false);
 
 	function checkMobile() {
-		isMobile = window.matchMedia('(max-width: 768px)').matches;
+		if (typeof window !== 'undefined') {
+			isMobile = window.matchMedia('(max-width: 768px)').matches;
+		}
 	}
 
 	onMount(() => {
+		// Register plugins only in browser
+		gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
+		
 		checkMobile();
 
 		smoother = ScrollSmoother.create({
